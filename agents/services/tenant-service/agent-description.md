@@ -52,7 +52,7 @@ Route requests to this agent when users ask about:
 ## Tools Available
 
 - `getMyUser`: Retrieves complete current user information (existing)
-- `getCustomersByStatus`: Filter customers by status
+- `getCustomersByStatus`: Get all customers (AI filters by status after fetching)
 - `getAllCustomers`: List all customers for tenant
 - `getUsersByStatus`: Filter users by active/inactive status
 - `getUserCount`: Get user statistics and counts

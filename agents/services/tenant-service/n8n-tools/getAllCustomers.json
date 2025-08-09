@@ -4,8 +4,8 @@
       "parameters": {
         "toolDescription": "Gets all customers for the current tenant. Use this when users ask for 'all customers', 'list customers', 'show me all customers', or general customer information without specific filters. This tool requires no parameters from the user.",
         "endpoint": "={{ $('hubTalk Input').first().json.graphqlEndpoint }}",
-        "query": "query getAllCustomers($tenantId: ID!, $limit: Int, $offset: Int) {\n  customers(filter: { tenantId: $tenantId }, limit: $limit, offset: $offset) {\n    id\n    name\n    email\n    status\n    createdAt\n    updatedAt\n    tenant {\n      id\n      name\n    }\n    contactInfo {\n      phone\n      address\n    }\n  }\n  customersCount(filter: { tenantId: $tenantId })\n}",
-        "variables": "={{ { \"tenantId\": $('hubTalk Input').first().json.tenantId, \"limit\": 50, \"offset\": 0 } }}",
+        "query": "query getAllCustomers($page: Int!, $pageSize: Int!) {\n  customersPaginated(options: {\n    pagination: { page: $page, pageSize: $pageSize }\n  }) {\n    data {\n      id\n      tenantId\n      name\n      status\n      linkedTenant {\n        id\n        name\n      }\n      externalId\n      websiteUrl\n      address {\n        country\n        state\n        city\n        postalCode\n        street\n        street2\n      }\n    }\n    pageInfo {\n      totalElements\n      totalPages\n      currentPage\n    }\n  }\n}",
+        "variables": "={{ { \"page\": 1, \"pageSize\": 50 } }}",
         "operationName": "getAllCustomers",
         "headerParametersUi": {
           "parameter": [

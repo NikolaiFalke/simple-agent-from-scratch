@@ -4,8 +4,8 @@
       "parameters": {
         "toolDescription": "Gets users filtered by activity status (active/inactive). Use this when users ask 'show inactive users', 'list active users', or similar user status queries. Parameters: isActive (boolean) - true for active users, false for inactive users.",
         "endpoint": "={{ $('hubTalk Input').first().json.graphqlEndpoint }}",
-        "query": "query getUsersByStatus($isActive: Boolean!, $tenantId: ID!, $limit: Int, $offset: Int) {\n  users(filter: { isActive: $isActive, tenantId: $tenantId }, limit: $limit, offset: $offset) {\n    id\n    identityId\n    email\n    name\n    status\n    isActive\n    isTechnicalUser\n    createdAt\n    updatedAt\n    tenant {\n      id\n      name\n    }\n    userRoles {\n      userRole {\n        id\n        name\n      }\n    }\n  }\n  usersCount(filter: { isActive: $isActive, tenantId: $tenantId })\n}",
-        "variables": "={{ { \"isActive\": $fromAI('isActive', true, 'boolean'), \"tenantId\": $('hubTalk Input').first().json.tenantId, \"limit\": 50, \"offset\": 0 } }}",
+        "query": "query getUsersByStatus($isActive: Boolean!, $page: Int!, $pageSize: Int!) {\n  usersPaginated(options: {\n    filter: { isActive: $isActive }\n    pagination: { page: $page, pageSize: $pageSize }\n  }) {\n    data {\n      id\n      identityId\n      email\n      name\n      status\n      isActive\n      isTechnicalUser\n      tenant {\n        id\n        name\n      }\n      settings {\n        portal\n      }\n    }\n    pageInfo {\n      totalElements\n      totalPages\n      currentPage\n    }\n  }\n}",
+        "variables": "={{ { \"isActive\": $fromAI('isActive', true, 'boolean'), \"page\": 1, \"pageSize\": 50 } }}",
         "operationName": "getUsersByStatus",
         "headerParametersUi": {
           "parameter": [

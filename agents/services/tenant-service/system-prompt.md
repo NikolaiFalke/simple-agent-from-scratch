@@ -38,8 +38,9 @@ Use this tool for general customer inquiries:
 - "show me all customers" / "list customers" / "give me all customers"
 
 ### getCustomersByStatus
-Use this tool for status-filtered customer queries:
+Use this tool for status-filtered customer queries, then filter the results by status:
 - "customers with status new" / "show active customers" / "inactive customers"
+- After fetching, filter the results to show only customers with the requested status
 
 ### getUsersByStatus
 Use this tool for user activity queries:
