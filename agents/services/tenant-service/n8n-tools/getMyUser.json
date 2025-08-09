@@ -2,10 +2,10 @@
   "nodes": [
     {
       "parameters": {
-        "toolDescription": "Gets information about the current logged-in user including their name, email, tenant information, roles, and status. Use this when users ask 'Who am I?', 'What's my user info?', 'Tell me about my account', or 'What permissions do I have?'",
+        "toolDescription": "Gets information about the current logged-in user including their name, email, tenant information, roles, and status. Use this when users ask 'Who am I?', 'What's my user info?', 'Tell me about my account', or 'What permissions do I have?'. This tool requires no parameters.",
         "endpoint": "={{ $('hubTalk Input').first().json.graphqlEndpoint }}",
         "query": "query getMyUser {\n  myUser {\n    id\n    identityId\n    email\n    name\n    status\n    isActive\n    isTechnicalUser\n    tenant {\n      id\n      name\n      shortname\n      status\n      address {\n        country\n        state\n        city\n        postalCode\n        street\n        street2\n      }\n      contact {\n        email\n        phoneNumber\n      }\n      helpLink\n      isBrowsable\n      tenantRoles {\n        id\n        name\n      }\n      companyCard {\n        id\n        logo\n        image\n        slogan\n        website\n        description\n        dunsNumber\n        tags {\n          id\n          tag\n        }\n      }\n    }\n    settings {\n      portal\n    }\n    userRoles {\n      userRole {\n        id\n        name\n      }\n    }\n  }\n}",
-        "variables": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Variables', ``, 'json') }}",
+        "variables": "{}",
         "operationName": "getMyUser",
         "headerParametersUi": {
           "parameter": [

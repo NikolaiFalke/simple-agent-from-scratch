@@ -2,10 +2,10 @@
   "nodes": [
     {
       "parameters": {
-        "toolDescription": "Gets all customers for the current tenant. Use this when users ask for 'all customers', 'list customers', 'show me all customers', or general customer information without specific filters.",
+        "toolDescription": "Gets all customers for the current tenant. Use this when users ask for 'all customers', 'list customers', 'show me all customers', or general customer information without specific filters. This tool requires no parameters from the user.",
         "endpoint": "={{ $('hubTalk Input').first().json.graphqlEndpoint }}",
         "query": "query getAllCustomers($tenantId: ID!, $limit: Int, $offset: Int) {\n  customers(filter: { tenantId: $tenantId }, limit: $limit, offset: $offset) {\n    id\n    name\n    email\n    status\n    createdAt\n    updatedAt\n    tenant {\n      id\n      name\n    }\n    contactInfo {\n      phone\n      address\n    }\n  }\n  customersCount(filter: { tenantId: $tenantId })\n}",
-        "variables": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Variables', `{\"tenantId\": \"${$('hubTalk Input').first().json.tenantId}\", \"limit\": 50, \"offset\": 0}`, 'json') }}",
+        "variables": "={{ { \"tenantId\": $('hubTalk Input').first().json.tenantId, \"limit\": 50, \"offset\": 0 } }}",
         "operationName": "getAllCustomers",
         "headerParametersUi": {
           "parameter": [

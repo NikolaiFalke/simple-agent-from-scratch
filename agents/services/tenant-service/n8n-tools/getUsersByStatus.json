@@ -2,10 +2,10 @@
   "nodes": [
     {
       "parameters": {
-        "toolDescription": "Gets users filtered by activity status (active/inactive). Use this when users ask 'how many active users', 'show inactive users', 'list active users', or similar user status queries.",
+        "toolDescription": "Gets users filtered by activity status (active/inactive). Use this when users ask 'show inactive users', 'list active users', or similar user status queries. Parameters: isActive (boolean) - true for active users, false for inactive users.",
         "endpoint": "={{ $('hubTalk Input').first().json.graphqlEndpoint }}",
         "query": "query getUsersByStatus($isActive: Boolean!, $tenantId: ID!, $limit: Int, $offset: Int) {\n  users(filter: { isActive: $isActive, tenantId: $tenantId }, limit: $limit, offset: $offset) {\n    id\n    identityId\n    email\n    name\n    status\n    isActive\n    isTechnicalUser\n    createdAt\n    updatedAt\n    tenant {\n      id\n      name\n    }\n    userRoles {\n      userRole {\n        id\n        name\n      }\n    }\n  }\n  usersCount(filter: { isActive: $isActive, tenantId: $tenantId })\n}",
-        "variables": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Variables', `{\"isActive\": true, \"tenantId\": \"${$('hubTalk Input').first().json.tenantId}\", \"limit\": 50, \"offset\": 0}`, 'json') }}",
+        "variables": "={{ { \"isActive\": $fromAI('isActive', true, 'boolean'), \"tenantId\": $('hubTalk Input').first().json.tenantId, \"limit\": 50, \"offset\": 0 } }}",
         "operationName": "getUsersByStatus",
         "headerParametersUi": {
           "parameter": [

@@ -2,10 +2,10 @@
   "nodes": [
     {
       "parameters": {
-        "toolDescription": "Gets customers filtered by status (e.g., 'new', 'active', 'inactive'). Use this when users ask for 'customers with status X', 'show me new customers', 'active customers', etc. Requires a status parameter.",
+        "toolDescription": "Gets customers filtered by status (e.g., 'new', 'active', 'inactive'). Use this when users ask for 'customers with status X', 'show me new customers', 'active customers', etc. Parameters: status (string) - the status to filter by.",
         "endpoint": "={{ $('hubTalk Input').first().json.graphqlEndpoint }}",
         "query": "query getCustomersByStatus($status: String!, $tenantId: ID!) {\n  customers(filter: { status: $status, tenantId: $tenantId }) {\n    id\n    name\n    email\n    status\n    createdAt\n    updatedAt\n    tenant {\n      id\n      name\n    }\n    contactInfo {\n      phone\n      address\n    }\n  }\n}",
-        "variables": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Variables', `{\"status\": \"new\", \"tenantId\": \"${$('hubTalk Input').first().json.tenantId}\"}`, 'json') }}",
+        "variables": "={{ { \"status\": $fromAI('status', 'new', 'string'), \"tenantId\": $('hubTalk Input').first().json.tenantId } }}",
         "operationName": "getCustomersByStatus",
         "headerParametersUi": {
           "parameter": [

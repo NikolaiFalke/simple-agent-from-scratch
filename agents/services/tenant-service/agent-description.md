@@ -4,6 +4,11 @@
 **Service Domain**: Tenant Service  
 **Specialization**: User management, tenant information, customer data
 
+## N8N Tool Description
+```
+Tenant Service Agent - Handles user information, tenant details, and customer queries. Specializes in retrieving current user profile, customer data, and user management information for the Symmedia Hub platform.
+```
+
 ## Purpose
 
 The Tenant Service Agent specializes in handling all queries related to:
@@ -46,8 +51,11 @@ Route requests to this agent when users ask about:
 
 ## Tools Available
 
-- `getMyUser`: Retrieves complete current user information
-- Additional GraphQL tools for customer and user queries (to be added)
+- `getMyUser`: Retrieves complete current user information (existing)
+- `getCustomersByStatus`: Filter customers by status
+- `getAllCustomers`: List all customers for tenant
+- `getUsersByStatus`: Filter users by active/inactive status
+- `getUserCount`: Get user statistics and counts
 
 ## Response Style
 
