@@ -1,0 +1,43 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "toolDescription": "Gets users filtered by activity status (active/inactive). Use this when users ask 'how many active users', 'show inactive users', 'list active users', or similar user status queries.",
+        "endpoint": "={{ $('hubTalk Input').first().json.graphqlEndpoint }}",
+        "query": "query getUsersByStatus($isActive: Boolean!, $tenantId: ID!, $limit: Int, $offset: Int) {\n  users(filter: { isActive: $isActive, tenantId: $tenantId }, limit: $limit, offset: $offset) {\n    id\n    identityId\n    email\n    name\n    status\n    isActive\n    isTechnicalUser\n    createdAt\n    updatedAt\n    tenant {\n      id\n      name\n    }\n    userRoles {\n      userRole {\n        id\n        name\n      }\n    }\n  }\n  usersCount(filter: { isActive: $isActive, tenantId: $tenantId })\n}",
+        "variables": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Variables', `{\"isActive\": true, \"tenantId\": \"${$('hubTalk Input').first().json.tenantId}\", \"limit\": 50, \"offset\": 0}`, 'json') }}",
+        "operationName": "getUsersByStatus",
+        "headerParametersUi": {
+          "parameter": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('hubTalk Input').first().json.token }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.graphqlTool",
+      "typeVersion": 1.1,
+      "position": [
+        384,
+        336
+      ],
+      "id": "getUsersByStatus-tool-id",
+      "name": "getUsersByStatus",
+      "alwaysOutputData": true,
+      "onError": "continueErrorOutput"
+    }
+  ],
+  "connections": {
+    "getUsersByStatus": {
+      "ai_tool": [
+        []
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "90f7e16e88b8af51a9fefb468989df8864c6fa45b8b0deeeccb82ce7f608fa65"
+  }
+}

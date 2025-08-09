@@ -1,0 +1,43 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "toolDescription": "Gets customers filtered by status (e.g., 'new', 'active', 'inactive'). Use this when users ask for 'customers with status X', 'show me new customers', 'active customers', etc. Requires a status parameter.",
+        "endpoint": "={{ $('hubTalk Input').first().json.graphqlEndpoint }}",
+        "query": "query getCustomersByStatus($status: String!, $tenantId: ID!) {\n  customers(filter: { status: $status, tenantId: $tenantId }) {\n    id\n    name\n    email\n    status\n    createdAt\n    updatedAt\n    tenant {\n      id\n      name\n    }\n    contactInfo {\n      phone\n      address\n    }\n  }\n}",
+        "variables": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Variables', `{\"status\": \"new\", \"tenantId\": \"${$('hubTalk Input').first().json.tenantId}\"}`, 'json') }}",
+        "operationName": "getCustomersByStatus",
+        "headerParametersUi": {
+          "parameter": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('hubTalk Input').first().json.token }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.graphqlTool",
+      "typeVersion": 1.1,
+      "position": [
+        384,
+        336
+      ],
+      "id": "getCustomersByStatus-tool-id",
+      "name": "getCustomersByStatus",
+      "alwaysOutputData": true,
+      "onError": "continueErrorOutput"
+    }
+  ],
+  "connections": {
+    "getCustomersByStatus": {
+      "ai_tool": [
+        []
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "90f7e16e88b8af51a9fefb468989df8864c6fa45b8b0deeeccb82ce7f608fa65"
+  }
+}
