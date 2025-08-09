@@ -1,0 +1,304 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "endpoint": "={{ $('hubTalk Input').first().json.graphqlEndpoint }}",
+        "query": "query getMyUser {\n  myUser {\n    id\n    identityId\n    email\n    name\n    tenant {\n      id\n      name\n      tenantRoles {\n        id\n        name\n      }\n      theme {\n        active {\n          properties\n          images {\n            imageurl\n            key\n          }\n          owner {\n            id\n            name\n          }\n        }\n        custom {\n          properties\n          images {\n            imageurl\n            key\n          }\n          owner {\n            id\n            name\n          }\n        }\n      }\n    }\n    userRoles {\n      userRole {\n        id\n        name\n      }\n    }\n  }\n}",
+        "operationName": "getMyUser",
+        "headerParametersUi": {
+          "parameter": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('hubTalk Input').first().json.token }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.graphql",
+      "typeVersion": 1.1,
+      "position": [
+        -432,
+        -320
+      ],
+      "id": "6ea17e22-3523-4944-a20e-551f2eff8641",
+      "name": "getMyTenantUser"
+    },
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "chatInput"
+            },
+            {
+              "name": "userId"
+            },
+            {
+              "name": "tenantId"
+            },
+            {
+              "name": "graphqlEndpoint"
+            },
+            {
+              "name": "token"
+            },
+            {
+              "name": "environment"
+            },
+            {
+              "name": "sessionId"
+            },
+            {
+              "name": "timestamp"
+            }
+          ]
+        }
+      },
+      "id": "c055762a-8fe7-4141-a639-df2372f30060",
+      "typeVersion": 1.1,
+      "name": "hubTalk Input",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "position": [
+        -704,
+        -320
+      ]
+    },
+    {
+      "parameters": {
+        "toolDescription": "Tenant Agent\n\ncapability check current logged in user information",
+        "text": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Prompt__User_Message_', ``, 'string') }}",
+        "options": {
+          "systemMessage": "You are a helpful assistant. You can fetch the current user information with the tool getMyUser."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "typeVersion": 2.2,
+      "position": [
+        224,
+        16
+      ],
+      "id": "5116c456-b4ef-4c3c-a32d-274da90a973a",
+      "name": "Tenant Agent",
+      "alwaysOutputData": true,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('hubTalk Input').first().json.chatInput }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=You are a helpful assistant. You are the orchestrator or router to your subagents. But you combine all results of the subagents and their tools to one response.\n\n## Meta Information\nUser Information from the current User (use this if asked for whoami and current user information). This information is accurate and can be reused (in JSON format):\n{{ $('getMyTenantUser').item.json.data.myUser.toJsonString() }}\n\nRequest origin: {{ $('hubTalk Input').first().json.graphqlEndpoint }}\nCurrent environment: {{ $('hubTalk Input').first().json.environment }}\nToday's date: {{ $now }}\nTime of the request: {{ $('hubTalk Input').first().json.timestamp }}\nTenant ID: {{ $('hubTalk Input').first().json.tenantId }} (ALWAYS use for tenant-scoped operations)\nUser ID: {{ $('getMyTenantUser').item.json.data.myUser.id }} (current requesting user)\n",
+          "returnIntermediateSteps": true
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        -160,
+        -320
+      ],
+      "id": "047114c6-db44-40e5-aefb-a3549065eaed",
+      "name": "Orchestrator"
+    },
+    {
+      "parameters": {
+        "toolDescription": "Gets information about the current logged-in user including their name, email, tenant information, and status. Use this when users ask 'Who am I?', 'What's my user info?', or 'Tell me about my account'.\"\n\n\n  \"query\": \"query getMyUser { myUser { id name email status isActive isTechnicalUser tenant { id name status } } }\"\n",
+        "endpoint": "={{ $('hubTalk Input').first().json.graphqlEndpoint }}",
+        "query": "query getMyUser {\n  myUser {\n    id\n    name\n    email\n    status\n    isActive\n    isTechnicalUser\n    tenant {\n      id\n      name\n      status\n    }\n  }\n}",
+        "variables": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Variables', ``, 'json') }}",
+        "operationName": "getMyUser",
+        "headerParametersUi": {
+          "parameter": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('hubTalk Input').first().json.token }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.graphqlTool",
+      "typeVersion": 1.1,
+      "position": [
+        384,
+        336
+      ],
+      "id": "23e60a47-6369-4976-9eba-e467ee52c89b",
+      "name": "getMyUser",
+      "alwaysOutputData": true,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('hubTalk Input').first().json.sessionId }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        -48,
+        0
+      ],
+      "id": "a44060e2-15c4-441e-bd1b-f33e18a22553",
+      "name": "Postgres symmedia cluster",
+      "credentials": {
+        "postgres": {
+          "id": "v1ZXRF0ExCK16pUo",
+          "name": "Postgres symmedia cluster"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        208,
+        336
+      ],
+      "id": "45616173-87bb-4a86-bfd4-4b18d17c226c",
+      "name": "gpt-4.1-mini3",
+      "credentials": {
+        "openAiApi": {
+          "id": "AzNWF8qPcfG2hyfD",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -224,
+        0
+      ],
+      "id": "7c3d3fc0-4119-4112-a21f-146b522165cb",
+      "name": "gpt-4.1-mini",
+      "credentials": {
+        "openAiApi": {
+          "id": "AzNWF8qPcfG2hyfD",
+          "name": "OpenAi account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "getMyTenantUser": {
+      "main": [
+        [
+          {
+            "node": "Orchestrator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "hubTalk Input": {
+      "main": [
+        [
+          {
+            "node": "getMyTenantUser",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tenant Agent": {
+      "ai_tool": [
+        [
+          {
+            "node": "Orchestrator",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Orchestrator": {
+      "main": [
+        []
+      ]
+    },
+    "getMyUser": {
+      "ai_tool": [
+        [
+          {
+            "node": "Tenant Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres symmedia cluster": {
+      "ai_memory": [
+        [
+          {
+            "node": "Orchestrator",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "gpt-4.1-mini3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Tenant Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "gpt-4.1-mini": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Orchestrator",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {
+    "hubTalk Input": [
+      {
+        "chatInput": "give me my user info",
+        "userId": "983dbaee-5dde-464c-a9c1-bd0b1f2d5880",
+        "tenantId": "8026294d-e774-4c34-bd6a-23e0b0d36b9d",
+        "graphqlEndpoint": "https://gateway-development.secure-service-hub.com/graphql",
+        "token": "eyJhbGciOiJSUzI1NiIsImtpZCI6IkwzRUhmRnhXRE9vVTI4eW9zUG1FZjhaM1FPV3Z4MzNtRDY1ekNVX3dEaVkiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiI1ZDA1NGQ0MS0zZjJhLTQ4NTYtOWNkYy05YWQ5MWE0M2UxNTIiLCJpc3MiOiJodHRwczovL3N5bW1lZGlhcGxhdGZvcm1kZXYuYjJjbG9naW4uY29tLzVkZjNjMzUwLTQ1NTItNDk2MC05NGRhLTA2YmI3NDRhZDkwNi92Mi4wLyIsImV4cCI6MTc1NDc1MTQ3OSwibmJmIjoxNzU0NzQ3ODc5LCJlbWFpbCI6ImNwaW1fYTYzYjE3YTUtMDU5YS00ZGQyLThiYWYtNjI0ZGM0NTI5NDVmQFN5bW1lZGlhUGxhdGZvcm1EZXYub25taWNyb3NvZnQuY29tIiwic3ViIjoiZjVjYjQxOTItNThjYS00MjhhLWI0YWUtNzg0ZmMzOGFlN2NlIiwib2lkIjoiZjVjYjQxOTItNThjYS00MjhhLWI0YWUtNzg0ZmMzOGFlN2NlIiwidGlkIjoiNWRmM2MzNTAtNDU1Mi00OTYwLTk0ZGEtMDZiYjc0NGFkOTA2IiwidGZwIjoiQjJDXzFBX3NpZ25pbiIsIm5vbmNlIjoiMDE5ODhmMWYtYWZhZS03MzU1LTllNmYtNWMyYzg3M2NjNzE4Iiwic2NwIjoidXNlcl9pbXBlcnNvbmF0aW9uIiwiYXpwIjoiNWQwNTRkNDEtM2YyYS00ODU2LTljZGMtOWFkOTFhNDNlMTUyIiwidmVyIjoiMS4wIiwiaWF0IjoxNzU0NzQ3ODc5fQ.ySSK9M-xlbuB9nD4ikU2UwOc4J650GO0h-7EfShYIAXgVLlDOCZpTjK87hbIfVOC-9RpuDdBy7bQjeqMyT6zP8iuSsON5n1qRG3OeWWnslnc5CkvEQOxJsPk6HFvJg0LiGLoie0BoSixkaYJQi57C7DHX7wfotpkHmtHbwznKE9BWwFa0C7HKuNpvqlRsIP6yi16vehBwq_VHHRIxcl5_tT1E66mCD-15vnQ3fGjeAwb3hDEzR3FRwmkieCBd-fVWKAH-kHsluChfvPGPLTkQa1RurgT4szZVzJ4ah3nXbyXnthAOU5dJ4nFJEY-bq0WA2aBnTp69BlWZ4w7KOhXVQ",
+        "environment": "dev",
+        "sessionId": "983dbaee-5dde-464c-a9c1-bd0b1f2d5880",
+        "timestamp": "2025-08-09T14:13:10.839Z"
+      }
+    ]
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "90f7e16e88b8af51a9fefb468989df8864c6fa45b8b0deeeccb82ce7f608fa65"
+  }
+}

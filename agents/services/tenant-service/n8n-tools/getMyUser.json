@@ -1,0 +1,43 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "toolDescription": "Gets information about the current logged-in user including their name, email, tenant information, roles, and status. Use this when users ask 'Who am I?', 'What's my user info?', 'Tell me about my account', or 'What permissions do I have?'",
+        "endpoint": "={{ $('hubTalk Input').first().json.graphqlEndpoint }}",
+        "query": "query getMyUser {\n  myUser {\n    id\n    identityId\n    email\n    name\n    status\n    isActive\n    isTechnicalUser\n    tenant {\n      id\n      name\n      shortname\n      status\n      address {\n        country\n        state\n        city\n        postalCode\n        street\n        street2\n      }\n      contact {\n        email\n        phoneNumber\n      }\n      helpLink\n      isBrowsable\n      tenantRoles {\n        id\n        name\n      }\n      companyCard {\n        id\n        logo\n        image\n        slogan\n        website\n        description\n        dunsNumber\n        tags {\n          id\n          tag\n        }\n      }\n    }\n    settings {\n      portal\n    }\n    userRoles {\n      userRole {\n        id\n        name\n      }\n    }\n  }\n}",
+        "variables": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Variables', ``, 'json') }}",
+        "operationName": "getMyUser",
+        "headerParametersUi": {
+          "parameter": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('hubTalk Input').first().json.token }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.graphqlTool",
+      "typeVersion": 1.1,
+      "position": [
+        384,
+        336
+      ],
+      "id": "getMyUser-tool-id",
+      "name": "getMyUser",
+      "alwaysOutputData": true,
+      "onError": "continueErrorOutput"
+    }
+  ],
+  "connections": {
+    "getMyUser": {
+      "ai_tool": [
+        []
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "90f7e16e88b8af51a9fefb468989df8864c6fa45b8b0deeeccb82ce7f608fa65"
+  }
+}

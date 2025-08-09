@@ -1,0 +1,583 @@
+directive @extends on OBJECT
+directive @external on FIELD_DEFINITION
+directive @key(fields: String) on OBJECT
+
+type Query @extends{
+    tenant(id: ID!): Tenant!
+    tenantsPaginated(options: TenantOptions): TenantQueryResult!
+
+    user(id: ID!): User!
+    myUser: User!
+    usersPaginated(options: UserOptions): UserQueryResult!
+
+    facility(id: ID!): Facility!
+    facilitiesPaginated: FacilityQueryResult!
+
+    serviceOrganisation(id: ID!): ServiceOrganisation!
+    serviceOrganisationsPaginated: ServiceOrganisationQueryResult!
+
+    customerInvitation(tenantId: ID!): CustomerInvitation
+
+    customer(id: ID, externalId: String):Customer
+    customersPaginated(options: CustomerOptions): CustomerQueryResult!
+
+    customerStateStatistics(where: CustomerFilter): [CustomerStateStatistic]!
+
+    platformAgreements: [PlatformAgreement!]!
+    tenantInvitations(options:TenantInvitationOptions): [TenantInvitation]!
+
+    checkInvitationByIDAndEmail(invitationId: ID!, email: String!): Boolean!
+    isUserOfTenantActive(identityId: ID!): Boolean!
+    findUserByIdentityId(identityId: ID!): User!
+}
+
+type TenantQueryResult {
+    data: [Tenant!]!
+}
+
+type FacilityQueryResult {
+    data: [Facility!]!
+}
+
+type ServiceOrganisationQueryResult {
+    data: [ServiceOrganisation!]!
+}
+input UpdateTenantInput {
+    name: String
+    address: UpdateTenantAddressInput
+    helpLink: String
+    phoneNumber: String
+    email: String
+    companyCard: UpdateCompanyCardInput
+    isBrowsable: Boolean
+}
+
+input UpdateCompanyCardInput {
+    deleteLogo: Boolean
+    deleteImage: Boolean
+    slogan: String
+    website: String
+    description: String
+    dunsNumber: String
+    tags: [String]
+}
+
+input InviteUserInput {
+    name: String
+    email: String!
+}
+
+input InviteAdminUserInput {
+    name: String
+    email: String!
+    tenantId: ID!
+}
+
+input CompanyInput {
+    name: String!
+    website: String
+    description: String
+    slogan: String
+    dunsNumber: String
+    isBrowsable: Boolean
+    tags: [String]
+}
+
+input CreateTenantAddressInput{
+    country: String!
+    state: String
+    city: String
+    postalCode: String
+    street: String
+    street2: String
+}
+
+input UpdateTenantAddressInput{
+    country: String
+    state: String
+    city: String
+    postalCode: String
+    street: String
+    street2: String
+}
+
+input CreateCustomerAddressInput{
+    country: String!
+    state: String
+    city: String
+    postalCode: String
+    street: String
+    street2: String
+}
+
+input UpdateCustomerAddressInput{
+    country: String
+    state: String
+    city: String
+    postalCode: String
+    street: String
+    street2: String
+}
+
+input UpdateTenantUserInput {
+    id: ID!
+    name: String!
+}
+
+input UpdateUserInput {
+    name: String!
+}
+
+input UpdateTenantUserIdentityInput {
+    id: ID!
+    identityId: String!
+}
+
+input UpdateUserIdentityInput {
+    identityId: String
+}
+
+input UpdateFacilityInput {
+    name: String
+    description: String
+}
+
+input CreateFacilityInput {
+    name: String!
+    description: String
+}
+
+input UpdateServiceOrganisationInput {
+    name: String!
+    description: String
+}
+
+input CreateServiceOrganisationInput {
+    name: String!
+    description: String
+}
+
+input TenantInvitationUserInput {
+    name: String!
+}
+
+input InviteTenantToPlatformInput {
+    platformRoles: [PlatformRole!]
+    tenantRoles: [ID!]
+
+    tenantId: ID
+    tenantName: String!
+    tenantShortname: String!
+    tenantAddress: CreateTenantAddressInput!
+
+    recipientName: String!
+    recipientEmail: String!
+}
+
+input TenantUserFilter {
+    isActive: Boolean
+}
+
+input UserFilter {
+    isActive: Boolean
+}
+
+input TenantFilter {
+    status: [TenantStatus]
+}
+
+input TenantOptions {
+    filter: TenantFilter
+}
+input TenantInvitationFilter {
+    status: [TenantInvitationStatus]
+}
+
+input TenantInvitationOptions {
+    filter: TenantInvitationFilter
+    pagination: PaginationInput
+}
+
+input CustomerOptions {
+    filter: CustomerFilter
+    pagination: PaginationInput
+    sortBy: [CustomerSorter!]
+}
+
+input UserOptions {
+    filter: UserFilter
+    pagination: PaginationInput
+}
+
+input UpdateCustomThemeInput {
+    properties: String,
+    deleteBrandLogo: Boolean,
+    deleteProductLogo: Boolean,
+    deleteFavicon: Boolean
+}
+input StringExpression {
+    equals: String
+    contains: String
+    starts: String
+    ends: String
+}
+
+input IDExpression {
+    is: ID
+}
+
+input IntegerExpression {
+    eq: Int
+    ne: Int
+    lt: Int
+    le: Int
+    gt: Int
+    ge: Int
+}
+
+enum SortDirection {
+    ASC
+    DESC
+}
+input PaginationInput {
+    page: Int!,
+    pageSize: Int!
+}
+
+type PageInfo {
+    totalElements: Int
+    totalPages: Int
+    currentPage: Int
+    fromElement: Int
+    untilElement: Int
+}
+scalar DateTime
+scalar Long @specifiedBy(url: "https://github.com/graphql-java/graphql-java-extended-scalars")
+scalar UUID @specifiedBy(url: "https://tools.ietf.org/html/rfc4122")
+type Mutation @extends {
+
+    inviteUser(options: InviteUserInput!): String!
+
+    createFacility(facility: CreateFacilityInput!): Facility!
+    updateFacility(id: ID!, facility: UpdateFacilityInput!): Facility!
+    deleteFacility(id: ID!): ID!
+
+    createServiceOrganisation(serviceOrganisation: CreateServiceOrganisationInput!): ServiceOrganisation!
+    updateServiceOrganisation(id: ID!, serviceOrganisation: UpdateServiceOrganisationInput!): ServiceOrganisation!
+    deleteServiceOrganisation(id: ID!): ID!
+
+    inviteCustomer(customerId: ID!, userName: String!, userEmail: String!): Customer!
+
+    requestCustomerLinkingToTenant(options: RequestCustomerLinkingToTenantInput!): Customer! @deprecated(reason: "will be replaced in the near future")
+    unlinkCustomerFromTenant(options: UnlinkCustomerFromTenantInput!): Customer! @deprecated(reason: "will be replaced in the near future")
+
+    inviteTenantToPlatform(options:InviteTenantToPlatformInput!):TenantInvitation
+
+    createCustomer(customer: CreateCustomerInput!):Customer
+    updateCustomer(id: ID!, customer: UpdateCustomerInput! ):Customer
+    updateCustomerByExternalId(externalId: ID!, customer: UpdateCustomerInput! ):Customer
+    deleteCustomer(id: ID!): ID
+
+}
+
+input AgreementInput {
+    agreeToPlatformSaas: Boolean!
+    agreeToDataProcessing: Boolean!
+    confirmSignatoryAuthority: Boolean!
+}
+
+type Tenant @key(fields: "id"){
+    id: ID!
+    name: String!
+    shortname: String
+    status: TenantStatus
+    address: Address
+    users: [TenantUser!]!
+    contact: ContactInformation
+    helpLink: String
+    isBrowsable: Boolean
+    linkedTenants(tenantLinkType: TenantLinkType = ALL, filter: TenantFilter): [Tenant]!
+    acceptedPlatformAgreements: [AcceptedPlatformAgreement]
+    onboardedOn: DateTime
+    companyCard: CompanyCard
+}
+
+enum TenantLinkType {
+    ALL #defaultValue
+    SERVICE_PROVIDER
+    OPERATOR
+    NONE
+}
+
+enum PlatformRole {
+    SERVICE_PROVIDER
+    OPERATOR
+    DEVICE_PROVISIONER
+}
+
+type CompanyCard {
+    id: ID!
+    logo: String
+    image: String
+    slogan: String
+    website: String
+    description: String
+    dunsNumber: String
+    tags: [CompanyTag]
+}
+
+type CompanyTag {
+    id: ID!
+    tag: String!
+}
+
+input CompanyFileUploadAllowedInput {
+    fileDomainType: CompanyDomainType!,
+    mimeType: String!,
+    fileSizeBytes: Long!
+}
+
+type CompanyFileUploadAllowedResult {
+    allowed: Boolean!
+    maxDimension: Long
+    resultMessage: String
+}
+
+enum CompanyDomainType {
+    COMPANY_IMAGE
+    COMPANY_LOGO
+}
+# ToDo: we'd like to merge the UserInvitation type and the UserInvitationUrl type
+# we have currently abstained from doing so as it imposes security risks due to the action RedeemUserInvitation not being secure
+type UserInvitation {
+    validationFlag: Boolean!
+    redeemFlag: Boolean!
+}
+type Customer @key(fields: "id") {
+    id: ID!
+    tenantId: ID!
+    name: String!
+    status: CustomerStatus!
+    linkedTenantId: ID @deprecated(reason: "Use linkedTenant instead")
+    linkedTenant: Tenant
+    externalId: String
+    websiteUrl: String
+    serviceOrganisation: ServiceOrganisation
+    address: Address
+}
+
+input UpdateCustomerInput {
+    name: String
+    externalId: String
+    websiteUrl: String
+    serviceOrganisation: ID
+    address: UpdateCustomerAddressInput
+}
+
+input CreateCustomerInput {
+    name: String!
+    #ToDo:  Should we remove this? LinkedTenant should only be updated via a business process following all business/domain rules
+    linkedTenantId: ID
+    externalId: String
+    websiteUrl: String
+    serviceOrganisation: ID!
+    address: CreateCustomerAddressInput!
+}
+
+input RequestCustomerLinkingToTenantInput {
+    customerId: ID!
+    tenantId: ID!
+}
+input UnlinkCustomerFromTenantInput {
+    customerId: ID!
+}
+
+input CustomerFilter{
+    id: IDExpression
+    name: StringExpression
+    status: CustomerStatusExpression
+    linkedTenantId: StringExpression
+    externalId: StringExpression
+    websiteUrl: StringExpression
+    address: AddressFilter
+
+    and: [CustomerFilter!]
+    or: [CustomerFilter!]
+    not: CustomerFilter
+}
+
+input AddressFilter {
+    country: StringExpression
+    postalCode: StringExpression
+    city: StringExpression
+    street: StringExpression
+    street2: StringExpression
+    state: StringExpression
+
+    and: [AddressFilter!]
+    or: [AddressFilter!]
+    not: AddressFilter
+}
+
+input CustomerStatusExpression {
+    is: CustomerStatus
+}
+input CustomerSorter{
+    name: SortDirection
+    status: SortDirection
+    linkedTenantId: SortDirection
+    externalId: SortDirection
+    websiteUrl: SortDirection
+}
+type CustomerQueryResult {
+    data: [Customer]!
+    pageInfo: PageInfo
+}
+
+type UserSettings {
+    portal: String
+}
+
+type TenantRole @key(fields: "id") @extends {
+    id: ID! @external
+}
+type ServiceOrganisation @key(fields: "id") {
+    id: ID!
+    tenant: Tenant!
+    name: String!
+    description: String
+}
+
+enum TenantStatus {
+    INCOMPLETE
+    ACTIVE
+    DEACTIVATED
+}
+
+type Facility @key(fields: "id"){
+    id: ID!
+    tenant: Tenant!
+    name: String!
+    description: String
+}
+
+
+
+type CustomerInvitation {
+    userEmail: String!
+    userName : String!
+    invitationUrl: String!
+    expirationDate: DateTime!
+}
+type Address {
+    country: String!
+    state: String
+    city: String
+    postalCode: String
+    street: String
+    street2: String
+}
+type CustomerStateStatistic {
+    status: CustomerStatus!
+    count: Int!
+    percentage: Int!
+}
+type ContactInformation {
+    email: String
+    phoneNumber: String
+}
+type PlatformAgreement {
+    id: ID!
+    type: PlatformAgreementType!
+    description: String!
+    url: String!
+    version: String
+}
+
+type AcceptedPlatformAgreement {
+    agreement: PlatformAgreement!
+    acceptedAt: DateTime!
+    acceptedBy: AgreementUser!
+}
+
+enum PlatformAgreementType {
+    DATA_PROCESSING_AGREEMENT
+    SAAS_AGREEMENT
+}
+
+type AgreementUser {
+    id: ID
+    name: String
+    email: String
+}
+type UserQueryResult {
+    data: [User]!
+    pageInfo: PageInfo
+}
+
+type TenantUser @key(fields: "id") {
+    id: ID!
+    name: String!
+    email: String
+    tenant: Tenant!
+    identityId: ID
+    status: UserStatus
+    userInvitation: UserInvitationUrl
+    isActive: Boolean! # @deprecated(reason: "Use status instead")
+    isTechnicalUser: Boolean!
+    settings: UserSettings
+}
+
+
+type User @key(fields: "id") {
+    id: ID!
+    name: String!
+    email: String
+    tenant: Tenant!
+    identityId: ID
+    status: UserStatus
+    isActive: Boolean
+    userInvitation: UserInvitationUrl
+    isTechnicalUser: Boolean!
+    settings: UserSettings
+}
+
+enum UserStatus {
+    INVITED
+    INVITATION_EXPIRED
+    ONBOARDED
+    ONBOARDING
+    DECLINED
+}
+
+# ToDo: we'd like to merge the UserInvitation type and the UserInvitationUrl type
+# we have currently abstained from doing so as it imposes security risks due to the action RedeemUserInvitation not being secure
+type UserInvitationUrl {
+    url: String!
+    expiresOn: DateTime!
+}
+
+type TenantInvitation {
+    id: ID!
+    email: String
+    invitedOn: DateTime!
+    expirationDate: DateTime!
+    createdTenant: Tenant!
+    status:TenantInvitationStatus !
+    tenantRoles: [TenantRole!]!
+}
+
+enum TenantInvitationStatus {
+    INVITED
+    ACCEPTED
+    EXPIRED
+}
+
+enum CustomerStatus {
+    NEW
+    INVITED
+    ONBOARDED
+    DEMO
+    CONVERTED
+}
+
