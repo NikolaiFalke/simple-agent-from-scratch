@@ -1,0 +1,56 @@
+serviceCasesPaginated(options: ServiceCaseOptions!): ServiceCaseQueryResult!
+
+input ServiceCaseOptions {
+view: ServiceCaseView!
+filter: ServiceCaseFilter
+}
+
+enum ServiceCaseView {
+OPERATOR
+SERVICE_PROVIDER
+}
+
+type ServiceCaseQueryResult {
+data: [ServiceCase!]!
+}
+
+type CustomerMachine {
+id: ID!
+serialNumber: String!
+machineModel: MachineModel
+displayName: String
+externalId: String
+avatar: String
+status: CustomerMachineStatus
+customer: Customer
+isSp1Migration: Boolean
+edgeDeviceSerialNumber: String
+}
+
+type ServiceCase {
+id: ID!
+displayId: String!
+state: ServiceCaseState
+title: String!
+description: String
+createdAt: DateTime!
+updatedAt: DateTime
+closedAt: DateTime
+"""The first time when the service case was assigned to a service provider user."""
+firstTimeAssignedAt: DateTime
+"""The first time when the service case state was changed to IN_PROGRESS."""
+firstTimeInProgressAt: DateTime
+creator: User
+assignee: User
+customerMachine: CustomerMachine
+priority: Int
+severity: Severity
+externalId: String
+customFields: [CustomFieldValue]
+closingReport: ClosingReport
+}
+type ClosingReport {
+id: ID!
+isSolved: Boolean!
+notes: String
+}

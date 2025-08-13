@@ -1,0 +1,41 @@
+scenario_id,user_request,expected_tools,expected_result,test_category,user_role_context
+DK001,"What can I do with my role?","[""getDomainKnowledge""]","Explains SERVICE_PROVIDER capabilities: customer management, service org control, user invitations","Role Capabilities",SERVICE_PROVIDER
+DK002,"What are my permissions?","[]","Uses embedded knowledge to list SERVICE_PROVIDER permissions without tool call","Role Permissions",SERVICE_PROVIDER
+DK003,"What can I do as an OPERATOR?","[""getDomainKnowledge""]","Details OPERATOR capabilities: facility management, operational customer access, service case execution","Role Capabilities",OPERATOR
+DK004,"What permissions do I have as DEVICE_PROVISIONER?","[""getDomainKnowledge""]","Explains DEVICE_PROVISIONER scope: device management, technical operations, limited access","Role Capabilities",DEVICE_PROVISIONER
+DK005,"Why can't I create customers?","[]","Explains customer creation requires SERVICE_PROVIDER role, suggests alternatives for current role","Permission Explanation",OPERATOR
+DK006,"What role do I need to create service organizations?","[]","States SERVICE_PROVIDER role required, explains why this permission level is needed","Permission Requirements",DEVICE_PROVISIONER
+DK007,"Can I invite users?","[]","Applies hybrid user logic, explains SERVICE_PROVIDER can invite any role, OPERATOR has limited scope","Permission Validation",SERVICE_PROVIDER+OPERATOR
+DK008,"Who can manage customers?","[""getDomainKnowledge""]","Details customer management permissions across roles with permission matrix","Permission Matrix",SERVICE_PROVIDER
+DK009,"How does the platform work?","[""getDomainKnowledge""]","Provides platform architecture overview: multi-tenant IoT service delivery model","Platform Education",OPERATOR
+DK010,"What is a service organization?","[""getDomainKnowledge""]","Explains service org concept: organizational units grouping services, customers, resources","Platform Concepts",DEVICE_PROVISIONER
+DK011,"What are the different tenant roles?","[""getDomainKnowledge""]","Lists and explains all three tenant roles with hierarchy and responsibilities","Role Education",SERVICE_PROVIDER
+DK012,"How do I collaborate with other roles?","[""getDomainKnowledge""]","Explains cross-role collaboration patterns and service case workflows","Collaboration Guidance",OPERATOR
+DK013,"What's the role hierarchy?","[]","Uses embedded knowledge: SERVICE_PROVIDER > OPERATOR > DEVICE_PROVISIONER","Role Hierarchy",SERVICE_PROVIDER
+DK014,"I have multiple roles, which one is used?","[]","Explains hybrid user default logic: always defaults to SERVICE_PROVIDER context","Hybrid User Logic",SERVICE_PROVIDER+OPERATOR
+DK015,"Why do I see SERVICE_PROVIDER data when I'm also an OPERATOR?","[]","Explains hybrid user default rule and why SERVICE_PROVIDER context provides broader access","Hybrid User Explanation",SERVICE_PROVIDER+OPERATOR+DEVICE_PROVISIONER
+DK016,"How do service cases work?","[""getDomainKnowledge""]","Details service case workflow across roles: creation, assignment, execution, closure","Business Process",SERVICE_PROVIDER
+DK017,"What can OPERATORS do with customers?","[""getDomainKnowledge""]","Explains OPERATOR customer access: operational context only, no business relationship management","Role-Specific Access",OPERATOR
+DK018,"Who handles device provisioning?","[""getDomainKnowledge""]","Details DEVICE_PROVISIONER responsibilities and technical scope","Role Responsibilities",SERVICE_PROVIDER
+DK019,"What's the business model?","[""getDomainKnowledge""]","Explains service delivery hierarchy: Service Provider → Service Organization → Customers → Facilities → Devices","Business Model",OPERATOR
+DK020,"How do invitations work?","[""getDomainKnowledge""]","Details user and customer invitation processes and role requirements","Invitation Process",SERVICE_PROVIDER
+DK021,"Can I access other tenants' data?","[""getDomainKnowledge""]","Explains tenant scoping, cross-tenant access only through service relationships","Data Access Rules",SERVICE_PROVIDER
+DK022,"What's my data scope?","[]","Applies role to explain data visibility: full strategic access for SERVICE_PROVIDER","Data Scope",SERVICE_PROVIDER
+DK023,"Why can't I see all customer information?","[]","Explains OPERATOR data scope: operational context only, not strategic business data","Data Limitations",OPERATOR
+DK024,"How do facilities relate to customers?","[""getDomainKnowledge""]","Explains facility management context and customer relationships","Platform Relationships",OPERATOR
+DK025,"What devices can I manage?","[""getDomainKnowledge""]","Details device management scope based on DEVICE_PROVISIONER role","Device Management",DEVICE_PROVISIONER
+DK026,"Who should I contact for customer issues?","[""getDomainKnowledge""]","Guides on role-appropriate escalation paths and collaboration","Escalation Guidance",OPERATOR
+DK027,"Can I create facilities?","[]","Validates facility creation permissions: SERVICE_PROVIDER and OPERATOR can create","Permission Check",OPERATOR
+DK028,"What's the difference between roles?","[""getDomainKnowledge""]","Compares all three roles with capabilities, limitations, and use cases","Role Comparison",SERVICE_PROVIDER
+DK029,"How do I switch between my roles?","[]","Explains hybrid user can specify role context, but defaults to SERVICE_PROVIDER","Role Switching",SERVICE_PROVIDER+OPERATOR
+DK030,"What business rules apply to me?","[""getDomainKnowledge""]","Lists relevant business rules based on user's effective role context","Business Rules",SERVICE_PROVIDER
+DK031,"Why do I need SERVICE_PROVIDER role for customer creation?","[""getDomainKnowledge""]","Explains business logic: customer creation is strategic business relationship management","Business Logic",OPERATOR
+DK032,"What's my daily workflow?","[""getDomainKnowledge""]","Describes typical OPERATOR daily operations: facility status, service cases, coordination","Workflow Guidance",OPERATOR
+DK033,"How does multi-tenant work?","[""getDomainKnowledge""]","Explains multi-tenant architecture and service delivery across organizations","Architecture Education",DEVICE_PROVISIONER
+DK034,"What are platform concepts I should know?","[""getDomainKnowledge""]","Overview of key platform concepts relevant to user's role","Platform Overview",SERVICE_PROVIDER
+DK035,"Help me understand my responsibilities","[""getDomainKnowledge""]","Role-specific responsibility breakdown with examples and workflows","Responsibility Guide",OPERATOR
+DK036,"Can DEVICE_PROVISIONERS invite customers?","[]","Uses embedded rules: No, customer invitations require SERVICE_PROVIDER role","Permission Validation",SERVICE_PROVIDER
+DK037,"What if I don't have the right permissions?","[""getDomainKnowledge""]","Explains permission escalation paths and role-appropriate alternatives","Permission Escalation",OPERATOR
+DK038,"How do I work with SERVICE_PROVIDERS?","[""getDomainKnowledge""]","Collaboration guidance for OPERATOR working with SERVICE_PROVIDER oversight","Collaboration Patterns",OPERATOR
+DK039,"What's the IoT integration about?","[""getDomainKnowledge""]","Explains IoT aspects of platform and how they relate to user's role","IoT Education",DEVICE_PROVISIONER
+DK040,"Show me everything about roles","[""getDomainKnowledge""]","Comprehensive role information including definitions, permissions, and workflows","Complete Role Info",SERVICE_PROVIDER

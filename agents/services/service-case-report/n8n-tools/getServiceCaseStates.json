@@ -1,0 +1,43 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "toolDescription": "Retrieves all available service case states and workflow information. Use when users ask 'what are the case states?', 'explain case workflow', 'what does state X mean?', or when analyzing case timelines and transitions. Returns state names, indices, and closed status for workflow understanding.",
+        "endpoint": "={{ $('hubTalk Input').first().json.graphqlEndpoint }}",
+        "query": "query getServiceCaseStates {\n  serviceCaseStates {\n    id\n    index\n    name\n    isClosed\n  }\n}",
+        "variables": "{}",
+        "operationName": "getServiceCaseStates",
+        "headerParametersUi": {
+          "parameter": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('hubTalk Input').first().json.token }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.graphqlTool",
+      "typeVersion": 1.1,
+      "position": [
+        384,
+        336
+      ],
+      "id": "getServiceCaseStates-tool-id",
+      "name": "getServiceCaseStates",
+      "alwaysOutputData": true,
+      "onError": "continueErrorOutput"
+    }
+  ],
+  "connections": {
+    "getServiceCaseStates": {
+      "ai_tool": [
+        []
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "90f7e16e88b8af51a9fefb468989df8864c6fa45b8b0deeeccb82ce7f608fa65"
+  }
+}

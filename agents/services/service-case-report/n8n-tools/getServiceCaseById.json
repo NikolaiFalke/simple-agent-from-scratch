@@ -1,0 +1,43 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "toolDescription": "Retrieves a service case by its internal ID (UUID format). Use for system references, follow-up queries, or when working with case IDs from other tools. Returns complete case details including machine snapshots, audit log, and resolution information. Automatically applies role-based access control.",
+        "endpoint": "={{ $('hubTalk Input').first().json.graphqlEndpoint }}",
+        "query": "query getServiceCaseById($id: ID!) {\n  serviceCase(id: $id) {\n    id\n    displayId\n    title\n    description\n    createdAt\n    updatedAt\n    closedAt\n    firstTimeAssignedAt\n    firstTimeInProgressAt\n    isShared\n    externalId\n    priority\n    severity\n    \n    state {\n      id\n      name\n      index\n      isClosed\n    }\n    \n    creator {\n      id\n      name\n      email\n    }\n    \n    scmCreator {\n      id\n      name\n    }\n    \n    assignee {\n      id\n      name\n      email\n    }\n    \n    scmAssignee {\n      id\n      name\n    }\n    \n    closingReport {\n      id\n      isSolved\n      notes\n    }\n    \n    serviceCaseMachineSnapshot {\n      id\n      serialNumber\n      modelName\n      technology\n      brand\n      edgeDevice {\n        id\n        iotDeviceId\n      }\n    }\n    \n    serviceCaseCustomerMachineSnapshot {\n      id\n      machineModelId\n      customer {\n        id\n        name\n      }\n      tenant {\n        id\n      }\n    }\n    \n    serviceCaseServiceOrganisationSnapshot {\n      id\n      serviceOrganisationId\n      name\n    }\n    \n    operatorTenant {\n      id\n    }\n    \n    serviceProviderTenant {\n      id\n    }\n    \n    auditLog {\n      changedByUser {\n        id\n        name\n      }\n      changedAt\n      fieldName\n      oldValue\n      newValue\n    }\n    \n    customFields {\n      definition {\n        id\n        key\n        displayName\n        type\n      }\n      value\n    }\n  }\n}",
+        "variables": "={{ { \"id\": $fromAI('id', '', 'string') } }}",
+        "operationName": "getServiceCaseById",
+        "headerParametersUi": {
+          "parameter": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('hubTalk Input').first().json.token }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.graphqlTool",
+      "typeVersion": 1.1,
+      "position": [
+        384,
+        336
+      ],
+      "id": "getServiceCaseById-tool-id",
+      "name": "getServiceCaseById",
+      "alwaysOutputData": true,
+      "onError": "continueErrorOutput"
+    }
+  ],
+  "connections": {
+    "getServiceCaseById": {
+      "ai_tool": [
+        []
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "90f7e16e88b8af51a9fefb468989df8864c6fa45b8b0deeeccb82ce7f608fa65"
+  }
+}

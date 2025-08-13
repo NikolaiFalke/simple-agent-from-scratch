@@ -1,0 +1,736 @@
+directive @extends on OBJECT
+directive @external on FIELD_DEFINITION
+directive @key(fields: String) on OBJECT
+
+type Query @extends{
+    assetsPaginated(options: AssetOptions): AssetQueryResult!
+    asset(assetId: ID!): Asset
+
+    proposedAssets: [ProposedAsset]!
+    proposedCustomerMachines: [ProposedCustomerMachine]!
+
+    machineModelsPaginated(options: MachineModelOptions): MachineModelQueryResult!
+    machineModel(machineModelId: ID, externalId: String, tenantLinkType: TenantLinkType = ALL): MachineModel
+
+    customerMachinesPaginated(options:CustomerMachineOptions): CustomerMachineQueryResult!
+
+    customerMachine(customerMachineId: ID, externalId: String): CustomerMachine
+
+    machines: [Machine!]!
+    machine(machineId: ID!): Machine
+
+    machineAvatarUploadAllowed(machineAvatarUploadAllowedInput: MachineAvatarUploadAllowedInput!): MachineAvatarUploadAllowedResult!
+
+    machineDocumentContextsPaginated(options: MachineDocumentContextOptions): MachineDocumentContextResult!
+    machineDocumentContext(machineDocumentId: ID!): MachineDocumentContext
+
+    licenses(licenseDateInput: LicenseDateInput!): [LicenseReport]!
+    myTenantLicenses(licenseDateInput: LicenseDateInput!): LicenseReport!
+
+    serviceContract(serviceContractId: ID!): ServiceContract
+    serviceContractsPaginated: ServiceContractQueryResult!
+
+    tags(tagKey: String): [Tag!]!
+    tagValue(tagValueId: ID!): TagValue
+
+}
+
+type TenantUser @key(fields: "id") @extends {
+    id: ID! @external
+}
+directive @shareable repeatable on FIELD_DEFINITION | OBJECT
+type EdgeDevice @key(fields: "id") @extends{
+    id: ID! @shareable
+    iotDeviceId: String @shareable
+    owner: Tenant @external
+    provisionedByTenant: Tenant @external
+    serviceProvider: Tenant
+    operator: Tenant
+    machine: Machine
+    connected: Boolean
+}
+
+type Facility @key(fields: "id") @extends {
+    id: ID! @external
+}
+type Tenant @key(fields: "id") @extends {
+    id: ID! @external
+}
+
+enum TenantLinkType {
+    ALL #defaultValue
+    SERVICE_PROVIDER
+    OPERATOR
+    NONE
+}
+type Customer @key(fields: "id") @extends {
+    id: ID! @external
+    machines: [CustomerMachine!]
+    machinesCount: Int
+    registeredMachinesCount: Int
+    licenses: Licenses
+}
+
+enum SortDirection {
+    ASC
+    DESC
+}
+input StringExpression {
+    equals: String
+    contains: String
+    startsWith: String
+    endsWith: String
+}
+
+input IDExpression {
+    is: ID
+}
+
+input BooleanExpression {
+    is: Boolean
+}
+
+input CustomerMachineStatusExpression {
+    is: CustomerMachineStatus
+}
+input PaginationInput {
+    page: Int!,
+    pageSize: Int!
+}
+
+type PageInfo {
+    totalElements: Int
+    totalPages: Int
+    currentPage: Int
+    fromElement: Int
+    untilElement: Int
+}
+scalar UUID @specifiedBy(url: "https://tools.ietf.org/html/rfc4122")
+scalar Long @specifiedBy(url: "https://github.com/graphql-java/graphql-java-extended-scalars")
+
+type MachineDocumentContext { #=> löschen links werden abgeräumt
+    machineDocument: MachineDocument!
+    isShared: Boolean!#machinemodel ja für asset nein default
+    isArchived: Boolean!#=> links bleiben bestehen, wird nicht mehr vererbt
+    """ ID of the referenced Asset or CustomerMachine or MachineModel set by document file domain type """
+    references: [MachineDocumentReference]!
+    """ number of references to the documents """
+    totalNumberOfReferences: Int! #=> master data manager kann nur global sachen machen, die anderen beschränken sich auf link
+}
+
+type MachineDocument @key(fields: "id") { #=> löschen links werden abgeräumt
+    id: ID!
+    documentUrl: String!
+    label: String
+    """ types of objects the document can be referenced by """
+    fileDomainType: FileDomainType!
+    documentType: MachineDocumentType!
+    language: String
+    category: String
+    createdAt: DateTime!
+    createdBy: TenantUser
+    owner: Tenant
+}
+
+
+union MachineDocumentReference = Asset | CustomerMachine | MachineModel
+
+input UpdateMachineDocumentInput {
+    label: String
+    documentUrl: String
+    language: String
+    category: String
+    isArchived: Boolean
+    isShared: Boolean
+    references: [UpdateMachineDocumentReferenceInput!]
+}
+
+enum MachineDocumentReferenceOperation{
+    ADD
+    REMOVE
+}
+
+input UpdateMachineDocumentReferenceInput{
+    """ ID of the referenced Asset or CustomerMachine or MachineModel set by document file domain type """
+    referencedId: ID!
+    operation: MachineDocumentReferenceOperation
+}
+
+input CreateMachineDocumentLinkInput{
+    documentUrl: String!
+    label: String
+    language: String
+    category: String
+    isShared: Boolean
+    fileDomainType: FileDomainType
+    referencedObjectId: ID!
+}
+
+
+
+
+
+
+enum MachineDocumentType {
+    DOCUMENT
+    IMAGE
+    VIDEO
+    LINK
+}
+
+
+enum FileDomainType {
+    ASSET
+    MACHINE_MODEL
+    CUSTOMER_MACHINE
+}
+
+
+type MachineModel @key(fields: "id") {
+    id: ID!
+    tenant: Tenant
+    modelName: String!
+    technology: String!
+    brand: String
+    avatar: String
+    isPublic: Boolean
+    externalId: String
+    machineDocuments: [MachineDocument!]!
+}
+
+
+type Proposal{
+    id:ID!
+    proposalRejection: ProposalRejection
+}
+
+
+type AssetProposal{
+    asset:Asset!
+}
+
+type ProposalRejection{
+    reason: String
+    user: TenantUser!
+}
+
+input AssetProposalRejectionInput{
+    reason: String
+}
+
+type CustomerMachine @key(fields: "id") {
+    id: ID!
+    tenant: Tenant
+    machineModel: MachineModel
+    externalId: String
+    avatar: String
+    warrantyBegin: String
+    warrantyEnd: String
+    customer: Customer
+    isSp1Migration: Boolean
+    edgeDeviceSerialNumber: String
+    serviceContractAssignments: [ServiceContractAssignment!]!
+    proposal:Proposal
+
+    machine: Machine
+
+    machineDocuments: [MachineDocument!]!
+
+}
+
+input CustomerMachineOptions {
+    filter: CustomerMachineFilter
+    pagination: PaginationInput
+    sortBy: [CustomerMachineSorter!]
+}
+
+input MachineDocumentContextOptions {
+    filter: MachineDocumentContextFilter
+    pagination: PaginationInput
+    sortBy: [MachineDocumentContextSorter!]
+}
+
+type MachineDocumentContextResult{
+    data: [MachineDocumentContext!]!
+    pageInfo: PageInfo
+}
+
+""" maximum depth level is 5 """
+input MachineDocumentContextFilter{
+    isShared: BooleanExpression
+    isArchived: BooleanExpression
+    machineDocument: MachineDocumentFilter
+
+    and: [MachineDocumentContextFilter!]
+    or: [MachineDocumentContextFilter!]
+    """ Not can only be used if there are no other filters defined on this level """
+    not: MachineDocumentContextFilter
+}
+
+input MachineDocumentFilter{
+    id: IDExpression
+    label: StringExpression
+
+    documentType: MachineDocumentTypeFilter
+    fileDomainType: FileDomainTypeFilter
+    language: StringExpression
+    category: StringExpression
+}
+
+input FileDomainTypeFilter{
+    is: FileDomainType
+}
+input DocumentLinkTypeFilter{
+    is: FileDomainType
+}
+input MachineDocumentTypeFilter{
+    is: MachineDocumentType
+}
+input MachineDocumentSorter{
+    id: SortDirection
+    label: SortDirection
+    documentType: SortDirection
+    language: SortDirection
+    category: SortDirection
+    createdAt: SortDirection
+
+}
+
+input MachineDocumentContextSorter{
+    isShared: SortDirection
+    isArchived: SortDirection
+    machineDocument: MachineDocumentSorter
+}
+
+input CustomerMachineSorter {
+    id: SortDirection
+    status: SortDirection
+    brand: SortDirection
+    technology: SortDirection
+    model: SortDirection
+    externalId: SortDirection
+    serialNumber: SortDirection
+    customerName: SortDirection
+}
+
+input CustomerMachineFilter{
+    externalId: StringExpression
+    customerId: IDExpression
+    customerName: StringExpression
+    status: CustomerMachineStatusExpression
+    serialNumber: StringExpression
+    machineModelName: StringExpression
+    brand: StringExpression
+    technology: StringExpression
+    id: StringExpression
+    serviceContracts: StringExpression
+}
+
+type Asset @key(fields: "id"){
+    id: ID!
+    tenant: Tenant
+    displayName: String
+    avatar: String
+    country: String
+    facility: Facility
+    isActive: Boolean
+    serviceContractAssignments: [ServiceContractAssignment!]!
+    machine: Machine
+    tags: [Tag]
+
+    machineDocuments: [MachineDocument!]!
+
+    serviceProviderTenant: Tenant
+    externalId: String
+}
+
+type Tag {
+    key: String!
+    value: TagValue!
+}
+
+type TagValue {
+    id: ID!
+    text: String!
+}
+
+type Machine @key(fields: "id") {
+    id: ID!
+    owner:Owner
+
+    technology: String
+    modelName: String
+    brand: String
+    avatar: String
+    serialNumber: String!
+
+    asset: Asset
+    customerMachine: CustomerMachine
+    edgeDevice: EdgeDevice
+    collaborationStatus: MachineCollaborationStatus
+
+}
+
+type Owner{
+    tenant: Tenant
+    ownerType: OwnerType
+    owner: MachineOwner
+}
+interface MachineType{
+    id: ID!
+    tenant: Tenant
+    displayName: String
+    avatar: String
+    machine: Machine
+}
+
+union MachineOwner = CustomerMachine | Asset
+
+enum OwnerType{
+    ASSET
+    CUSTOMER_MACHINE
+}
+
+type ProposedAsset @key(fields: "proposalId") {
+    proposalId: ID!
+    machine: Machine
+    proposedBy: Tenant
+    proposedFor: Tenant
+}
+
+type ProposedCustomerMachine @key(fields: "proposalId") {
+    proposalId: ID!
+    machine: Machine
+    proposedBy: Tenant
+    proposedFor: Tenant
+}
+
+
+
+
+
+enum CustomerMachineStatus {
+    NEW,
+    PROPOSED,
+    UNCONNECTED,
+    CONNECTED
+}
+
+input AcceptAssetProposalPayload {
+    proposalId: ID!,
+    displayName: String!,
+    facilityId: ID!
+}
+
+type LicenseReport {
+    tenant: Tenant!
+    licenses: Licenses!
+    customers: [Customer]!
+}
+
+type Licenses {
+    connectedLicenseCount: Int!
+    newConnectedLicensesThisMonth: Int!
+    unconnectedLicenseCount: Int!
+    newUnconnectedLicensesThisMonth: Int!
+}
+
+input LicenseDateInput {
+    year: Int!
+    month: Int!
+}
+
+input CustomerInput {
+    customerId: ID,
+    customerExternalId: String
+}
+
+type ServiceContract {
+    id: ID!
+    contractName: String!
+    shortDescription: String
+    escalateAfterMinutes: NonNegativeInt
+    isAssignable: Boolean!
+    followTheSun: Boolean!
+    serviceContractAssignments: [ServiceContractAssignment!]!
+}
+
+input CreateServiceContractInput {
+    contractName: String!
+    shortDescription: String
+    escalateAfterMinutes: NonNegativeInt
+    isAssignable: Boolean
+    followTheSun: Boolean!
+}
+
+input ChangeOwnerOfMachineInput{
+    newOwnerId: ID!
+}
+
+input UpdateServiceContractInput {
+    id: ID!
+    contractName: String!
+    shortDescription: String
+    escalateAfterMinutes: NonNegativeInt
+    isAssignable: Boolean
+    followTheSun: Boolean!
+}
+
+type ServiceContractAssignment {
+    id: ID!
+    serviceContract: ServiceContract!
+    customerMachine: CustomerMachine
+    startDate: DateTime!
+    endDate: DateTime!
+    createdBy: TenantUser
+    createdAt: DateTime!
+    updatedBy: TenantUser
+    updatedAt: DateTime
+}
+
+type AssetQueryResult {
+    data: [Asset!]!
+}
+
+input AssetFilter {
+    isActive: Boolean
+    externalId: StringExpression
+}
+
+input AssetOptions {
+    filter: AssetFilter
+}
+
+type CustomerMachineQueryResult {
+    data: [CustomerMachine!]!
+    pageInfo: PageInfo
+}
+
+input MachineModelOptions {
+    filter: MachineModelFilter
+}
+
+input MachineModelFilter {
+    tenantLinkType: TenantLinkType
+}
+
+type MachineModelQueryResult {
+    data: [MachineModel!]!
+}
+
+type ServiceContractQueryResult {
+    data: [ServiceContract!]!
+}
+
+input MachineModelInput {
+    machineModelId: ID,
+    machineModelExternalId: String
+}
+
+input CreateMachineModelInput {
+    modelName: String!,
+    technology: String!,
+    brand: String,
+    isPublic: Boolean,
+    externalId: String
+}
+
+input CreateCustomerMachineInput {
+    customer: CustomerInput!,
+    serialNumber: String!,
+    machineModel: MachineModelInput!,
+    warrantyBegin: String,
+    warrantyEnd: String,
+    externalId: String,
+    name: String,
+    avatar: String,
+    edgeDeviceSerialNumber: String,
+    isSp1Migration: Boolean
+}
+
+input UpdateCustomerMachineInput {
+    customer: CustomerInput,
+    serialNumber: String,
+    machineModel: MachineModelInput,
+    warrantyBegin: String,
+    warrantyEnd: String,
+    externalId: String,
+    name: String,
+    avatar: String
+    edgeDeviceSerialNumber: String,
+    isSp1Migration: Boolean
+}
+
+input UpdateMachineModelInput {
+    modelName: String,
+    technology: String,
+    brand: String,
+    isPublic: Boolean,
+    externalId: String,
+    deleteAvatar: Boolean
+}
+
+input CreateAssetInput{
+    serialNumber: String!,
+    facilityId: ID,
+    name: String,
+    country: String,
+    technology: String,
+    modelName: String,
+    brand: String,
+    tags: [TagInput!],
+    externalId: String
+}
+
+input AcceptAssetProposalInput {
+    displayName: String!
+    facilityId: ID
+    country: String
+    externalId: String
+}
+
+input UpdateAssetInput {
+    serialNumber: String,
+    facilityId: ID,
+    name: String,
+    country: String,
+    technology: String,
+    modelName: String,
+    brand: String,
+    tags: [TagInput!],
+    externalId: String,
+    deleteAvatar: Boolean
+}
+
+input TagInput {
+    valueId: ID,
+    key: String!
+}
+
+input AcceptCustomerMachineProposalInput {
+    customer: CustomerInput!
+    warrantyBegin: String,
+    warrantyEnd: String,
+    externalId: String,
+    name: String,
+    edgeDeviceSerialNumber: String,
+    isSp1Migration: Boolean
+}
+
+enum MachineCollaborationStatus {
+    INTERNAL, PROPOSED, SHARED,DEACTIVATED,REJECTED
+}
+
+input CreateTagValueInput {
+    tagKey: String!,
+    tagValue :String!
+}
+
+input UpdateTagValueInput {
+    tagValueId: ID!,
+    tagValue :String!
+}
+
+input AssignTagInput {
+    tagKeyId: ID,
+    tagValueId: ID,
+    assetId: ID
+}
+
+input MachineDocumentUploadAllowedInput {
+    referencedId: UUID!,
+    fileDomainType: FileDomainType!,
+    language: String,
+    mimeType: String!,
+    fileSizeBytes: Long!
+}
+
+type MachineDocumentUploadAllowedResult {
+    allowed: Boolean!
+    resultMessage: String
+    fileDomainType: FileDomainType
+}
+
+input MachineAvatarUploadAllowedInput {
+    targetId: UUID!,
+    fileDomainType: FileDomainType!,
+    mimeType: String!,
+    fileSizeBytes: Long!
+}
+
+type MachineAvatarUploadAllowedResult {
+    allowed: Boolean!
+    resultMessage: String
+}
+
+scalar DateTime
+
+scalar NonNegativeInt
+type Mutation @extends {
+    createAsset(asset:CreateAssetInput): Asset
+    updateAsset(assetId: ID!, asset:UpdateAssetInput): Asset
+    deleteAsset(assetId: ID!): Boolean
+    deactivateAsset(assetId: ID!): Asset
+    reactivateAsset(assetId: ID!): Asset
+    assignEdgeDeviceToAsset(assetId: ID!, edgeDeviceId: ID!): Asset
+    assignEdgeDeviceToCustomerMachine(customerMachineId: ID!, edgeDeviceId: ID!): CustomerMachine
+    assignAssetToFacility(assetId: ID!, facilityId: ID!): Asset
+    downgradeAsset(assetId: ID!): Asset
+
+    createMachineDocumentLink(
+        machineDocument: CreateMachineDocumentLinkInput!
+    ): MachineDocumentContext
+
+    updateMachineDocument(machineDocumentId: ID!, machineDocument: UpdateMachineDocumentInput!): MachineDocumentContext
+
+    deleteMachineDocument(machineDocumentId: ID!): Boolean
+
+    createMachineModel(machineModel: CreateMachineModelInput!): MachineModel
+    updateMachineModel(id: ID!, machineModel: UpdateMachineModelInput!): MachineModel
+    updateMachineModelByExternalId(externalId: ID!, machineModel: UpdateMachineModelInput!): MachineModel
+
+    deleteMachineModel(machineModelId: ID!): Boolean
+
+    createCustomerMachine(customerMachine: CreateCustomerMachineInput!): CustomerMachine
+    updateCustomerMachine(id: ID!, customerMachine: UpdateCustomerMachineInput!): CustomerMachine
+    updateCustomerMachineByExternalId(externalId: ID!, customerMachine: UpdateCustomerMachineInput!): CustomerMachine
+    deleteCustomerMachine(customerMachineId: ID!): Boolean
+    moveCustomerMachine(customerMachineId: ID!, customerId: ID!): CustomerMachine
+    assignMachineModelToCustomerMachine(customerMachineId: ID!, machineModelId: ID!): CustomerMachine
+    copyMachineModelToAssignedMachines(machineModelId: ID!): Int
+    downgradeCustomerMachine(id: ID!): CustomerMachine
+
+    moveEdgeDevice(sourceCustomerMachineId: ID!, targetCustomerMachineId: ID!): CustomerMachine
+
+    proposeCustomerMachine(customerMachineId: ID!): CustomerMachine
+    acceptAssetProposal(proposalId: ID!, input:AcceptAssetProposalInput!): Asset
+    declineAssetProposal(proposalId: ID!, input:AssetProposalRejectionInput): Boolean
+    revokeCustomerMachineProposal(customerMachineId: ID!): Boolean
+
+    proposeAsset(assetId: ID!, targetTenantId: ID!): Asset
+    acceptCustomerMachineProposal(proposalId: ID!, input:AcceptCustomerMachineProposalInput!): CustomerMachine
+
+    createServiceContract(serviceContract: CreateServiceContractInput!): ServiceContract
+    updateServiceContract(serviceContract: UpdateServiceContractInput!): ServiceContract
+    deleteServiceContract(id: ID!): ID!
+    assignServiceContract(
+        serviceContractId: ID!,
+        customerMachineId: ID!,
+        startDate: DateTime!,
+        endDate: DateTime!
+    ): ServiceContractAssignment
+    updateServiceContractAssignment(
+        id: ID!,
+        startDate: DateTime!,
+        endDate: DateTime!
+    ): ServiceContractAssignment
+    deleteServiceContractAssignment(id: ID!): ID!
+
+    changeOwnerOfMachineManually(machineId: ID!, newOwner:ChangeOwnerOfMachineInput!): Machine
+
+    createTagValue(createTagValueInput: CreateTagValueInput): TagValue!
+    updateTagValue(updateTagValueInput: UpdateTagValueInput): TagValue!
+    deleteTagValue(tagValueId: ID!): Boolean
+}
+
+

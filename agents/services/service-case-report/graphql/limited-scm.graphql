@@ -1,0 +1,404 @@
+directive @extends on OBJECT
+directive @external on FIELD_DEFINITION
+directive @key(fields: String) on OBJECT
+
+type Query @extends {
+    serviceCaseState(id: ID): ServiceCaseState
+    serviceCaseStates: [ServiceCaseState]
+    serviceCase(id: ID!): ServiceCase
+    serviceCaseByDisplayId(displayId: String!): ServiceCase
+    orphanedServiceCases(options: OrphanedServiceCaseOptions!): ServiceCaseQueryResult!
+    serviceCasesPaginated(options: ServiceCaseOptions!): ServiceCaseQueryResult!
+    followTheSunDispatcherTenantUsers: [TenantUser!]!
+    possibleServiceCaseAssignees(options: PossibleServiceCaseAssigneesOptions!): PossibleServiceCaseAssigneesResult!
+}
+
+type ServiceCaseQueryResult {
+    data: [ServiceCase!]!
+}
+
+type PossibleServiceCaseAssigneesResult {
+    data: [TenantUser!]!
+}
+type Asset @key(fields: "id") @extends {
+    id: ID! @external
+    serviceCases: [ServiceCase!]!
+    authorization: AssetAuthorization!
+}
+
+type CustomerMachine @key(fields: "id") @extends {
+    id: ID! @external
+    serviceCases: [ServiceCase!]!
+}
+
+type Machine @key(fields: "id") @extends {
+    id: ID! @external
+}
+
+type ServiceOrganisation @key(fields: "id") @extends {
+    id: ID! @external
+    followTheSun: FollowTheSun
+}
+
+type Tenant @key(fields: "id") @extends {
+    id: ID! @external
+    serviceCaseTenantSettings: ServiceCaseTenantSettings
+}
+
+type TenantUser @key(fields: "id") @extends {
+    id: ID! @external
+    serviceCaseNotificationAssignments: [ServiceCaseNotificationAssignment!]!
+}
+input NewServiceCaseDefaultInput {
+    title: String!
+    description: String
+    severity: Severity!
+    externalId: String
+    creatorContactEmail: String
+    creatorPhoneNumber: String
+    customFields: [CustomFieldValueInput]
+    isShared: Boolean!
+}
+
+input ServiceCaseTenantSettingsInput {
+    tenantId: UUID!
+    allowLinkedTenantsOnBehalfServiceCaseCreation: Boolean!
+}
+
+input NewServiceCaseOperatorInput {
+    assetId: UUID!
+}
+
+input NewServiceCaseServiceProviderInput {
+    customerMachineId: UUID!
+    priority: Int
+    assigneeId: UUID
+}
+
+input ServiceCaseOptions {
+    view: ServiceCaseView!
+    filter: ServiceCaseFilter
+}
+
+input OrphanedServiceCaseOptions {
+    filter: ServiceCaseFilter
+}
+
+input ServiceCaseFilter {
+    isClosed: Boolean
+    isShared: Boolean
+    description: String
+    displayId: String
+    title: String
+}
+
+input CustomFieldValueInput {
+    definitionId: ID!
+    value: String
+}
+
+input UpdateCustomFieldsConfigurationInput {
+    customFieldDefinitions: [UpdateCustomFieldDefinitionInput!]!
+}
+
+input UpdateCustomFieldDefinitionInput {
+    """  ID of the custom field definition, used to identify which field to update. To append, leave the ID field out of the input  """
+    id: ID
+    key: String!
+    displayName: String!
+    required: Boolean!
+    defaultValue: String
+    type: CustomFieldType!
+    """  Only valid for STRING type, expected format is REGEX  """
+    validation: String
+    """  Only valid for SELECT and MULTI_SELECT types  """
+    selectableValues: [String!]
+}
+
+input CustomFieldsConfigurationInput {
+    customFieldDefinitions: [CustomFieldDefinitionInput!]!
+}
+
+input CustomFieldDefinitionInput {
+    key: String!
+    displayName: String!
+    required: Boolean!
+    defaultValue: String
+    type: CustomFieldType!
+    """  Only valid for STRING type, expected format is REGEX  """
+    validation: String
+    """  Only valid for SELECT and MULTI_SELECT types  """
+    selectableValues: [String!]
+}
+
+input FollowTheSunInput {
+    serviceOrganisationId: UUID!
+    providesFollowTheSunSupport: Boolean!
+    zoneId: String!
+    schedule: [ServiceScheduleInput!]!
+    dispatcher: [UUID!]!
+    serviceOrganisationBlacklist: [UUID!]!
+}
+
+input ServiceScheduleInput {
+    dayOfWeek: Int!
+    startTime: LocalTime!
+    endTime: LocalTime!
+}
+
+input UpdateServiceCaseInput {
+    serviceCaseId: ID!
+    externalId: String
+    priority: Int
+    stateId: ID
+}
+
+input PossibleServiceCaseAssigneesOptions {
+    type: ServiceCaseView!
+}
+scalar DateTime @specifiedBy(url:"https://scalars.graphql.org/andimarek/date-time.html")
+scalar NonNegativeInt
+scalar LocalTime
+scalar UUID @specifiedBy(url: "https://tools.ietf.org/html/rfc4122")
+
+type ServiceCase @key(fields: "id") {
+    id: ID!
+    displayId: String!
+    state: ServiceCaseState
+    title: String!
+    description: String
+    createdAt: DateTime!
+    updatedAt: DateTime
+    closedAt: DateTime
+    firstTimeAssignedAt: DateTime
+    firstTimeInProgressAt: DateTime
+    creator: TenantUser
+    scmCreator: ServiceCaseTenantUser
+    creatorContactEmail: String
+    creatorPhoneNumber: String
+    assignee: TenantUser
+    scmAssignee: ServiceCaseTenantUser
+    watcher: [TenantUser]!
+    isWatchedByCurrentUser: Boolean
+
+    serviceCaseAssetSnapshot: ServiceCaseAssetSnapshot
+    serviceCaseCustomerMachineSnapshot: ServiceCaseCustomerMachineSnapshot
+    serviceCaseMachineSnapshot: ServiceCaseMachineSnapshot
+
+    priority: Int
+    severity: Severity
+    auditLog: [LogEntry]
+    externalId: String
+    customFields: [CustomFieldValue]
+    hasSharedChatRoom: Boolean!
+    sharedChatRoom: ChatRoom
+    hasInternalOperatorChatRoom: Boolean!
+    internalOperatorChatRoom: ChatRoom
+    hasInternalServiceProviderChatRoom: Boolean!
+    internalServiceProviderChatRoom: ChatRoom
+    closingReport: ClosingReport
+    scmServiceContractData: [ScmServiceContractData!]
+    serviceCaseServiceOrganisationSnapshot: ServiceCaseServiceOrganisationSnapshot
+    isShared: Boolean!
+    operatorTenant: Tenant
+    serviceProviderTenant: Tenant
+    serviceProviderTenantNameSnapshot: String
+}
+
+type ServiceCaseTenantUser @key(fields: "id")  {
+    id: UUID!
+    name: String!
+    serviceCaseTenantUser: ServiceCaseTenant!
+}
+
+type ServiceCaseTenant @key(fields: "id") {
+    id: UUID!
+}
+
+type ServiceCaseAssetSnapshot @key(fields: "id") {
+    id: UUID!
+    displayName: String
+    tenant: ServiceCaseTenant
+    facility: ServiceCaseFacilitySnapshot
+}
+
+type ServiceCaseFacilitySnapshot @key(fields: "id") {
+    id: UUID!
+    name: String
+}
+
+type ServiceCaseCustomerMachineSnapshot @key(fields: "id") {
+    id: UUID!
+    machineModelId: UUID
+    customer: ServiceCaseCustomerSnapshot
+    tenant: ServiceCaseTenant
+}
+
+type ServiceCaseCustomerSnapshot @key(fields: "id") {
+    id: UUID!
+    name: String
+}
+
+type ServiceCaseMachineSnapshot @key(fields: "id") {
+    id: UUID!
+    serialNumber: String!
+    modelName: String
+    technology: String
+    brand: String
+
+    edgeDevice: ServiceCaseEdgeDeviceSnapshot
+}
+
+type CustomFieldValue {
+    definition: CustomFieldDefinition!
+    value: String!
+}
+
+type CustomFieldDefinition {
+    id: UUID!
+    key: String!
+    displayName: String!
+    required: Boolean!
+    defaultValue: String
+    type: CustomFieldType!
+    validation: String
+    selectableValues: [String!]
+}
+
+type ServiceCaseTenantSettings {
+    allowLinkedTenantsOnBehalfServiceCaseCreation: Boolean!
+    customFieldsConfiguration: [CustomFieldDefinition!]
+}
+
+type ServiceCaseEdgeDeviceSnapshot @key(fields: "id") {
+    id: UUID!
+    iotDeviceId: String!
+}
+
+type ServiceCaseState @key(fields: "id") {
+    id: ID!
+    index: Int!
+    name: String!
+    isClosed: Boolean!
+}
+
+type LogEntry {
+    serviceCaseId: ID!
+    changedByUser: TenantUser
+    changedAt: DateTime!
+    fieldName: String!
+    oldValue: String
+    newValue: String
+}
+
+type ChatRoom @key(fields: "id") @extends {
+    id: ID! @external
+}
+
+type ClosingReport {
+    id: ID!
+    isSolved: Boolean!
+    notes: String
+}
+
+type ScmServiceContractData @key(fields: "id") {
+    id: ID!
+    serviceContractAssignmentId: ID!
+    startDate: DateTime!
+    endDate: DateTime!
+
+    serviceContractId: ID!
+    contractName: String!
+    shortDescription: String
+    escalateAfterMinutes: NonNegativeInt
+    followTheSun: Boolean!
+    isValid: Boolean!
+    isValidFollowTheSunContract: Boolean!
+}
+
+type ServiceCaseServiceOrganisationSnapshot @key(fields: "id") {
+    id: UUID!
+    serviceOrganisationId: UUID!
+    name: String!
+}
+
+type FollowTheSun {
+    providesFollowTheSunSupport: Boolean!
+    zoneId: String
+    isCurrentlyInSchedule: Boolean!
+    schedule: [ServiceSchedule!]!
+    dispatcher: [TenantUser]!
+    serviceOrganisationBlacklist: [ServiceOrganisation!]!
+}
+
+type ServiceSchedule {
+    startTime: LocalTime!
+    endTime: LocalTime!
+    dayOfWeek: Int!
+}
+
+
+
+type AssetAuthorization {
+    currentUserCanCreateInternalServiceCase: Boolean!
+    currentUserCanCreateSharedServiceCase: Boolean!
+}
+
+type ServiceCaseNotificationAssignment {
+    id: ID!
+    notificationType: ServiceCaseNotificationType!
+    user: TenantUser!
+    notificationEnabled: Boolean!
+}
+
+enum ServiceCaseNotificationType {
+    EMAIL_SERVICE_CASE_CREATED
+    EMAIL_NEW_ASSIGNEE
+    EMAIL_SERVICE_CASE_EXTERNAL_ID_UPDATED
+}
+
+enum Severity {
+    MACHINE_BREAKDOWN
+    PRODUCTION_IMPAIRED
+    NO_IMPAIRMENT
+}
+
+enum ServiceCaseView {
+    OPERATOR
+    SERVICE_PROVIDER
+    SERVICE_PROVIDER_ABAC
+    MAINTENANCE_ENGINEER
+}
+
+enum CustomFieldType {
+    NUMBER
+    BOOLEAN
+    STRING
+    FREE_TEXT
+    DATE
+    PASSWORD
+    SELECT
+    MULTI_SELECT
+}
+type Mutation @extends {
+    createOperatorServiceCase(serviceCaseDefaultData: NewServiceCaseDefaultInput!, serviceCaseOperatorData: NewServiceCaseOperatorInput!): ServiceCase
+    createServiceProviderServiceCase(serviceCaseDefaultData: NewServiceCaseDefaultInput!, serviceCaseServiceProviderData: NewServiceCaseServiceProviderInput!): ServiceCase
+    assignServiceCase(serviceCaseId: ID!, assignee: String!): ServiceCase
+    assignServiceCaseToMe(serviceCaseId: ID!): ServiceCase
+    unassignServiceCase(serviceCaseId: ID!): ServiceCase
+    updateServiceCase(serviceCase: UpdateServiceCaseInput!): ServiceCase
+    joinSharedChatRoom(serviceCaseId: UUID!): ServiceCase
+    joinInternalChatRoom(serviceCaseId: UUID!): ServiceCase
+    createInternalChatRoom(serviceCaseId: UUID!): ServiceCase
+    createClosingReport(serviceCaseId: ID!, stateId: ID!, isSolved: Boolean!, notes: String): ServiceCase
+    watchServiceCase(serviceCaseId: ID!): ServiceCase
+    unwatchServiceCase(serviceCaseId: ID!): ServiceCase
+    setServiceCaseNotification(notificationType: ServiceCaseNotificationType!, enabled: Boolean!): ServiceCaseNotificationAssignment
+    setFollowTheSunFields(followTheSunInput: FollowTheSunInput!): ServiceOrganisation
+    setServiceCaseTenantSettings(serviceCaseTenantSettingsInput: ServiceCaseTenantSettingsInput): ServiceCaseTenantSettings
+
+    createCustomFieldsConfiguration(configuration: CustomFieldsConfigurationInput!, tenantId: UUID): ServiceCaseTenantSettings
+    updateCustomFieldsConfiguration(configuration: UpdateCustomFieldsConfigurationInput!, tenantId: UUID): ServiceCaseTenantSettings
+    deleteCustomFieldDefinitions(definitionIds: [UUID!]!): ServiceCaseTenantSettings
+
+}

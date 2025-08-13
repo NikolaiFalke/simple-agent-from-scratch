@@ -1,0 +1,224 @@
+{
+  "operationName": "tableCustomerMachines",
+  "variables": {
+    "avatar": true,
+    "externalId": false,
+    "serialNumber": true,
+    "machineModelName": true,
+    "technology": true,
+    "brand": false,
+    "edgeDeviceConnectionStatus": false,
+    "serviceContracts": false,
+    "customerAddressCountry": false,
+    "options": {
+      "filter": {
+        "customerId": {
+          "is": "bc2413f5-2bc9-4c63-9358-0aabed8c555b"
+        }
+      },
+      "sortBy": [
+        {
+          "serialNumber": "ASC"
+        }
+      ],
+      "pagination": {
+        "page": 0,
+        "pageSize": 15
+      }
+    }
+  },
+  "query": "query tableCustomerMachines($options: CustomerMachineOptions, $avatar: Boolean!, $serialNumber: Boolean!, $externalId: Boolean!, $machineModelName: Boolean!, $technology: Boolean!, $brand: Boolean!, $customerAddressCountry: Boolean!, $edgeDeviceConnectionStatus: Boolean!, $serviceContracts: Boolean!) {\n  customerMachinesPaginated(options: $options) {\n    data {\n      ...MoveEdgeDeviceMachineValidationFields\n      id\n      avatar @include(if: $avatar)\n      externalId @include(if: $externalId)\n      serialNumber @include(if: $serialNumber)\n      status\n      proposal {\n        id\n        proposalRejection {\n          reason\n          __typename\n        }\n        __typename\n      }\n      customer {\n        id\n        name\n        linkedTenant {\n          id\n          __typename\n        }\n        status\n        address @include(if: $customerAddressCountry) {\n          country\n          __typename\n        }\n        __typename\n      }\n      machineModel {\n        id\n        avatar @include(if: $avatar)\n        brand @include(if: $brand)\n        externalId\n        modelName @include(if: $machineModelName)\n        technology @include(if: $technology)\n        __typename\n      }\n      machine {\n        id\n        serialNumber\n        brand @include(if: $brand)\n        technology @include(if: $technology)\n        owner {\n          tenant {\n            id\n            name\n            __typename\n          }\n          ownerType\n          __typename\n        }\n        __typename\n      }\n      edgeDevice {\n        id\n        iotDeviceId\n        status @include(if: $edgeDeviceConnectionStatus) {\n          connectionState\n          __typename\n        }\n        __typename\n      }\n      serviceContractAssignments {\n        id\n        startDate\n        endDate\n        serviceContract @include(if: $serviceContracts) {\n          id\n          contractName\n          __typename\n        }\n        __typename\n      }\n      __typename\n    }\n    pageInfo {\n      currentPage\n      totalPages\n      totalElements\n      __typename\n    }\n    __typename\n  }\n}\n\nfragment MoveEdgeDeviceMachineValidationFields on CustomerMachine {\n  id\n  status\n  edgeDevice {\n    id\n    connectedAsset {\n      id\n      tenant {\n        id\n        __typename\n      }\n      __typename\n    }\n    connectedMachine {\n      id\n      tenant {\n        id\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n  __typename\n}"
+}
+
+result:
+
+{
+"data": {
+"customerMachinesPaginated": {
+"data": [
+{
+"id": "3182516e-4785-41bb-83a7-afa6c4d14e61",
+"status": "NEW",
+"edgeDevice": null,
+"__typename": "CustomerMachine",
+"avatar": null,
+"serialNumber": "hawk123",
+"proposal": null,
+"customer": {
+"id": "bc2413f5-2bc9-4c63-9358-0aabed8c555b",
+"name": "_________________________resend",
+"linkedTenant": {
+"id": "10d120d3-79c7-49f4-865f-db111ec974da",
+"__typename": "Tenant"
+},
+"status": "INVITED",
+"__typename": "Customer"
+},
+"machineModel": {
+"id": "9716f51f-bc17-4988-9637-4d9257c172d5",
+"avatar": "https://stfileservicedev.blob.core.windows.net/avatar/MachineModel/avatar/9716f51fbc17498896374d9257c172d5_${size}.png?20230511152516",
+"externalId": "123",
+"modelName": "CM teset",
+"technology": "CM test",
+"__typename": "MachineModel"
+},
+"machine": {
+"id": "e1e6a6eb-d3b6-339b-8f94-900a36d4cac5",
+"serialNumber": "hawk123",
+"technology": null,
+"owner": {
+"tenant": {
+"id": "8026294d-e774-4c34-bd6a-23e0b0d36b9d",
+"name": "symmedia",
+"__typename": "Tenant"
+},
+"ownerType": "CUSTOMER_MACHINE",
+"__typename": "Owner"
+},
+"__typename": "Machine"
+},
+"serviceContractAssignments": []
+},
+{
+"id": "4b4549ed-1110-44fe-ae78-e1a45ea66e75",
+"status": "NEW",
+"edgeDevice": null,
+"__typename": "CustomerMachine",
+"avatar": null,
+"serialNumber": "mymachi",
+"proposal": null,
+"customer": {
+"id": "bc2413f5-2bc9-4c63-9358-0aabed8c555b",
+"name": "_________________________resend",
+"linkedTenant": {
+"id": "10d120d3-79c7-49f4-865f-db111ec974da",
+"__typename": "Tenant"
+},
+"status": "INVITED",
+"__typename": "Customer"
+},
+"machineModel": {
+"id": "80a53169-b0a3-42ec-a110-c8735b5e17d9",
+"avatar": "https://blob.url",
+"externalId": "^12445",
+"modelName": ":_BIG2??",
+"technology": "_BIG",
+"__typename": "MachineModel"
+},
+"machine": {
+"id": "52d810c8-70cc-3929-a150-30f7a778a1ad",
+"serialNumber": "mymachi",
+"technology": "_BIG",
+"owner": {
+"tenant": {
+"id": "8026294d-e774-4c34-bd6a-23e0b0d36b9d",
+"name": "symmedia",
+"__typename": "Tenant"
+},
+"ownerType": "CUSTOMER_MACHINE",
+"__typename": "Owner"
+},
+"__typename": "Machine"
+},
+"serviceContractAssignments": []
+},
+{
+"id": "f0372b16-2c4a-4693-8fa8-dea9e84c56dd",
+"status": "NEW",
+"edgeDevice": null,
+"__typename": "CustomerMachine",
+"avatar": null,
+"serialNumber": "newsn2243",
+"proposal": null,
+"customer": {
+"id": "bc2413f5-2bc9-4c63-9358-0aabed8c555b",
+"name": "_________________________resend",
+"linkedTenant": {
+"id": "10d120d3-79c7-49f4-865f-db111ec974da",
+"__typename": "Tenant"
+},
+"status": "INVITED",
+"__typename": "Customer"
+},
+"machineModel": {
+"id": "e936c44d-9a3b-4900-81d7-3a85818df665",
+"avatar": "https://stfileservicedev.blob.core.windows.net/avatar/MachineModel/avatar/e936c44d9a3b490081d73a85818df665_${size}.png?20250321143632",
+"externalId": "",
+"modelName": "__zz12",
+"technology": "SuperFlutsch",
+"__typename": "MachineModel"
+},
+"machine": {
+"id": "84c08a2d-e58e-3ba3-990e-7d43c659a67c",
+"serialNumber": "newsn2243",
+"technology": "symmedia",
+"owner": {
+"tenant": {
+"id": "8026294d-e774-4c34-bd6a-23e0b0d36b9d",
+"name": "symmedia",
+"__typename": "Tenant"
+},
+"ownerType": "CUSTOMER_MACHINE",
+"__typename": "Owner"
+},
+"__typename": "Machine"
+},
+"serviceContractAssignments": []
+},
+{
+"id": "722e8e8d-5828-4d1a-ae3e-2bb4eeba93d2",
+"status": "NEW",
+"edgeDevice": null,
+"__typename": "CustomerMachine",
+"avatar": null,
+"serialNumber": "tweradst123123",
+"proposal": null,
+"customer": {
+"id": "bc2413f5-2bc9-4c63-9358-0aabed8c555b",
+"name": "_________________________resend",
+"linkedTenant": {
+"id": "10d120d3-79c7-49f4-865f-db111ec974da",
+"__typename": "Tenant"
+},
+"status": "INVITED",
+"__typename": "Customer"
+},
+"machineModel": {
+"id": "80a53169-b0a3-42ec-a110-c8735b5e17d9",
+"avatar": "https://blob.url",
+"externalId": "^12445",
+"modelName": ":_BIG2??",
+"technology": "_BIG",
+"__typename": "MachineModel"
+},
+"machine": {
+"id": "c23d8a0f-6cb5-30e4-90bc-5bae82fa4b44",
+"serialNumber": "tweradst123123",
+"technology": "_BIG",
+"owner": {
+"tenant": {
+"id": "8026294d-e774-4c34-bd6a-23e0b0d36b9d",
+"name": "symmedia",
+"__typename": "Tenant"
+},
+"ownerType": "CUSTOMER_MACHINE",
+"__typename": "Owner"
+},
+"__typename": "Machine"
+},
+"serviceContractAssignments": []
+}
+],
+"pageInfo": {
+"currentPage": 0,
+"totalPages": 1,
+"totalElements": 4,
+"__typename": "PageInfo"
+},
+"__typename": "CustomerMachineQueryResult"
+}
+},
+"extensions": {
+"traceId": "9a56f7413f3780008d8c8af0a08c0644"
+}
+}

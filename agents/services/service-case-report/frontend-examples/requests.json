@@ -1,0 +1,376 @@
+{
+  "operationName": "serviceProviderServiceCaseByDisplayId",
+  "variables": {
+    "displayId": "GFMS1-6175"
+  },
+  "query": "query serviceProviderServiceCaseByDisplayId($displayId: String!) {\n  serviceCaseByDisplayId(displayId: $displayId) {\n    ...ServiceProviderServiceCaseDetail\n    __typename\n  }\n}\n\nfragment ServiceProviderServiceCaseDetail on ServiceCase {\n  id\n  displayId\n  isShared\n  ...ServiceProviderServiceCaseTenant\n  ...ServiceCaseHeader\n  ...ServiceProviderServiceCaseOverviewSection\n  ...ServiceCaseClosingReportSection\n  ...ServiceCaseInfoSection\n  ...ServiceCaseCustomerMachineSection\n  ...ServiceCaseCustomFieldsSection\n  ...ServiceCaseServiceContractSection\n  ...ServiceProviderRemoteAccessSection\n  ...ServiceProviderFileTransferSection\n  __typename\n}\n\nfragment ServiceProviderServiceCaseTenant on ServiceCase {\n  id\n  operatorTenant {\n    id\n    __typename\n  }\n  serviceProviderTenant {\n    id\n    __typename\n  }\n  serviceCaseCustomerMachineSnapshot {\n    id\n    tenant {\n      id\n      __typename\n    }\n    __typename\n  }\n  __typename\n}\n\nfragment ServiceCaseHeader on ServiceCase {\n  id\n  displayId\n  title\n  isShared\n  __typename\n}\n\nfragment ServiceProviderServiceCaseOverviewSection on ServiceCase {\n  id\n  title\n  createdAt\n  updatedAt\n  closedAt\n  isWatchedByCurrentUser\n  externalId\n  ...ServiceCaseState\n  ...ServiceCaseAssignee\n  ...ServiceCasePriority\n  ...WatchServiceCase\n  __typename\n}\n\nfragment ServiceCaseState on ServiceCase {\n  id\n  isShared\n  state {\n    id\n    name\n    index\n    isClosed\n    __typename\n  }\n  __typename\n}\n\nfragment ServiceCaseAssignee on ServiceCase {\n  id\n  isShared\n  scmAssignee {\n    id\n    name\n    __typename\n  }\n  state {\n    id\n    isClosed\n    __typename\n  }\n  __typename\n}\n\nfragment ServiceCasePriority on ServiceCase {\n  id\n  priority\n  state {\n    id\n    isClosed\n    __typename\n  }\n  __typename\n}\n\nfragment WatchServiceCase on ServiceCase {\n  id\n  displayId\n  isWatchedByCurrentUser\n  __typename\n}\n\nfragment ServiceCaseClosingReportSection on ServiceCase {\n  id\n  state {\n    id\n    isClosed\n    __typename\n  }\n  closingReport {\n    id\n    isSolved\n    notes\n    __typename\n  }\n  __typename\n}\n\nfragment ServiceCaseInfoSection on ServiceCase {\n  id\n  title\n  description\n  severity\n  customFields {\n    definition {\n      key\n      __typename\n    }\n    value\n    __typename\n  }\n  scmCreator {\n    id\n    name\n    __typename\n  }\n  serviceCaseCustomerMachineSnapshot {\n    id\n    customer {\n      id\n      name\n      __typename\n    }\n    __typename\n  }\n  creatorContactEmail\n  creatorPhoneNumber\n  __typename\n}\n\nfragment ServiceCaseCustomerMachineSection on ServiceCase {\n  id\n  serviceCaseMachineSnapshot {\n    id\n    serialNumber\n    modelName\n    technology\n    brand\n    edgeDevice {\n      id\n      iotDeviceId\n      __typename\n    }\n    __typename\n  }\n  serviceCaseCustomerMachineSnapshot {\n    id\n    machineModelId\n    customer {\n      id\n      name\n      __typename\n    }\n    __typename\n  }\n  serviceCaseServiceOrganisationSnapshot {\n    id\n    name\n    serviceOrganisationId\n    __typename\n  }\n  customerMachine {\n    id\n    avatar\n    __typename\n  }\n  __typename\n}\n\nfragment ServiceCaseCustomFieldsSection on ServiceCase {\n  id\n  customFields {\n    definition {\n      id\n      key\n      displayName\n      type\n      selectableValues\n      __typename\n    }\n    value\n    __typename\n  }\n  __typename\n}\n\nfragment ServiceCaseServiceContractSection on ServiceCase {\n  id\n  scmServiceContractData {\n    id\n    contractName\n    startDate\n    endDate\n    isValid\n    __typename\n  }\n  __typename\n}\n\nfragment ServiceProviderRemoteAccessSection on ServiceCase {\n  id\n  isShared\n  state {\n    id\n    isClosed\n    __typename\n  }\n  serviceCaseMachineSnapshot {\n    id\n    edgeDevice {\n      id\n      iotDeviceId\n      __typename\n    }\n    __typename\n  }\n  serviceCaseCustomerMachineSnapshot {\n    id\n    __typename\n  }\n  remoteAccess {\n    id\n    state\n    active\n    sessions {\n      id\n      state\n      startDate\n      endDate\n      connection {\n        deviceToMachineState\n        deviceToTepsiState\n        localToServiceState\n        localToTepsiState\n        __typename\n      }\n      configuration {\n        localIp\n        localPort\n        localProxyId\n        remoteIp\n        remotePort\n        __typename\n      }\n      deviceInfo {\n        info\n        __typename\n      }\n      technician {\n        id\n        name\n        email\n        __typename\n      }\n      webTunnelUrl\n      __typename\n    }\n    __typename\n  }\n  __typename\n}\n\nfragment ServiceProviderFileTransferSection on ServiceCase {\n  id\n  isShared\n  serviceCaseMachineSnapshot {\n    id\n    edgeDevice {\n      id\n      iotDeviceId\n      __typename\n    }\n    __typename\n  }\n  __typename\n}"
+}
+{
+  "data": {
+    "serviceCaseByDisplayId": {
+      "id": "c9b8a14b-3a67-4f13-8089-3a08f0ab4a4f",
+      "displayId": "GFMS1-6175",
+      "isShared": true,
+      "operatorTenant": {
+        "id": "a799bc25-f491-4617-8070-c55deadeaf69",
+        "__typename": "Tenant"
+      },
+      "serviceProviderTenant": {
+        "id": "9de78994-f531-4d0b-acb6-cb732925c5fe",
+        "__typename": "Tenant"
+      },
+      "serviceCaseCustomerMachineSnapshot": {
+        "id": "97612816-b84d-442e-a482-fd8db6294de8",
+        "tenant": {
+          "id": "9de78994-f531-4d0b-acb6-cb732925c5fe",
+          "__typename": "ServiceCaseTenant"
+        },
+        "__typename": "ServiceCaseCustomerMachineSnapshot",
+        "customer": {
+          "id": "51944015-1956-4ee5-92ad-4abb63b4cc64",
+          "name": "Kurt Betz GmbH",
+          "__typename": "ServiceCaseCustomerSnapshot"
+        },
+        "machineModelId": "08df7f4a-6e49-4b30-9244-2956d4179e7f"
+      },
+      "__typename": "ServiceCase",
+      "title": "ET Bild s. Anlage",
+      "createdAt": "2025-06-24T11:01:38.762+02:00",
+      "updatedAt": "2025-06-24T13:29:49.294+02:00",
+      "closedAt": "2025-06-24T13:29:49.294+02:00",
+      "isWatchedByCurrentUser": false,
+      "externalId": "000301407730",
+      "state": {
+        "id": "d2a72f60-77fe-ec43-ba8a-6db929b535c6",
+        "name": "Closed",
+        "index": 2,
+        "isClosed": true,
+        "__typename": "ServiceCaseState"
+      },
+      "scmAssignee": {
+        "id": "6fd621eb-d946-4159-86ad-8e8a8341c066",
+        "name": "Benaja Bilopotocki",
+        "__typename": "ServiceCaseTenantUser"
+      },
+      "priority": 4,
+      "closingReport": {
+        "id": "abb165e5-5a9e-4e0d-8bca-274fc633bb4e",
+        "isSolved": true,
+        "notes": "Kunde bekommt das gewünschte Angebot\n",
+        "__typename": "ClosingReport"
+      },
+      "description": "Angebot 20737605 soll ergänzt werden\nET 1x\nArtikelnr. an unsere EDM Sachbearbeitung\n\nTel.:  07131 / 90234-43\nEmail: patrick.wylezik@kurtbetzgmbh.de",
+      "severity": "NO_IMPAIRMENT",
+      "customFields": [],
+      "scmCreator": {
+        "id": "6ef7ef4a-aab6-49a7-b77b-762ea0aa9cf4",
+        "name": "Susanne Zobler",
+        "__typename": "ServiceCaseTenantUser"
+      },
+      "creatorContactEmail": "susanne.zobler@georgfischer.com",
+      "creatorPhoneNumber": "",
+      "serviceCaseMachineSnapshot": {
+        "id": "4a2310a1-e315-4d42-9f21-077aaacd5cf4",
+        "serialNumber": "591.200.006.0177",
+        "modelName": "CUT P 350 Pro",
+        "technology": "EDM",
+        "brand": "AgieCharmilles",
+        "edgeDevice": null,
+        "__typename": "ServiceCaseMachineSnapshot"
+      },
+      "serviceCaseServiceOrganisationSnapshot": {
+        "id": "c9b8a14b-3a67-4f13-8089-3a08f0ab4a4f",
+        "name": "M192 GFMS Germany",
+        "serviceOrganisationId": "4fbbeacb-c7fd-4e8d-895f-c3a7096df60a",
+        "__typename": "ServiceCaseServiceOrganisationSnapshot"
+      },
+      "customerMachine": {
+        "id": "97612816-b84d-442e-a482-fd8db6294de8",
+        "avatar": null,
+        "__typename": "CustomerMachine"
+      },
+      "scmServiceContractData": [],
+      "remoteAccess": null
+    }
+  },
+  "extensions": {
+    "traceId": "9b314c0222d14a36e55f159a1187f525"
+  }
+}
+
+
+
+{
+  "operationName": "myUserAssignee",
+  "variables": {},
+  "query": "query myUserAssignee {\n  myUser {\n    id\n    name\n    email\n    __typename\n  }\n}"
+}
+
+{
+  "data": {
+    "myUser": {
+      "id": "977739b6-c663-4e00-b0a0-f6af03e999f5",
+      "name": "Nikolai Falke",
+      "email": "nikolai.falke@georgfischer.com",
+      "__typename": "User"
+    }
+  },
+  "extensions": {
+    "traceId": "231ff194dad9291f2f62baa2e9801b30"
+  }
+}
+
+
+
+
+
+{
+  "operationName": "serviceCaseChatRoom",
+  "variables": {
+    "id": "c9b8a14b-3a67-4f13-8089-3a08f0ab4a4f"
+  },
+  "query": "query serviceCaseChatRoom($id: ID!) {\n  serviceCase(id: $id) {\n    id\n    hasSharedChatRoom\n    sharedChatRoom {\n      ...ChatRoomAttributes\n      __typename\n    }\n    hasInternalOperatorChatRoom\n    internalOperatorChatRoom {\n      ...ChatRoomAttributes\n      __typename\n    }\n    hasInternalServiceProviderChatRoom\n    internalServiceProviderChatRoom {\n      ...ChatRoomAttributes\n      __typename\n    }\n    __typename\n  }\n}\n\nfragment ChatRoomAttributes on ChatRoom {\n  id\n  externalChatRoomId\n  name\n  context\n  participants {\n    id\n    name\n    externalChatUserId\n    __typename\n  }\n  videoConference {\n    externalId\n    key\n    __typename\n  }\n  whiteboards {\n    externalId\n    key\n    createdAt\n    __typename\n  }\n  isArchived\n  files {\n    encoding\n    externalFileName\n    filename\n    mimetype\n    authenticatedUrl\n    __typename\n  }\n  __typename\n}"
+}
+
+{
+  "data": {
+    "serviceCase": {
+      "id": "c9b8a14b-3a67-4f13-8089-3a08f0ab4a4f",
+      "hasSharedChatRoom": true,
+      "sharedChatRoom": null,
+      "hasInternalOperatorChatRoom": false,
+      "internalOperatorChatRoom": null,
+      "hasInternalServiceProviderChatRoom": false,
+      "internalServiceProviderChatRoom": null,
+      "__typename": "ServiceCase"
+    }
+  },
+  "extensions": {
+    "valueCompletion": [
+      {
+        "message": "Cannot return null for non-nullable field ChatRoom.externalChatRoomId.",
+        "path": [
+          "serviceCase",
+          "sharedChatRoom",
+          "externalChatRoomId"
+        ],
+        "extensions": {
+          "code": "INVALID_GRAPHQL"
+        }
+      }
+    ],
+    "traceId": "b1bba5abf662c721bff7c398a8745cff"
+  }
+}
+
+{
+  "operationName": "joinSharedChatRoom",
+  "variables": {
+    "serviceCaseId": "c9b8a14b-3a67-4f13-8089-3a08f0ab4a4f"
+  },
+  "query": "mutation joinSharedChatRoom($serviceCaseId: UUID!) {\n  joinSharedChatRoom(serviceCaseId: $serviceCaseId) {\n    id\n    sharedChatRoom {\n      id\n      participants {\n        id\n        name\n        externalChatUserId\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}"
+}
+
+{
+  "data": {
+    "joinSharedChatRoom": {
+      "id": "c9b8a14b-3a67-4f13-8089-3a08f0ab4a4f",
+      "sharedChatRoom": {
+        "id": "03974e95-f77d-4d97-8ee7-9d324e0c4afb",
+        "participants": [
+          {
+            "id": "977739b6-c663-4e00-b0a0-f6af03e999f5",
+            "name": "Nikolai Falke",
+            "externalChatUserId": "@6ee22993-1a52-4e98-8aa4-c0ccc6338e71:secure-service-hub.com",
+            "__typename": "TenantUser"
+          },
+          {
+            "id": "f0d94baf-5550-49ed-a0a1-4810e5c6c26d",
+            "name": "Levan Khaimov",
+            "externalChatUserId": "@19c3554a-1d2b-4a31-b5ef-56bc2dbcec95:secure-service-hub.com",
+            "__typename": "TenantUser"
+          },
+          {
+            "id": "6ef7ef4a-aab6-49a7-b77b-762ea0aa9cf4",
+            "name": "Susanne Zobler",
+            "externalChatUserId": "@b1d5b753-a50d-4548-bf17-1d62c59b917d:secure-service-hub.com",
+            "__typename": "TenantUser"
+          },
+          {
+            "id": "9fe6247a-f0fd-4f03-a5ae-bd9ca744521a",
+            "name": "Benjamin Sendler",
+            "externalChatUserId": "@40ac32b3-c3a2-45b7-817c-7cf20c7e7454:secure-service-hub.com",
+            "__typename": "TenantUser"
+          }
+        ],
+        "__typename": "ChatRoom"
+      },
+      "__typename": "ServiceCase"
+    }
+  },
+  "extensions": {
+    "traceId": "217185c2111b0b31dd69a7ae392cfdb0"
+  }
+}
+
+{
+  "operationName": "serviceCaseChatRoom",
+  "variables": {
+    "id": "c9b8a14b-3a67-4f13-8089-3a08f0ab4a4f"
+  },
+  "query": "query serviceCaseChatRoom($id: ID!) {\n  serviceCase(id: $id) {\n    id\n    hasSharedChatRoom\n    sharedChatRoom {\n      ...ChatRoomAttributes\n      __typename\n    }\n    hasInternalOperatorChatRoom\n    internalOperatorChatRoom {\n      ...ChatRoomAttributes\n      __typename\n    }\n    hasInternalServiceProviderChatRoom\n    internalServiceProviderChatRoom {\n      ...ChatRoomAttributes\n      __typename\n    }\n    __typename\n  }\n}\n\nfragment ChatRoomAttributes on ChatRoom {\n  id\n  externalChatRoomId\n  name\n  context\n  participants {\n    id\n    name\n    externalChatUserId\n    __typename\n  }\n  videoConference {\n    externalId\n    key\n    __typename\n  }\n  whiteboards {\n    externalId\n    key\n    createdAt\n    __typename\n  }\n  isArchived\n  files {\n    encoding\n    externalFileName\n    filename\n    mimetype\n    authenticatedUrl\n    __typename\n  }\n  __typename\n}"
+}
+
+{
+  "data": {
+    "serviceCase": {
+      "id": "c9b8a14b-3a67-4f13-8089-3a08f0ab4a4f",
+      "hasSharedChatRoom": true,
+      "sharedChatRoom": {
+        "id": "03974e95-f77d-4d97-8ee7-9d324e0c4afb",
+        "externalChatRoomId": "!frgRMtcnbnnfbASzkD:secure-service-hub.com",
+        "name": "GFMS1-6175: ET Bild s. Anlage",
+        "context": "ServiceCase",
+        "participants": [
+          {
+            "id": "977739b6-c663-4e00-b0a0-f6af03e999f5",
+            "name": "Nikolai Falke",
+            "externalChatUserId": "@6ee22993-1a52-4e98-8aa4-c0ccc6338e71:secure-service-hub.com",
+            "__typename": "TenantUser"
+          },
+          {
+            "id": "f0d94baf-5550-49ed-a0a1-4810e5c6c26d",
+            "name": "Levan Khaimov",
+            "externalChatUserId": "@19c3554a-1d2b-4a31-b5ef-56bc2dbcec95:secure-service-hub.com",
+            "__typename": "TenantUser"
+          },
+          {
+            "id": "6ef7ef4a-aab6-49a7-b77b-762ea0aa9cf4",
+            "name": "Susanne Zobler",
+            "externalChatUserId": "@b1d5b753-a50d-4548-bf17-1d62c59b917d:secure-service-hub.com",
+            "__typename": "TenantUser"
+          },
+          {
+            "id": "9fe6247a-f0fd-4f03-a5ae-bd9ca744521a",
+            "name": "Benjamin Sendler",
+            "externalChatUserId": "@40ac32b3-c3a2-45b7-817c-7cf20c7e7454:secure-service-hub.com",
+            "__typename": "TenantUser"
+          }
+        ],
+        "videoConference": {
+          "externalId": "03974e95-f77d-4d97-8ee7-9d324e0c4afb",
+          "key": "R6RixGMSvM8UnrLyQK7MZV",
+          "__typename": "VideoConference"
+        },
+        "whiteboards": [],
+        "isArchived": true,
+        "files": [],
+        "__typename": "ChatRoom"
+      },
+      "hasInternalOperatorChatRoom": false,
+      "internalOperatorChatRoom": null,
+      "hasInternalServiceProviderChatRoom": false,
+      "internalServiceProviderChatRoom": null,
+      "__typename": "ServiceCase"
+    }
+  },
+  "extensions": {
+    "traceId": "5e835f8492822cd8ae621412b5b323db"
+  }
+}
+
+
+{
+  "operationName": "auditLog",
+  "variables": {
+    "id": "c9b8a14b-3a67-4f13-8089-3a08f0ab4a4f"
+  },
+  "query": "query auditLog($id: ID!) {\n  serviceCase(id: $id) {\n    id\n    auditLog {\n      ...DefaultLogEntryFragment\n      __typename\n    }\n    __typename\n  }\n}\n\nfragment DefaultLogEntryFragment on LogEntry {\n  changedByUser {\n    id\n    name\n    __typename\n  }\n  changedAt\n  fieldName\n  oldValue\n  newValue\n  __typename\n}"
+}
+
+
+{
+  "data": {
+    "serviceCase": {
+      "id": "c9b8a14b-3a67-4f13-8089-3a08f0ab4a4f",
+      "auditLog": [
+        {
+          "changedByUser": {
+            "id": "6fd621eb-d946-4159-86ad-8e8a8341c066",
+            "name": "Benaja Bilopotocki",
+            "__typename": "TenantUser"
+          },
+          "changedAt": "2025-06-24T13:29:49.296+02:00",
+          "fieldName": "Closing Report - notes",
+          "oldValue": "",
+          "newValue": "Kunde bekommt das gewünschte Angebot\n",
+          "__typename": "LogEntry"
+        },
+        {
+          "changedByUser": {
+            "id": "6fd621eb-d946-4159-86ad-8e8a8341c066",
+            "name": "Benaja Bilopotocki",
+            "__typename": "TenantUser"
+          },
+          "changedAt": "2025-06-24T13:29:49.296+02:00",
+          "fieldName": "Closing Report - is solved",
+          "oldValue": "",
+          "newValue": "true",
+          "__typename": "LogEntry"
+        },
+        {
+          "changedByUser": {
+            "id": "6fd621eb-d946-4159-86ad-8e8a8341c066",
+            "name": "Benaja Bilopotocki",
+            "__typename": "TenantUser"
+          },
+          "changedAt": "2025-06-24T13:29:49.296+02:00",
+          "fieldName": "State",
+          "oldValue": "5fe2addb-52fa-7543-afb9-4880ed899645",
+          "newValue": "d2a72f60-77fe-ec43-ba8a-6db929b535c6",
+          "__typename": "LogEntry"
+        },
+        {
+          "changedByUser": {
+            "id": "6fd621eb-d946-4159-86ad-8e8a8341c066",
+            "name": "Benaja Bilopotocki",
+            "__typename": "TenantUser"
+          },
+          "changedAt": "2025-06-24T13:09:17.858+02:00",
+          "fieldName": "Priority",
+          "oldValue": "3",
+          "newValue": "4",
+          "__typename": "LogEntry"
+        },
+        {
+          "changedByUser": {
+            "id": "6fd621eb-d946-4159-86ad-8e8a8341c066",
+            "name": "Benaja Bilopotocki",
+            "__typename": "TenantUser"
+          },
+          "changedAt": "2025-06-24T11:03:54.820+02:00",
+          "fieldName": "Assignee",
+          "oldValue": null,
+          "newValue": "6fd621eb-d946-4159-86ad-8e8a8341c066",
+          "__typename": "LogEntry"
+        },
+        {
+          "changedByUser": {
+            "id": "6fd621eb-d946-4159-86ad-8e8a8341c066",
+            "name": "Benaja Bilopotocki",
+            "__typename": "TenantUser"
+          },
+          "changedAt": "2025-06-24T11:03:52.547+02:00",
+          "fieldName": "State",
+          "oldValue": "22337411-094f-8548-98ad-32cf31a141c1",
+          "newValue": "5fe2addb-52fa-7543-afb9-4880ed899645",
+          "__typename": "LogEntry"
+        }
+      ],
+      "__typename": "ServiceCase"
+    }
+  },
+  "extensions": {
+    "traceId": "7b346509ed7501cd7d57ef16e4ac6047"
+  }
+}

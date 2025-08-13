@@ -1,0 +1,588 @@
+{
+  "operationName": "getMachineModel",
+  "variables": {
+    "id": "aec2e332-d33e-4e17-b415-eddd7390d8ea"
+  },
+  "query": "query getMachineModel($id: ID!) {\n  machineModel(machineModelId: $id) {\n    ...DefaultMachineModelFragment\n    __typename\n  }\n}\n\nfragment DefaultMachineModelFragment on MachineModel {\n  id\n  technology\n  modelName\n  brand\n  avatar\n  isPublic\n  externalId\n  tenant {\n    id\n    name\n    __typename\n  }\n  assignedApplicationVersions {\n    id\n    version\n    status\n    application {\n      id\n      name\n      status\n      __typename\n    }\n    __typename\n  }\n  tunnelConfigTemplates {\n    id\n    displayId\n    remoteIp\n    remotePort\n    tunnelType\n    localIp\n    localPort\n    __typename\n  }\n  __typename\n}"
+}
+
+{
+  "data": {
+    "machineModel": {
+      "id": "aec2e332-d33e-4e17-b415-eddd7390d8ea",
+      "technology": "EDM",
+      "modelName": "CUT P 1250",
+      "brand": "AgieCharmilles",
+      "avatar": "https://stfileserviceprod.blob.core.windows.net/avatar/MachineModel/avatar/aec2e332d33e4e17b415eddd7390d8ea_${size}.png?20230809152739",
+      "isPublic": true,
+      "externalId": "995001107",
+      "tenant": {
+        "id": "9de78994-f531-4d0b-acb6-cb732925c5fe",
+        "name": "GFMS",
+        "__typename": "Tenant"
+      },
+      "assignedApplicationVersions": [
+        {
+          "id": "00a3fb93-3c4e-4331-84c3-0d96a751074d",
+          "version": "0.1.0",
+          "status": "DISABLED",
+          "application": {
+            "id": "afb36624-783a-2540-813c-a5612bc549be",
+            "name": "File transfer",
+            "status": "PUBLISHED",
+            "__typename": "Application"
+          },
+          "__typename": "ApplicationVersion"
+        },
+        {
+          "id": "66697155-3726-42bc-a46a-d4f22642fce3",
+          "version": "1.1.1",
+          "status": "DISABLED",
+          "application": {
+            "id": "afb36624-783a-2540-813c-a5612bc549be",
+            "name": "File transfer",
+            "status": "PUBLISHED",
+            "__typename": "Application"
+          },
+          "__typename": "ApplicationVersion"
+        },
+        {
+          "id": "84af95c5-c8c2-481e-9b2b-5aeb7d80c923",
+          "version": "1.0.0",
+          "status": "PUBLISHED",
+          "application": {
+            "id": "a7a655a1-5322-9544-93a2-55bdba21795d",
+            "name": "Data Connect",
+            "status": "PUBLISHED",
+            "__typename": "Application"
+          },
+          "__typename": "ApplicationVersion"
+        },
+        {
+          "id": "1bb0ee63-6b3c-4dee-a519-50357998708b",
+          "version": "1.3.90",
+          "status": "DISABLED",
+          "application": {
+            "id": "7b0491c6-79a1-0c40-993c-f93ab714e1b0",
+            "name": "OPC UA Publisher",
+            "status": "PUBLISHED",
+            "__typename": "Application"
+          },
+          "__typename": "ApplicationVersion"
+        },
+        {
+          "id": "db9ed5a1-c4d4-4685-bea0-a555888a76d3",
+          "version": "1.0.3",
+          "status": "PUBLISHED",
+          "application": {
+            "id": "a7a655a1-5322-9544-93a2-55bdba21795d",
+            "name": "Data Connect",
+            "status": "PUBLISHED",
+            "__typename": "Application"
+          },
+          "__typename": "ApplicationVersion"
+        },
+        {
+          "id": "93db04c0-5f39-4383-a8b2-141b1046bd2a",
+          "version": "0.0.7",
+          "status": "DISABLED",
+          "application": {
+            "id": "afb36624-783a-2540-813c-a5612bc549be",
+            "name": "File transfer",
+            "status": "PUBLISHED",
+            "__typename": "Application"
+          },
+          "__typename": "ApplicationVersion"
+        },
+        {
+          "id": "b673d703-4d32-4a56-adc6-6e07eb4377c8",
+          "version": "1.6.2",
+          "status": "DISABLED",
+          "application": {
+            "id": "7b0491c6-79a1-0c40-993c-f93ab714e1b0",
+            "name": "OPC UA Publisher",
+            "status": "PUBLISHED",
+            "__typename": "Application"
+          },
+          "__typename": "ApplicationVersion"
+        },
+        {
+          "id": "44df6b24-0aba-4d16-bf06-b7f16bbb143f",
+          "version": "0.1.1",
+          "status": "DISABLED",
+          "application": {
+            "id": "afb36624-783a-2540-813c-a5612bc549be",
+            "name": "File transfer",
+            "status": "PUBLISHED",
+            "__typename": "Application"
+          },
+          "__typename": "ApplicationVersion"
+        },
+        {
+          "id": "37c7d8c8-aa1a-4f9f-8c97-12348db005be",
+          "version": "1.7.36",
+          "status": "PUBLISHED",
+          "application": {
+            "id": "7b0491c6-79a1-0c40-993c-f93ab714e1b0",
+            "name": "OPC UA Publisher",
+            "status": "PUBLISHED",
+            "__typename": "Application"
+          },
+          "__typename": "ApplicationVersion"
+        },
+        {
+          "id": "1fa31715-6567-4cbd-a01b-96d418e6d66f",
+          "version": "1.0.1",
+          "status": "PUBLISHED",
+          "application": {
+            "id": "a7a655a1-5322-9544-93a2-55bdba21795d",
+            "name": "Data Connect",
+            "status": "PUBLISHED",
+            "__typename": "Application"
+          },
+          "__typename": "ApplicationVersion"
+        },
+        {
+          "id": "33f64afd-2ec4-4fb7-91f5-41293c3cddc1",
+          "version": "1.8.15",
+          "status": "PUBLISHED",
+          "application": {
+            "id": "b07cc07d-6940-3b44-a5fa-76a534ffbae5",
+            "name": "MTConnect Publisher",
+            "status": "PUBLISHED",
+            "__typename": "Application"
+          },
+          "__typename": "ApplicationVersion"
+        },
+        {
+          "id": "981212ce-f05f-403e-aea3-d9c66a0b0122",
+          "version": "1.3.83",
+          "status": "DISABLED",
+          "application": {
+            "id": "7b0491c6-79a1-0c40-993c-f93ab714e1b0",
+            "name": "OPC UA Publisher",
+            "status": "PUBLISHED",
+            "__typename": "Application"
+          },
+          "__typename": "ApplicationVersion"
+        },
+        {
+          "id": "fc7db329-f841-4a71-b808-4579ea43a8ab",
+          "version": "1.1.18",
+          "status": "DISABLED",
+          "application": {
+            "id": "7b0491c6-79a1-0c40-993c-f93ab714e1b0",
+            "name": "OPC UA Publisher",
+            "status": "PUBLISHED",
+            "__typename": "Application"
+          },
+          "__typename": "ApplicationVersion"
+        },
+        {
+          "id": "c0889c88-4646-4511-9c81-f8a791d0d1e8",
+          "version": "1.1.2",
+          "status": "PUBLISHED",
+          "application": {
+            "id": "afb36624-783a-2540-813c-a5612bc549be",
+            "name": "File transfer",
+            "status": "PUBLISHED",
+            "__typename": "Application"
+          },
+          "__typename": "ApplicationVersion"
+        },
+        {
+          "id": "977196c6-cd9e-4f85-98a8-2b1d03bca3ed",
+          "version": "1.1.0",
+          "status": "DISABLED",
+          "application": {
+            "id": "afb36624-783a-2540-813c-a5612bc549be",
+            "name": "File transfer",
+            "status": "PUBLISHED",
+            "__typename": "Application"
+          },
+          "__typename": "ApplicationVersion"
+        }
+      ],
+      "tunnelConfigTemplates": [],
+      "__typename": "MachineModel"
+    }
+  },
+  "extensions": {
+    "traceId": "98c13cc42fa0a9e552f216c5e6c51330"
+  }
+}
+
+{
+  "operationName": "tableMachineModelMachineDocuments",
+  "variables": {
+    "machineModelId": "aec2e332-d33e-4e17-b415-eddd7390d8ea"
+  },
+  "query": "query tableMachineModelMachineDocuments($machineModelId: ID!) {\n  machineModel(machineModelId: $machineModelId) {\n    id\n    machineDocuments {\n      id\n      category\n      createdAt\n      createdBy {\n        id\n        name\n        __typename\n      }\n      fileDomainType\n      documentType\n      documentUrl\n      label\n      language\n      owner {\n        id\n        name\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}"
+}
+
+{
+  "data": {
+    "machineModel": {
+      "id": "aec2e332-d33e-4e17-b415-eddd7390d8ea",
+      "machineDocuments": [
+        {
+          "id": "210f15e1-6ede-4228-aebb-7230f118361a",
+          "category": "User Manual",
+          "createdAt": "2023-02-24T21:01:01.152+01:00",
+          "createdBy": {
+            "id": "14fc36a5-eaa5-493e-94e9-5a87fd48472f",
+            "name": "Benjamin Klassen",
+            "__typename": "TenantUser"
+          },
+          "fileDomainType": "MACHINE_MODEL",
+          "documentType": "DOCUMENT",
+          "documentUrl": "https://stfileserviceprod.blob.core.windows.net/chat-uploads/0b4fd9a0-30a2-49bb-8681-9cc7feb94cc4?sv=2025-05-05&st=2025-07-25T09%3A48%3A09Z&se=2025-07-25T10%3A23%3A09Z&sr=b&sp=r&sig=fc4sj%2Bkwuxsu9%2FCQsWYiQyHMIG63VcUW61yFiYurDtM%3D",
+          "label": "Manuel utilisateur",
+          "language": "fr",
+          "owner": {
+            "id": "9de78994-f531-4d0b-acb6-cb732925c5fe",
+            "name": "GFMS",
+            "__typename": "Tenant"
+          },
+          "__typename": "MachineDocument"
+        },
+        {
+          "id": "22c7450b-4bfb-49d2-af4e-d9654162f5a7",
+          "category": "User Manual",
+          "createdAt": "2023-02-24T21:01:00.988+01:00",
+          "createdBy": {
+            "id": "14fc36a5-eaa5-493e-94e9-5a87fd48472f",
+            "name": "Benjamin Klassen",
+            "__typename": "TenantUser"
+          },
+          "fileDomainType": "MACHINE_MODEL",
+          "documentType": "DOCUMENT",
+          "documentUrl": "https://stfileserviceprod.blob.core.windows.net/chat-uploads/2e74013f-7965-4b62-b7b0-4b6211c8d446?sv=2025-05-05&st=2025-07-25T09%3A48%3A09Z&se=2025-07-25T10%3A23%3A09Z&sr=b&sp=r&sig=%2Fz66o3p3ZgbRHLHhc1FWzGnVE%2BG87uNqnGEYbjzV4tk%3D",
+          "label": "用户手册",
+          "language": "zh",
+          "owner": {
+            "id": "9de78994-f531-4d0b-acb6-cb732925c5fe",
+            "name": "GFMS",
+            "__typename": "Tenant"
+          },
+          "__typename": "MachineDocument"
+        },
+        {
+          "id": "564ab6ec-8f35-447b-868e-bb422f11b1b5",
+          "category": "User Manual",
+          "createdAt": "2023-02-24T21:01:01.380+01:00",
+          "createdBy": {
+            "id": "14fc36a5-eaa5-493e-94e9-5a87fd48472f",
+            "name": "Benjamin Klassen",
+            "__typename": "TenantUser"
+          },
+          "fileDomainType": "MACHINE_MODEL",
+          "documentType": "DOCUMENT",
+          "documentUrl": "https://stfileserviceprod.blob.core.windows.net/chat-uploads/3ff9327d-be99-47a3-baae-2a7b296323e5?sv=2025-05-05&st=2025-07-25T09%3A48%3A09Z&se=2025-07-25T10%3A23%3A09Z&sr=b&sp=r&sig=bEmCVMcXWzb4BT%2BM%2F3J8eMfxsOEXKfCaDjblJWg6ssc%3D",
+          "label": "Manuale utente",
+          "language": "it",
+          "owner": {
+            "id": "9de78994-f531-4d0b-acb6-cb732925c5fe",
+            "name": "GFMS",
+            "__typename": "Tenant"
+          },
+          "__typename": "MachineDocument"
+        },
+        {
+          "id": "8fa6a6c4-506d-4147-869d-d82405806160",
+          "category": "User Manual",
+          "createdAt": "2023-02-24T21:01:01.474+01:00",
+          "createdBy": {
+            "id": "14fc36a5-eaa5-493e-94e9-5a87fd48472f",
+            "name": "Benjamin Klassen",
+            "__typename": "TenantUser"
+          },
+          "fileDomainType": "MACHINE_MODEL",
+          "documentType": "DOCUMENT",
+          "documentUrl": "https://stfileserviceprod.blob.core.windows.net/chat-uploads/af04b0bb-6d68-4c44-a881-98539c3a9fd6?sv=2025-05-05&st=2025-07-25T09%3A48%3A09Z&se=2025-07-25T10%3A23%3A09Z&sr=b&sp=r&sig=gCpMyEXdkBUioS8zO7vYlUok%2BH%2FCURWotp6PHaOhqaY%3D",
+          "label": "Manual del usuario",
+          "language": "es",
+          "owner": {
+            "id": "9de78994-f531-4d0b-acb6-cb732925c5fe",
+            "name": "GFMS",
+            "__typename": "Tenant"
+          },
+          "__typename": "MachineDocument"
+        },
+        {
+          "id": "961e3bac-02b3-4583-b27d-ca8e81e9d8b3",
+          "category": "User Manual",
+          "createdAt": "2023-02-24T21:01:01.270+01:00",
+          "createdBy": {
+            "id": "14fc36a5-eaa5-493e-94e9-5a87fd48472f",
+            "name": "Benjamin Klassen",
+            "__typename": "TenantUser"
+          },
+          "fileDomainType": "MACHINE_MODEL",
+          "documentType": "DOCUMENT",
+          "documentUrl": "https://stfileserviceprod.blob.core.windows.net/chat-uploads/eaf52246-9edb-4ebb-87de-41cb033c87d3?sv=2025-05-05&st=2025-07-25T09%3A48%3A09Z&se=2025-07-25T10%3A23%3A09Z&sr=b&sp=r&sig=wZeSRX8J%2BawVJ%2BuSstkOwX9W%2B8ZGAK354etSOPJFICA%3D",
+          "label": "Benutzerhandbuch",
+          "language": "de",
+          "owner": {
+            "id": "9de78994-f531-4d0b-acb6-cb732925c5fe",
+            "name": "GFMS",
+            "__typename": "Tenant"
+          },
+          "__typename": "MachineDocument"
+        },
+        {
+          "id": "b33bf19a-35e7-4e1b-83c3-6426d43158e9",
+          "category": "User Manual",
+          "createdAt": "2023-02-24T21:01:01.067+01:00",
+          "createdBy": {
+            "id": "14fc36a5-eaa5-493e-94e9-5a87fd48472f",
+            "name": "Benjamin Klassen",
+            "__typename": "TenantUser"
+          },
+          "fileDomainType": "MACHINE_MODEL",
+          "documentType": "DOCUMENT",
+          "documentUrl": "https://stfileserviceprod.blob.core.windows.net/chat-uploads/2e4906fa-d91b-440e-836b-2cc54237b7bc?sv=2025-05-05&st=2025-07-25T09%3A48%3A09Z&se=2025-07-25T10%3A23%3A09Z&sr=b&sp=r&sig=ruy2rdx5rrtosbsYcFEowrLP5OxtCKzlFeszVF%2Fwy1I%3D",
+          "label": "User Manual",
+          "language": "en",
+          "owner": {
+            "id": "9de78994-f531-4d0b-acb6-cb732925c5fe",
+            "name": "GFMS",
+            "__typename": "Tenant"
+          },
+          "__typename": "MachineDocument"
+        }
+      ],
+      "__typename": "MachineModel"
+    }
+  },
+  "extensions": {
+    "traceId": "cabd356473d94111e75ca5485891c6ed"
+  }
+}
+
+
+
+{
+  "operationName": "tableMachineDocumentContexts",
+  "variables": {
+    "options": {
+      "filter": {},
+      "sortBy": [
+        {
+          "machineDocument": {
+            "createdAt": "DESC"
+          }
+        }
+      ],
+      "pagination": {
+        "page": 0,
+        "pageSize": 5
+      }
+    }
+  },
+  "query": "query tableMachineDocumentContexts($options: MachineDocumentContextOptions) {\n  machineDocumentContextsPaginated(options: $options) {\n    data {\n      machineDocument {\n        id\n        category\n        createdAt\n        createdBy {\n          id\n          name\n          __typename\n        }\n        fileDomainType\n        documentType\n        documentUrl\n        label\n        language\n        owner {\n          id\n          name\n          __typename\n        }\n        __typename\n      }\n      references {\n        ... on Asset {\n          id\n          displayName\n          machine {\n            id\n            serialNumber\n            __typename\n          }\n          __typename\n        }\n        ... on CustomerMachine {\n          id\n          machine {\n            id\n            serialNumber\n            __typename\n          }\n          __typename\n        }\n        ... on MachineModel {\n          id\n          modelName\n          __typename\n        }\n        __typename\n      }\n      isArchived\n      isShared\n      totalNumberOfReferences\n      __typename\n    }\n    __typename\n  }\n}"
+}
+
+{
+  "data": {
+    "machineDocumentContextsPaginated": {
+      "data": [
+        {
+          "machineDocument": {
+            "id": "8323c907-076f-44f8-9183-939be7a0f989",
+            "category": "",
+            "createdAt": "2025-07-15T11:17:55.594+02:00",
+            "createdBy": {
+              "id": "553128f3-2b8c-4ba5-b77b-62bad5829217",
+              "name": "Jörg Schöneweiss",
+              "__typename": "TenantUser"
+            },
+            "fileDomainType": "CUSTOMER_MACHINE",
+            "documentType": "IMAGE",
+            "documentUrl": "https://stfileserviceprod.blob.core.windows.net/chat-uploads/e243b7e3-6fba-46e5-be5b-336bf1316d49?sv=2025-05-05&st=2025-07-25T09%3A51%3A27Z&se=2025-07-25T10%3A26%3A27Z&sr=b&sp=r&sig=mcSjCFeHV5tCsIhJ4mS5Ef8IkbbAHFJgRxpApuYMg4c%3D",
+            "label": "Bild",
+            "language": null,
+            "owner": {
+              "id": "9de78994-f531-4d0b-acb6-cb732925c5fe",
+              "name": "GFMS",
+              "__typename": "Tenant"
+            },
+            "__typename": "MachineDocument"
+          },
+          "references": [
+            {
+              "id": "4cf4e16b-732c-4610-800b-a42a22c14e04",
+              "machine": {
+                "id": "21406a8d-315d-4234-a779-30f9c3338c55",
+                "serialNumber": "591.200.005.0015",
+                "__typename": "Machine"
+              },
+              "__typename": "CustomerMachine"
+            }
+          ],
+          "isArchived": false,
+          "isShared": true,
+          "totalNumberOfReferences": 1,
+          "__typename": "MachineDocumentContext"
+        },
+        {
+          "machineDocument": {
+            "id": "5effc18e-e3db-4f16-9284-d50f42ffeac8",
+            "category": "",
+            "createdAt": "2025-07-07T10:20:04.617+02:00",
+            "createdBy": {
+              "id": "6970c1d8-9ccb-4204-8207-39c8037dbafe",
+              "name": "Stefaan Verkens",
+              "__typename": "TenantUser"
+            },
+            "fileDomainType": "CUSTOMER_MACHINE",
+            "documentType": "DOCUMENT",
+            "documentUrl": "https://stfileserviceprod.blob.core.windows.net/chat-uploads/489fd4e9-4456-47da-8438-70894a8d026c?sv=2025-05-05&st=2025-07-25T09%3A51%3A27Z&se=2025-07-25T10%3A26%3A27Z&sr=b&sp=r&sig=QL87nfcZ5GrSDDPeRWHlbX%2F1ASfOGLSkLSL21vgm7yQ%3D",
+            "label": "operating instructions Aerosol",
+            "language": "en",
+            "owner": {
+              "id": "9de78994-f531-4d0b-acb6-cb732925c5fe",
+              "name": "GFMS",
+              "__typename": "Tenant"
+            },
+            "__typename": "MachineDocument"
+          },
+          "references": [
+            {
+              "id": "8f4c4bd2-6ac1-45b3-b329-e5cfe0611771",
+              "machine": {
+                "id": "10ff01dd-979a-46b9-b29e-0b8b7dc7ef52",
+                "serialNumber": "107.112.10.0001",
+                "__typename": "Machine"
+              },
+              "__typename": "CustomerMachine"
+            }
+          ],
+          "isArchived": false,
+          "isShared": true,
+          "totalNumberOfReferences": 1,
+          "__typename": "MachineDocumentContext"
+        },
+        {
+          "machineDocument": {
+            "id": "55442d07-7348-49d3-abb1-e31fa458a667",
+            "category": "",
+            "createdAt": "2025-07-02T13:31:28.534+02:00",
+            "createdBy": {
+              "id": "9c0d7a08-410a-4fdd-a492-435b8c53e503",
+              "name": "Thomas Egli",
+              "__typename": "TenantUser"
+            },
+            "fileDomainType": "CUSTOMER_MACHINE",
+            "documentType": "DOCUMENT",
+            "documentUrl": "https://stfileserviceprod.blob.core.windows.net/chat-uploads/e94dd8d5-c23e-492c-970b-0124050fd882?sv=2025-05-05&st=2025-07-25T09%3A51%3A27Z&se=2025-07-25T10%3A26%3A27Z&sr=b&sp=r&sig=2o%2FtmONCmI9hN3Pr%2BbrFWcGMwAUOzx7oVM0d%2BBEzHvU%3D",
+            "label": "MILL P 800 U S Sinumerik ONE Benutzerhandbuch.pdf",
+            "language": null,
+            "owner": {
+              "id": "9de78994-f531-4d0b-acb6-cb732925c5fe",
+              "name": "GFMS",
+              "__typename": "Tenant"
+            },
+            "__typename": "MachineDocument"
+          },
+          "references": [
+            {
+              "id": "16cc7cf8-680f-42b8-a56b-301265df5883",
+              "machine": {
+                "id": "c11a946e-e027-41f1-95f9-2f54cd4ad999",
+                "serialNumber": "107.154.10.0002",
+                "__typename": "Machine"
+              },
+              "__typename": "CustomerMachine"
+            }
+          ],
+          "isArchived": false,
+          "isShared": true,
+          "totalNumberOfReferences": 1,
+          "__typename": "MachineDocumentContext"
+        },
+        {
+          "machineDocument": {
+            "id": "7d95bbaf-a46d-4b8f-9795-98ceebc713b2",
+            "category": "",
+            "createdAt": "2025-07-02T13:29:40.726+02:00",
+            "createdBy": {
+              "id": "9c0d7a08-410a-4fdd-a492-435b8c53e503",
+              "name": "Thomas Egli",
+              "__typename": "TenantUser"
+            },
+            "fileDomainType": "CUSTOMER_MACHINE",
+            "documentType": "DOCUMENT",
+            "documentUrl": "https://stfileserviceprod.blob.core.windows.net/chat-uploads/95574112-4182-44ea-94d1-1141337a601b?sv=2025-05-05&st=2025-07-25T09%3A51%3A27Z&se=2025-07-25T10%3A26%3A27Z&sr=b&sp=r&sig=HQ1uIPTlObcuggu85uZf8UM8Tjjdli0XCUcu4AeUaT0%3D",
+            "label": "MILL P 800 U S Sinumerik ONE Benutzerhandbuch.pdf",
+            "language": null,
+            "owner": {
+              "id": "9de78994-f531-4d0b-acb6-cb732925c5fe",
+              "name": "GFMS",
+              "__typename": "Tenant"
+            },
+            "__typename": "MachineDocument"
+          },
+          "references": [
+            {
+              "id": "87043d14-418f-4fa1-adbb-7d0a8112a962",
+              "machine": {
+                "id": "f9b2f6de-d13f-4356-b42b-6488d77c50f1",
+                "serialNumber": "107.154.10.0001",
+                "__typename": "Machine"
+              },
+              "__typename": "CustomerMachine"
+            }
+          ],
+          "isArchived": false,
+          "isShared": true,
+          "totalNumberOfReferences": 1,
+          "__typename": "MachineDocumentContext"
+        },
+        {
+          "machineDocument": {
+            "id": "6e6b632d-3596-4e7b-8cdc-680725b69112",
+            "category": "Repair",
+            "createdAt": "2025-03-04T14:44:56.319+01:00",
+            "createdBy": {
+              "id": "41c05097-8082-4970-a34f-f16db8dd3a71",
+              "name": "Andy Li",
+              "__typename": "TenantUser"
+            },
+            "fileDomainType": "ASSET",
+            "documentType": "DOCUMENT",
+            "documentUrl": "https://stfileserviceprod.blob.core.windows.net/chat-uploads/84cb7adc-802c-4879-8c4c-36f50a221d5d?sv=2025-05-05&st=2025-07-25T09%3A51%3A27Z&se=2025-07-25T10%3A26%3A27Z&sr=b&sp=r&sig=GIMcfSlzDdkCDSpxlWBuO8IPnnj%2BjXFjjc7Y4tGU7tU%3D",
+            "label": "cenower high version升级用",
+            "language": "en",
+            "owner": {
+              "id": "9de78994-f531-4d0b-acb6-cb732925c5fe",
+              "name": "GFMS",
+              "__typename": "Tenant"
+            },
+            "__typename": "MachineDocument"
+          },
+          "references": [
+            {
+              "id": "84b59796-097f-4d3e-8850-a5d2f5858892",
+              "displayName": "MILL P 800 U S 107.154.00.0035",
+              "machine": {
+                "id": "4f5da52a-ba5b-436e-beb0-3143ecfb8ef9",
+                "serialNumber": "107.154.00.0035",
+                "__typename": "Machine"
+              },
+              "__typename": "Asset"
+            }
+          ],
+          "isArchived": false,
+          "isShared": false,
+          "totalNumberOfReferences": 1,
+          "__typename": "MachineDocumentContext"
+        }
+      ],
+      "__typename": "MachineDocumentContextResult"
+    }
+  },
+  "extensions": {
+    "traceId": "0fdf3ad57c2de85dfe5e2b36739158ce"
+  }
+}

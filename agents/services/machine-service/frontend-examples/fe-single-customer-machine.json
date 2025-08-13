@@ -1,0 +1,71 @@
+{
+  "operationName": "getCustomerMachine",
+  "variables": {
+    "id": "4b4549ed-1110-44fe-ae78-e1a45ea66e75"
+  },
+  "query": "query getCustomerMachine($id: ID!) {\n  customerMachine(customerMachineId: $id) {\n    id\n    serialNumber\n    displayName\n    externalId\n    customer {\n      id\n      name\n      status\n      linkedTenant {\n        id\n        __typename\n      }\n      __typename\n    }\n    machine {\n      id\n      edgeDevice {\n        id\n        iotDeviceId\n        iotDeviceId\n        status {\n          connectionState\n          __typename\n        }\n        product\n        connected\n        __typename\n      }\n      technology\n      serialNumber\n      brand\n      modelName\n      collaborationStatus\n      owner {\n        ownerType\n        tenant {\n          id\n          name\n          __typename\n        }\n        __typename\n      }\n      __typename\n    }\n    warrantyBegin\n    warrantyEnd\n    isSp1Migration\n    edgeDeviceSerialNumber\n    edgeDevice {\n      id\n      iotDeviceId\n      status {\n        connectionState\n        __typename\n      }\n      __typename\n    }\n    avatar\n    status\n    machineModel {\n      id\n      avatar\n      brand\n      modelName\n      technology\n      isPublic\n      __typename\n    }\n    serviceContractAssignments {\n      id\n      startDate\n      endDate\n      serviceContract {\n        id\n        contractName\n        followTheSun\n        isAssignable\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}"
+}
+
+
+result:
+
+{
+"data": {
+"customerMachine": {
+"id": "4b4549ed-1110-44fe-ae78-e1a45ea66e75",
+"serialNumber": "mymachi",
+"displayName": "mymachi",
+"externalId": null,
+"customer": {
+"id": "bc2413f5-2bc9-4c63-9358-0aabed8c555b",
+"name": "_________________________resend",
+"status": "INVITED",
+"linkedTenant": {
+"id": "10d120d3-79c7-49f4-865f-db111ec974da",
+"__typename": "Tenant"
+},
+"__typename": "Customer"
+},
+"machine": {
+"id": "52d810c8-70cc-3929-a150-30f7a778a1ad",
+"edgeDevice": null,
+"technology": "_BIG",
+"serialNumber": "mymachi",
+"brand": "blaaablaaa",
+"modelName": ":_BIG2??",
+"collaborationStatus": "INTERNAL",
+"owner": {
+"ownerType": "CUSTOMER_MACHINE",
+"tenant": {
+"id": "8026294d-e774-4c34-bd6a-23e0b0d36b9d",
+"name": "symmedia",
+"__typename": "Tenant"
+},
+"__typename": "Owner"
+},
+"__typename": "Machine"
+},
+"warrantyBegin": null,
+"warrantyEnd": null,
+"isSp1Migration": false,
+"edgeDeviceSerialNumber": null,
+"edgeDevice": null,
+"avatar": null,
+"status": "NEW",
+"machineModel": {
+"id": "80a53169-b0a3-42ec-a110-c8735b5e17d9",
+"avatar": "https://blob.url",
+"brand": "blaaablaaa",
+"modelName": ":_BIG2??",
+"technology": "_BIG",
+"isPublic": true,
+"__typename": "MachineModel"
+},
+"serviceContractAssignments": [],
+"__typename": "CustomerMachine"
+}
+},
+"extensions": {
+"traceId": "e5d8611ebf755471ff853a3c8772ff3c"
+}
+}

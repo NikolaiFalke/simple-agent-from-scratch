@@ -1,0 +1,4 @@
+
+example to get a service case after login in the browser:
+
+https://portal-development.secure-service-hub.de/ticketing/service-provider/detail/Hawk7-0006

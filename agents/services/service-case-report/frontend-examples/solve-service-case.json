@@ -1,0 +1,179 @@
+{
+  "operationName": "serviceProviderServiceCaseByDisplayId",
+  "variables": {
+    "displayId": "Hawk8-0001"
+  },
+  "query": "query serviceProviderServiceCaseByDisplayId($displayId: String!) {\n  serviceCaseByDisplayId(displayId: $displayId) {\n    ...ServiceProviderServiceCaseDetail\n    __typename\n  }\n}\n\nfragment ServiceProviderServiceCaseDetail on ServiceCase {\n  id\n  displayId\n  isShared\n  ...ServiceProviderServiceCaseTenant\n  ...ServiceCaseHeader\n  ...ServiceProviderServiceCaseOverviewSection\n  ...ServiceCaseClosingReportSection\n  ...ServiceCaseInfoSection\n  ...ServiceCaseCustomerMachineSection\n  ...ServiceCaseCustomFieldsSection\n  ...ServiceCaseServiceContractSection\n  ...ServiceProviderRemoteAccessSection\n  ...ServiceProviderFileTransferSection\n  __typename\n}\n\nfragment ServiceProviderServiceCaseTenant on ServiceCase {\n  id\n  operatorTenant {\n    id\n    __typename\n  }\n  serviceProviderTenant {\n    id\n    __typename\n  }\n  serviceCaseCustomerMachineSnapshot {\n    id\n    tenant {\n      id\n      __typename\n    }\n    __typename\n  }\n  __typename\n}\n\nfragment ServiceCaseHeader on ServiceCase {\n  id\n  displayId\n  title\n  isShared\n  __typename\n}\n\nfragment ServiceProviderServiceCaseOverviewSection on ServiceCase {\n  id\n  title\n  createdAt\n  updatedAt\n  closedAt\n  isWatchedByCurrentUser\n  externalId\n  ...ServiceCaseState\n  ...ServiceCaseAssignee\n  ...ServiceCasePriority\n  ...WatchServiceCase\n  __typename\n}\n\nfragment ServiceCaseState on ServiceCase {\n  id\n  isShared\n  state {\n    id\n    name\n    index\n    isClosed\n    __typename\n  }\n  __typename\n}\n\nfragment ServiceCaseAssignee on ServiceCase {\n  id\n  isShared\n  scmAssignee {\n    id\n    name\n    __typename\n  }\n  state {\n    id\n    isClosed\n    __typename\n  }\n  __typename\n}\n\nfragment ServiceCasePriority on ServiceCase {\n  id\n  priority\n  state {\n    id\n    isClosed\n    __typename\n  }\n  __typename\n}\n\nfragment WatchServiceCase on ServiceCase {\n  id\n  displayId\n  isWatchedByCurrentUser\n  __typename\n}\n\nfragment ServiceCaseClosingReportSection on ServiceCase {\n  id\n  state {\n    id\n    isClosed\n    __typename\n  }\n  closingReport {\n    id\n    isSolved\n    notes\n    __typename\n  }\n  __typename\n}\n\nfragment ServiceCaseInfoSection on ServiceCase {\n  id\n  title\n  description\n  severity\n  customFields {\n    definition {\n      key\n      __typename\n    }\n    value\n    __typename\n  }\n  scmCreator {\n    id\n    name\n    __typename\n  }\n  serviceCaseCustomerMachineSnapshot {\n    id\n    customer {\n      id\n      name\n      __typename\n    }\n    __typename\n  }\n  creatorContactEmail\n  creatorPhoneNumber\n  __typename\n}\n\nfragment ServiceCaseCustomerMachineSection on ServiceCase {\n  id\n  serviceCaseMachineSnapshot {\n    id\n    serialNumber\n    modelName\n    technology\n    brand\n    edgeDevice {\n      id\n      iotDeviceId\n      __typename\n    }\n    __typename\n  }\n  serviceCaseCustomerMachineSnapshot {\n    id\n    machineModelId\n    customer {\n      id\n      name\n      __typename\n    }\n    __typename\n  }\n  serviceCaseServiceOrganisationSnapshot {\n    id\n    name\n    serviceOrganisationId\n    __typename\n  }\n  customerMachine {\n    id\n    avatar\n    __typename\n  }\n  __typename\n}\n\nfragment ServiceCaseCustomFieldsSection on ServiceCase {\n  id\n  customFields {\n    definition {\n      id\n      key\n      displayName\n      type\n      selectableValues\n      __typename\n    }\n    value\n    __typename\n  }\n  __typename\n}\n\nfragment ServiceCaseServiceContractSection on ServiceCase {\n  id\n  scmServiceContractData {\n    id\n    contractName\n    startDate\n    endDate\n    isValid\n    __typename\n  }\n  __typename\n}\n\nfragment ServiceProviderRemoteAccessSection on ServiceCase {\n  id\n  isShared\n  state {\n    id\n    isClosed\n    __typename\n  }\n  serviceCaseMachineSnapshot {\n    id\n    edgeDevice {\n      id\n      iotDeviceId\n      __typename\n    }\n    __typename\n  }\n  serviceCaseCustomerMachineSnapshot {\n    id\n    __typename\n  }\n  remoteAccess {\n    id\n    state\n    active\n    sessions {\n      id\n      state\n      startDate\n      endDate\n      connection {\n        deviceToMachineState\n        deviceToTepsiState\n        localToServiceState\n        localToTepsiState\n        __typename\n      }\n      configuration {\n        localIp\n        localPort\n        localProxyId\n        remoteIp\n        remotePort\n        __typename\n      }\n      deviceInfo {\n        info\n        __typename\n      }\n      technician {\n        id\n        name\n        email\n        __typename\n      }\n      webTunnelUrl\n      __typename\n    }\n    __typename\n  }\n  __typename\n}\n\nfragment ServiceProviderFileTransferSection on ServiceCase {\n  id\n  isShared\n  serviceCaseMachineSnapshot {\n    id\n    edgeDevice {\n      id\n      iotDeviceId\n      __typename\n    }\n    __typename\n  }\n  __typename\n}"
+}
+
+{
+  "data": {
+    "serviceCaseByDisplayId": {
+      "id": "51f76197-4da4-4fb8-bff4-48ef212066c6",
+      "displayId": "Hawk8-0001",
+      "isShared": true,
+      "operatorTenant": {
+        "id": "bdf4f13c-376b-4632-9998-ca6e587bf73c",
+        "__typename": "Tenant"
+      },
+      "serviceProviderTenant": {
+        "id": "0ff0ed7d-b048-42ce-9152-9aa4752e0676",
+        "__typename": "Tenant"
+      },
+      "serviceCaseCustomerMachineSnapshot": {
+        "id": "74420c19-c881-4441-a180-26952b5f1413",
+        "tenant": {
+          "id": "0ff0ed7d-b048-42ce-9152-9aa4752e0676",
+          "__typename": "ServiceCaseTenant"
+        },
+        "__typename": "ServiceCaseCustomerMachineSnapshot",
+        "customer": {
+          "id": "1a8c8104-4750-4e47-8225-243a6add99d2",
+          "name": "Hawk Operator",
+          "__typename": "ServiceCaseCustomerSnapshot"
+        },
+        "machineModelId": "fbd3d5d4-c8cd-4fe0-ad3b-e656c4207b01"
+      },
+      "__typename": "ServiceCase",
+      "title": "Machine zeigt rote Alarmleuchte",
+      "createdAt": "2024-02-16T10:00:40.656+01:00",
+      "updatedAt": "2025-05-22T09:43:20.964+02:00",
+      "closedAt": null,
+      "isWatchedByCurrentUser": false,
+      "externalId": null,
+      "state": {
+        "id": "4bac692c-e6b3-7647-8a2c-d7ad3db3ed7e",
+        "name": "New",
+        "index": 0,
+        "isClosed": false,
+        "__typename": "ServiceCaseState"
+      },
+      "scmAssignee": null,
+      "priority": 2,
+      "closingReport": null,
+      "description": "Machine zeigt plötzlich rote Lampe ",
+      "severity": "PRODUCTION_IMPAIRED",
+      "customFields": [],
+      "scmCreator": {
+        "id": "56495181-90ab-4b79-a0fc-274a27e99fde",
+        "name": "Niko Operator",
+        "__typename": "ServiceCaseTenantUser"
+      },
+      "creatorContactEmail": "operator@nikolaifalke.onmicrosoft.com",
+      "creatorPhoneNumber": "",
+      "serviceCaseMachineSnapshot": {
+        "id": "6aaca0a5-c764-3b24-9bbc-fdb2d67f60f8",
+        "serialNumber": "MercuryProdTest",
+        "modelName": "De'Longhi",
+        "technology": "Fully Automatic Coffee Machine",
+        "brand": "",
+        "edgeDevice": null,
+        "__typename": "ServiceCaseMachineSnapshot"
+      },
+      "serviceCaseServiceOrganisationSnapshot": {
+        "id": "51f76197-4da4-4fb8-bff4-48ef212066c6",
+        "name": "Porta Consumer",
+        "serviceOrganisationId": "3c59f078-e8a6-4665-8604-a6747ae9509b",
+        "__typename": "ServiceCaseServiceOrganisationSnapshot"
+      },
+      "customerMachine": {
+        "id": "74420c19-c881-4441-a180-26952b5f1413",
+        "avatar": null,
+        "__typename": "CustomerMachine"
+      },
+      "scmServiceContractData": [],
+      "remoteAccess": null
+    }
+  },
+  "extensions": {
+    "traceId": "0bde15933a411e3aa446ed0f30fd9b41"
+  }
+}
+
+{
+  "operationName": "getMachineModel",
+  "variables": {
+    "id": "fbd3d5d4-c8cd-4fe0-ad3b-e656c4207b01"
+  },
+  "query": "query getMachineModel($id: ID!) {\n  machineModel(machineModelId: $id) {\n    ...DefaultMachineModelFragment\n    __typename\n  }\n}\n\nfragment DefaultMachineModelFragment on MachineModel {\n  id\n  technology\n  modelName\n  brand\n  avatar\n  isPublic\n  externalId\n  tenant {\n    id\n    name\n    __typename\n  }\n  assignedApplicationVersions {\n    id\n    version\n    status\n    application {\n      id\n      name\n      status\n      __typename\n    }\n    __typename\n  }\n  tunnelConfigTemplates {\n    id\n    displayId\n    remoteIp\n    remotePort\n    tunnelType\n    localIp\n    localPort\n    __typename\n  }\n  __typename\n}"
+}
+
+{
+  "data": {
+    "machineModel": {
+      "id": "fbd3d5d4-c8cd-4fe0-ad3b-e656c4207b01",
+      "technology": "Fully Automatic Coffee Machine",
+      "modelName": "De'Longhi",
+      "brand": "",
+      "avatar": null,
+      "isPublic": true,
+      "externalId": "",
+      "tenant": {
+        "id": "0ff0ed7d-b048-42ce-9152-9aa4752e0676",
+        "name": "Hawk Asset Solutions",
+        "__typename": "Tenant"
+      },
+      "assignedApplicationVersions": [
+        {
+          "id": "82b4069f-dc50-4709-8837-3db127315f4e",
+          "version": "1.0.0",
+          "status": "PUBLISHED",
+          "application": {
+            "id": "bf0be19f-416a-4f5c-af0d-a0a6304d4926",
+            "name": "InterOp-O-Matic",
+            "status": "PUBLISHED",
+            "__typename": "Application"
+          },
+          "__typename": "ApplicationVersion"
+        }
+      ],
+      "tunnelConfigTemplates": [],
+      "__typename": "MachineModel"
+    }
+  },
+  "extensions": {
+    "traceId": "ee1a5c8071723cce7b86399bc6a3a0fb"
+  }
+}
+
+{
+  "operationName": "tableMachineModelMachineDocuments",
+  "variables": {
+    "machineModelId": "fbd3d5d4-c8cd-4fe0-ad3b-e656c4207b01"
+  },
+  "query": "query tableMachineModelMachineDocuments($machineModelId: ID!) {\n  machineModel(machineModelId: $machineModelId) {\n    id\n    machineDocuments {\n      id\n      category\n      createdAt\n      createdBy {\n        id\n        name\n        __typename\n      }\n      fileDomainType\n      documentType\n      documentUrl\n      label\n      language\n      owner {\n        id\n        name\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}"
+}
+{
+  "data": {
+    "machineModel": {
+      "id": "fbd3d5d4-c8cd-4fe0-ad3b-e656c4207b01",
+      "machineDocuments": [
+        {
+          "id": "5330684c-644d-4356-b6ec-7fa5bbf3307c",
+          "category": "",
+          "createdAt": "2024-02-08T17:18:32.540+01:00",
+          "createdBy": {
+            "id": "23d056b3-42ae-46ab-9395-16d1168c3ef6",
+            "name": "Niko Falke",
+            "__typename": "TenantUser"
+          },
+          "fileDomainType": "MACHINE_MODEL",
+          "documentType": "DOCUMENT",
+          "documentUrl": "https://stfileservicedev.blob.core.windows.net/chat-uploads/11b9166b-7a59-42d7-a66f-1ac83e309051?sv=2025-05-05&st=2025-07-29T11%3A34%3A45Z&se=2025-07-29T12%3A09%3A45Z&sr=b&sp=r&sig=6q0v2%2FYEP0jncQQxFQaDStN2fXGMe3U5dusjqIhsvO4%3D",
+          "label": "ECAM11112B-257593.pdf",
+          "language": null,
+          "owner": {
+            "id": "0ff0ed7d-b048-42ce-9152-9aa4752e0676",
+            "name": "Hawk Asset Solutions",
+            "__typename": "Tenant"
+          },
+          "__typename": "MachineDocument"
+        }
+      ],
+      "__typename": "MachineModel"
+    }
+  },
+  "extensions": {
+    "traceId": "ae2e7363f6c706741241ee3488f1dc71"
+  }
+}
