@@ -1,0 +1,36 @@
+scenario_id,user_request,expected_tools,expected_result,test_category,user_role_context
+TS001,"Who am I?","[""getMyUser""]","Returns user profile with name, email, tenant info, and roles","User Information",SERVICE_PROVIDER
+TS002,"What's my user info?","[""getMyUser""]","Displays complete user details including tenant name and role information","User Information",OPERATOR
+TS003,"Tell me about my account","[""getMyUser""]","Shows user account details with tenant context and permissions","User Information",DEVICE_PROVISIONER
+TS004,"Give me my profile","[""getMyUser""]","Provides user profile information formatted clearly","User Information",SERVICE_PROVIDER
+TS005,"Show me all customers","[""getAllCustomers""]","Lists all customers with ID, name, status, and service organization","Customer Queries",SERVICE_PROVIDER
+TS006,"How many customers do I have?","[""getAllCustomers""]","Counts customers and provides total number with breakdown by status","Customer Counting",SERVICE_PROVIDER
+TS007,"List customers with status NEW","[""getCustomersByStatus""]","Shows only customers with NEW status","Customer Filtering",SERVICE_PROVIDER
+TS008,"Show me inactive users","[""getUsersByStatus""]","Displays users with inactive status","User Management",SERVICE_PROVIDER
+TS009,"How many active users are there?","[""getUserCount""]","Provides count of active users in tenant","User Statistics",OPERATOR
+TS010,"What service organisations do I have?","[""getAllServiceOrganisations""]","Lists all service organizations with names and descriptions","Service Organizations",SERVICE_PROVIDER
+TS011,"Create a customer named ACME Corp","[""getAllServiceOrganisations"", ""createCustomer""]","Asks for service org selection, then country, creates customer successfully","Customer Creation",SERVICE_PROVIDER
+TS012,"Add a new customer called TechStart and assign to Service Europa","[""getAllServiceOrganisations"", ""createCustomer""]","Finds Service Europa ID, asks for country, creates customer with resolved service org","Customer Creation",SERVICE_PROVIDER
+TS013,"Create a service organisation called Support Team","[""createServiceOrganisation""]","Creates service organization with name Support Team","Service Org Creation",SERVICE_PROVIDER
+TS014,"Add a facility named Warehouse A","[""createFacility""]","Creates facility with name Warehouse A","Facility Creation",OPERATOR
+TS015,"Invite user john@example.com","[""inviteUser""]","Sends user invitation to john@example.com","User Invitations",SERVICE_PROVIDER
+TS016,"Send invitation to jane.doe@company.com with name Jane Doe","[""inviteUser""]","Invites Jane Doe with email and name parameters","User Invitations",SERVICE_PROVIDER
+TS017,"Invite customer ACME Corp for onboarding","[""getAllCustomers"", ""inviteCustomer""]","Finds ACME Corp ID, asks for user name and email, sends customer invitation","Customer Invitations",SERVICE_PROVIDER
+TS018,"Onboard customer TechStart with user admin@techstart.com","[""getAllCustomers"", ""inviteCustomer""]","Resolves TechStart ID, asks for user name, sends customer onboarding invitation","Customer Invitations",SERVICE_PROVIDER
+TS019,"What are company tags?","[""getCompanyTags""]","Shows current tenant's company card information including available tags","Company Information",SERVICE_PROVIDER
+TS020,"Show me our company information","[""getCompanyTags""]","Displays company card details with logo, description, and tags","Company Information",OPERATOR
+TS021,"Create customer ABC without service org specified","[""getAllServiceOrganisations"", ""createCustomer""]","Lists available service orgs, asks user to select one, then asks for country","Customer Creation",SERVICE_PROVIDER
+TS022,"How many customers have status ONBOARDED?","[""getCustomersByStatus""]","Filters customers by ONBOARDED status and provides count","Customer Filtering",SERVICE_PROVIDER
+TS023,"I want to create a customer","[""getAllServiceOrganisations"", ""createCustomer""]","Asks for customer name, shows service org options, asks for country, creates customer","Customer Creation",SERVICE_PROVIDER
+TS024,"Add customer XYZ to Service Deutschland in Germany","[""getAllServiceOrganisations"", ""createCustomer""]","Resolves Service Deutschland ID, creates customer XYZ with Germany address","Customer Creation",SERVICE_PROVIDER
+TS025,"Create facility Manufacturing Plant with description Main production facility","[""createFacility""]","Creates facility with name and description provided","Facility Creation",OPERATOR
+TS026,"What customers are in DEMO status?","[""getCustomersByStatus""]","Shows customers filtered by DEMO status","Customer Filtering",SERVICE_PROVIDER
+TS027,"Invite customer ABC with user manager@abc.com and name Site Manager","[""getAllCustomers"", ""inviteCustomer""]","Finds ABC customer ID, sends invitation with specified user details","Customer Invitations",SERVICE_PROVIDER
+TS028,"Show me user statistics","[""getUserCount""]","Provides comprehensive user statistics and counts","User Statistics",SERVICE_PROVIDER
+TS029,"List all users","[""getUsersByStatus""]","Shows all users regardless of status","User Management",SERVICE_PROVIDER
+TS030,"What tags does our company have?","[""getCompanyTags""]","Lists current company tags and their values","Company Information",SERVICE_PROVIDER
+TS031,"Create customer (OPERATOR role)","[""getMyUser""]","Explains that customer creation requires SERVICE_PROVIDER role, suggests alternatives","Permission Validation",OPERATOR
+TS032,"Add service organization (DEVICE_PROVISIONER role)","[""getMyUser""]","Explains insufficient permissions, suggests role-appropriate actions","Permission Validation",DEVICE_PROVISIONER
+TS033,"Show customers (OPERATOR role)","[""getAllCustomers""]","Shows customers with operational context appropriate to OPERATOR role","Role-Based Access",OPERATOR
+TS034,"Invite user test@example.com without name","[""inviteUser""]","Sends user invitation with email only, name parameter omitted","User Invitations",SERVICE_PROVIDER
+TS035,"Create customer DEF and ask about service orgs during process","[""getAllServiceOrganisations"", ""createCustomer""]","Shows service orgs when asked, handles conversational workflow","Customer Creation",SERVICE_PROVIDER
