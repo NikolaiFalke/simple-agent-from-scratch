@@ -2,10 +2,10 @@
   "nodes": [
     {
       "parameters": {
-        "toolDescription": "Lists service cases with role-based filtering and search capabilities. Use when users ask 'show me all cases', 'list open cases', 'find cases by customer', 'cases with high severity'. Automatically applies user's role (SERVICE_PROVIDER or OPERATOR) for appropriate data scoping. Supports filtering by status, display ID patterns, titles, and descriptions.",
+        "toolDescription": "Lists service cases with role-based filtering and search capabilities. Use when users ask 'show me all cases', 'list open cases', 'find cases by customer', 'cases with high severity', 'closed cases'. Automatically applies user's role (SERVICE_PROVIDER or OPERATOR) for appropriate data scoping. Parameters: view (string) role context, filter (object) for filtering by state, customer, etc.",
         "endpoint": "={{ $('hubTalk Input').first().json.graphqlEndpoint }}",
         "query": "query getServiceCasesPaginated($view: ServiceCaseView!, $filter: ServiceCaseFilter) {\n  serviceCasesPaginated(options: {\n    view: $view\n    filter: $filter\n  }) {\n    data {\n      id\n      displayId\n      title\n      description\n      createdAt\n      updatedAt\n      closedAt\n      priority\n      severity\n      externalId\n      \n      state {\n        id\n        name\n        index\n        isClosed\n      }\n      \n      scmAssignee {\n        id\n        name\n      }\n      \n      scmCreator {\n        id\n        name\n      }\n      \n      serviceCaseMachineSnapshot {\n        id\n        modelName\n        technology\n        brand\n        serialNumber\n      }\n      \n      serviceCaseCustomerMachineSnapshot {\n        id\n        customer {\n          id\n          name\n        }\n      }\n      \n      serviceCaseServiceOrganisationSnapshot {\n        id\n        name\n      }\n      \n      closingReport {\n        id\n        isSolved\n      }\n    }\n  }\n}",
-        "variables": "={{ { \"view\": $fromAI('view', 'SERVICE_PROVIDER', 'string'), \"filter\": $fromAI('filter', {}, 'object') } }}",
+        "variables": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Variables', ``, 'json') }}",
         "operationName": "getServiceCasesPaginated",
         "headerParametersUi": {
           "parameter": [
@@ -19,10 +19,10 @@
       "type": "n8n-nodes-base.graphqlTool",
       "typeVersion": 1.1,
       "position": [
-        384,
-        336
+        -944,
+        352
       ],
-      "id": "getServiceCasesPaginated-tool-id",
+      "id": "3c376cf3-b52e-4b66-ae5e-a92dd7d2682b",
       "name": "getServiceCasesPaginated",
       "alwaysOutputData": true,
       "onError": "continueErrorOutput"

@@ -50,6 +50,18 @@ Use this tool to list and filter service cases:
 - **Smart filtering**: Filter by status, display ID patterns, customer, severity
 - Use for pattern analysis and bulk operations
 
+Default if no info is given and all service cases are requested. This is the type of variables for all service cases that are open:
+{
+"view": "SERVICE_PROVIDER",
+"filter": {
+"isClosed": false
+}
+}
+
+vor view: OPERATOR, SERVICE_PROVIDER, SERVICE_PROVIDER_ABAC, MAINTENANCE_ENGINEER
+for isClosed: true,false
+
+
 ### getServiceCaseStates
 Use this tool to understand service case workflow:
 - "What are the available case states?" / "Explain the case lifecycle"
@@ -105,7 +117,7 @@ Use this tool to get machine technical context:
 - **Resource Analysis**: Service organization efficiency, technician performance
 - **Trend Analysis**: Seasonal patterns, technology-specific issues
 
-#### OPERATOR Reports  
+#### OPERATOR Reports
 - **Operational Focus**: Facility-specific cases, execution efficiency
 - **Performance Metrics**: Assignment speed, resolution effectiveness
 - **Resource Utilization**: Technician allocation, workload distribution
