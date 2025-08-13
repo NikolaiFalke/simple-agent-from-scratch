@@ -1,0 +1,43 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "toolDescription": "Retrieves facility-based assets with filtering and pagination. Use when users ask 'show facility assets', 'list active assets', 'assets by facility', 'asset status'. Returns asset information including facility assignments, machine details, service contracts, and operational status.",
+        "endpoint": "={{ $('hubTalk Input').first().json.graphqlEndpoint }}",
+        "query": "query assetsPaginated($options: AssetOptions) {\n  assetsPaginated(options: $options) {\n    data {\n      id\n      displayName\n      avatar\n      country\n      isActive\n      externalId\n      facility {\n        id\n        __typename\n      }\n      serviceProviderTenant {\n        id\n        name\n        __typename\n      }\n      machine {\n        id\n        serialNumber\n        technology\n        brand\n        modelName\n        owner {\n          tenant {\n            id\n            name\n            __typename\n          }\n          ownerType\n          __typename\n        }\n        edgeDevice {\n          id\n          iotDeviceId\n          status {\n            connectionState\n            __typename\n          }\n          __typename\n        }\n        __typename\n      }\n      tags {\n        key\n        value {\n          id\n          text\n          __typename\n        }\n        __typename\n      }\n      serviceContractAssignments {\n        id\n        startDate\n        endDate\n        serviceContract {\n          id\n          contractName\n          __typename\n        }\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}",
+        "variables": "={{ {\n  \"options\": $fromAI('options', {\n    \"filter\": {}\n  }, 'object')\n} }}",
+        "operationName": "assetsPaginated",
+        "headerParametersUi": {
+          "parameter": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('hubTalk Input').first().json.token }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.graphqlTool",
+      "typeVersion": 1.1,
+      "position": [
+        384,
+        336
+      ],
+      "id": "getAssetsPaginated-tool-id",
+      "name": "getAssetsPaginated",
+      "alwaysOutputData": true,
+      "onError": "continueErrorOutput"
+    }
+  ],
+  "connections": {
+    "getAssetsPaginated": {
+      "ai_tool": [
+        []
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "90f7e16e88b8af51a9fefb468989df8864c6fa45b8b0deeeccb82ce7f608fa65"
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "toolDescription": "Lists available service contracts with assignment information. Use when users ask 'show service contracts', 'available contracts', 'contract templates', 'SLA options'. Returns service contract information including names, descriptions, escalation policies, and assignment capabilities.",
+        "endpoint": "={{ $('hubTalk Input').first().json.graphqlEndpoint }}",
+        "query": "query serviceContractsPaginated {\n  serviceContractsPaginated {\n    data {\n      id\n      contractName\n      shortDescription\n      escalateAfterMinutes\n      isAssignable\n      followTheSun\n      serviceContractAssignments {\n        id\n        startDate\n        endDate\n        createdBy {\n          id\n          name\n          __typename\n        }\n        createdAt\n        updatedBy {\n          id\n          name\n          __typename\n        }\n        updatedAt\n        customerMachine {\n          id\n          serialNumber\n          customer {\n            id\n            name\n            __typename\n          }\n          machineModel {\n            id\n            modelName\n            brand\n            technology\n            __typename\n          }\n          __typename\n        }\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}",
+        "variables": "={}",
+        "operationName": "serviceContractsPaginated",
+        "headerParametersUi": {
+          "parameter": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('hubTalk Input').first().json.token }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.graphqlTool",
+      "typeVersion": 1.1,
+      "position": [
+        384,
+        336
+      ],
+      "id": "getServiceContracts-tool-id",
+      "name": "getServiceContracts",
+      "alwaysOutputData": true,
+      "onError": "continueErrorOutput"
+    }
+  ],
+  "connections": {
+    "getServiceContracts": {
+      "ai_tool": [
+        []
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "90f7e16e88b8af51a9fefb468989df8864c6fa45b8b0deeeccb82ce7f608fa65"
+  }
+}

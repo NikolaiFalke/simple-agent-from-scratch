@@ -1,0 +1,43 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "toolDescription": "Lists available machine models with filtering options. Use when users ask 'show machine models', 'available machine types', 'models by technology', 'public machine models'. Returns machine model templates with technical specifications, applications, and tenant information. Supports tenant filtering and public/private model access.",
+        "endpoint": "={{ $('hubTalk Input').first().json.graphqlEndpoint }}",
+        "query": "query machineModels($tenantLinkType: TenantLinkType) {\n  machineModels(tenantLinkType: $tenantLinkType) {\n    id\n    technology\n    modelName\n    brand\n    avatar\n    isPublic\n    externalId\n    tenant {\n      id\n      name\n      __typename\n    }\n    assignedApplicationVersions {\n      id\n      version\n      status\n      application {\n        id\n        name\n        status\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}",
+        "variables": "={{ {\n  \"tenantLinkType\": $fromAI('tenantLinkType', 'NONE', 'string')\n} }}",
+        "operationName": "machineModels",
+        "headerParametersUi": {
+          "parameter": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('hubTalk Input').first().json.token }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.graphqlTool",
+      "typeVersion": 1.1,
+      "position": [
+        384,
+        336
+      ],
+      "id": "getMachineModels-tool-id",
+      "name": "getMachineModels",
+      "alwaysOutputData": true,
+      "onError": "continueErrorOutput"
+    }
+  ],
+  "connections": {
+    "getMachineModels": {
+      "ai_tool": [
+        []
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "90f7e16e88b8af51a9fefb468989df8864c6fa45b8b0deeeccb82ce7f608fa65"
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "toolDescription": "Retrieves detailed information for a single asset by ID. Use when users ask 'show asset details', 'asset specifications', 'facility information for asset', 'asset machine details'. Returns comprehensive asset data including facility assignment, machine details, service contracts, tags, and operational status.",
+        "endpoint": "={{ $('hubTalk Input').first().json.graphqlEndpoint }}",
+        "query": "query getAsset($assetId: ID!) {\n  asset(assetId: $assetId) {\n    id\n    displayName\n    avatar\n    country\n    isActive\n    externalId\n    facility {\n      id\n      __typename\n    }\n    serviceProviderTenant {\n      id\n      name\n      __typename\n    }\n    machine {\n      id\n      serialNumber\n      technology\n      brand\n      modelName\n      owner {\n        tenant {\n          id\n          name\n          __typename\n        }\n        ownerType\n        __typename\n      }\n      edgeDevice {\n        id\n        iotDeviceId\n        status {\n          connectionState\n          __typename\n        }\n        product\n        connected\n        __typename\n      }\n      collaborationStatus\n      __typename\n    }\n    tags {\n      key\n      value {\n        id\n        text\n        __typename\n      }\n      __typename\n    }\n    serviceContractAssignments {\n      id\n      startDate\n      endDate\n      createdBy {\n        id\n        name\n        __typename\n      }\n      createdAt\n      updatedBy {\n        id\n        name\n        __typename\n      }\n      updatedAt\n      serviceContract {\n        id\n        contractName\n        shortDescription\n        escalateAfterMinutes\n        isAssignable\n        followTheSun\n        __typename\n      }\n      __typename\n    }\n    machineDocuments {\n      id\n      category\n      documentType\n      documentUrl\n      label\n      language\n      createdAt\n      createdBy {\n        id\n        name\n        __typename\n      }\n      owner {\n        id\n        name\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}",
+        "variables": "={{ {\n  \"assetId\": $fromAI('assetId', null, 'string')\n} }}",
+        "operationName": "getAsset",
+        "headerParametersUi": {
+          "parameter": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('hubTalk Input').first().json.token }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.graphqlTool",
+      "typeVersion": 1.1,
+      "position": [
+        384,
+        336
+      ],
+      "id": "getAsset-tool-id",
+      "name": "getAsset",
+      "alwaysOutputData": true,
+      "onError": "continueErrorOutput"
+    }
+  ],
+  "connections": {
+    "getAsset": {
+      "ai_tool": [
+        []
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "90f7e16e88b8af51a9fefb468989df8864c6fa45b8b0deeeccb82ce7f608fa65"
+  }
+}

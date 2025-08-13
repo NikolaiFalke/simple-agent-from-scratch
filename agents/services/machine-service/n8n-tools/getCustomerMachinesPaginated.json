@@ -1,0 +1,43 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "toolDescription": "Retrieves customer machines with comprehensive filtering, sorting, and pagination. Use when users ask 'show me customer machines', 'list machines for customer X', 'machines with status Y', 'IoT connected machines'. Supports role-based access control and complex filtering by customer, status, serial number, machine model, technology, and service contracts.",
+        "endpoint": "={{ $('hubTalk Input').first().json.graphqlEndpoint }}",
+        "query": "query tableCustomerMachines($options: CustomerMachineOptions, $avatar: Boolean!, $serialNumber: Boolean!, $externalId: Boolean!, $machineModelName: Boolean!, $technology: Boolean!, $brand: Boolean!, $customerAddressCountry: Boolean!, $edgeDeviceConnectionStatus: Boolean!, $serviceContracts: Boolean!) {\n  customerMachinesPaginated(options: $options) {\n    data {\n      id\n      avatar @include(if: $avatar)\n      externalId @include(if: $externalId)\n      serialNumber @include(if: $serialNumber)\n      status\n      proposal {\n        id\n        proposalRejection {\n          reason\n          __typename\n        }\n        __typename\n      }\n      customer {\n        id\n        name\n        linkedTenant {\n          id\n          __typename\n        }\n        status\n        address @include(if: $customerAddressCountry) {\n          country\n          __typename\n        }\n        __typename\n      }\n      machineModel {\n        id\n        avatar @include(if: $avatar)\n        brand @include(if: $brand)\n        externalId\n        modelName @include(if: $machineModelName)\n        technology @include(if: $technology)\n        __typename\n      }\n      machine {\n        id\n        serialNumber\n        brand @include(if: $brand)\n        technology @include(if: $technology)\n        owner {\n          tenant {\n            id\n            name\n            __typename\n          }\n          ownerType\n          __typename\n        }\n        __typename\n      }\n      edgeDevice {\n        id\n        iotDeviceId\n        status @include(if: $edgeDeviceConnectionStatus) {\n          connectionState\n          __typename\n        }\n        __typename\n      }\n      serviceContractAssignments @include(if: $serviceContracts) {\n        id\n        startDate\n        endDate\n        serviceContract {\n          id\n          contractName\n          __typename\n        }\n        __typename\n      }\n      __typename\n    }\n    pageInfo {\n      currentPage\n      totalPages\n      totalElements\n      __typename\n    }\n    __typename\n  }\n}",
+        "variables": "={{ {\n  \"options\": $fromAI('options', {\n    \"pagination\": { \"page\": 0, \"pageSize\": 15 },\n    \"sortBy\": [{ \"serialNumber\": \"ASC\" }]\n  }, 'object'),\n  \"avatar\": $fromAI('includeAvatar', true, 'boolean'),\n  \"serialNumber\": $fromAI('includeSerialNumber', true, 'boolean'),\n  \"externalId\": $fromAI('includeExternalId', false, 'boolean'),\n  \"machineModelName\": $fromAI('includeMachineModel', true, 'boolean'),\n  \"technology\": $fromAI('includeTechnology', true, 'boolean'),\n  \"brand\": $fromAI('includeBrand', false, 'boolean'),\n  \"customerAddressCountry\": $fromAI('includeCustomerCountry', false, 'boolean'),\n  \"edgeDeviceConnectionStatus\": $fromAI('includeIoTStatus', false, 'boolean'),\n  \"serviceContracts\": $fromAI('includeServiceContracts', false, 'boolean')\n} }}",
+        "operationName": "tableCustomerMachines",
+        "headerParametersUi": {
+          "parameter": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('hubTalk Input').first().json.token }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.graphqlTool",
+      "typeVersion": 1.1,
+      "position": [
+        384,
+        336
+      ],
+      "id": "getCustomerMachinesPaginated-tool-id",
+      "name": "getCustomerMachinesPaginated",
+      "alwaysOutputData": true,
+      "onError": "continueErrorOutput"
+    }
+  ],
+  "connections": {
+    "getCustomerMachinesPaginated": {
+      "ai_tool": [
+        []
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "90f7e16e88b8af51a9fefb468989df8864c6fa45b8b0deeeccb82ce7f608fa65"
+  }
+}

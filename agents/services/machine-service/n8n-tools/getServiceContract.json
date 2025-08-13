@@ -1,0 +1,43 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "toolDescription": "Retrieves detailed information for a single service contract by ID. Use when users ask 'show contract details', 'contract specifications', 'SLA information', 'contract assignments'. Returns comprehensive contract data including escalation policies, assignment status, and linked machines.",
+        "endpoint": "={{ $('hubTalk Input').first().json.graphqlEndpoint }}",
+        "query": "query getServiceContract($serviceContractId: ID!) {\n  serviceContract(serviceContractId: $serviceContractId) {\n    id\n    contractName\n    shortDescription\n    escalateAfterMinutes\n    isAssignable\n    followTheSun\n    serviceContractAssignments {\n      id\n      startDate\n      endDate\n      createdBy {\n        id\n        name\n        __typename\n      }\n      createdAt\n      updatedBy {\n        id\n        name\n        __typename\n      }\n      updatedAt\n      customerMachine {\n        id\n        serialNumber\n        displayName\n        status\n        customer {\n          id\n          name\n          status\n          __typename\n        }\n        machineModel {\n          id\n          modelName\n          brand\n          technology\n          __typename\n        }\n        machine {\n          id\n          serialNumber\n          owner {\n            tenant {\n              id\n              name\n              __typename\n            }\n            ownerType\n            __typename\n          }\n          __typename\n        }\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}",
+        "variables": "={{ {\n  \"serviceContractId\": $fromAI('serviceContractId', null, 'string')\n} }}",
+        "operationName": "getServiceContract",
+        "headerParametersUi": {
+          "parameter": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('hubTalk Input').first().json.token }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.graphqlTool",
+      "typeVersion": 1.1,
+      "position": [
+        384,
+        336
+      ],
+      "id": "getServiceContract-tool-id",
+      "name": "getServiceContract",
+      "alwaysOutputData": true,
+      "onError": "continueErrorOutput"
+    }
+  ],
+  "connections": {
+    "getServiceContract": {
+      "ai_tool": [
+        []
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "90f7e16e88b8af51a9fefb468989df8864c6fa45b8b0deeeccb82ce7f608fa65"
+  }
+}

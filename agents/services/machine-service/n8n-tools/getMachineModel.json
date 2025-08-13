@@ -1,0 +1,43 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "toolDescription": "Retrieves detailed information for a single machine model by ID. Use when users ask 'show model details', 'model specifications', 'available applications for model', 'tunnel configurations'. Returns comprehensive model data including technical specs, assigned applications, tunnel configurations, and documentation.",
+        "endpoint": "={{ $('hubTalk Input').first().json.graphqlEndpoint }}",
+        "query": "query getMachineModel($id: ID!) {\n  machineModel(machineModelId: $id) {\n    id\n    technology\n    modelName\n    brand\n    avatar\n    isPublic\n    externalId\n    tenant {\n      id\n      name\n      __typename\n    }\n    assignedApplicationVersions {\n      id\n      version\n      status\n      application {\n        id\n        name\n        status\n        __typename\n      }\n      __typename\n    }\n    tunnelConfigTemplates {\n      id\n      displayId\n      remoteIp\n      remotePort\n      tunnelType\n      localIp\n      localPort\n      __typename\n    }\n    __typename\n  }\n}",
+        "variables": "={{ {\n  \"id\": $fromAI('machineModelId', null, 'string')\n} }}",
+        "operationName": "getMachineModel",
+        "headerParametersUi": {
+          "parameter": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('hubTalk Input').first().json.token }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.graphqlTool",
+      "typeVersion": 1.1,
+      "position": [
+        384,
+        336
+      ],
+      "id": "getMachineModel-tool-id",
+      "name": "getMachineModel",
+      "alwaysOutputData": true,
+      "onError": "continueErrorOutput"
+    }
+  ],
+  "connections": {
+    "getMachineModel": {
+      "ai_tool": [
+        []
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "90f7e16e88b8af51a9fefb468989df8864c6fa45b8b0deeeccb82ce7f608fa65"
+  }
+}

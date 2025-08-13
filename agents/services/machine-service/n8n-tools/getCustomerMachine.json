@@ -1,0 +1,43 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "toolDescription": "Retrieves detailed information for a single customer machine by ID. Use when users ask 'show details for machine X', 'get machine information', 'machine specifications', 'IoT connectivity for machine'. Returns comprehensive machine data including customer, machine model, edge device, service contracts, and warranty information.",
+        "endpoint": "={{ $('hubTalk Input').first().json.graphqlEndpoint }}",
+        "query": "query getCustomerMachine($id: ID!) {\n  customerMachine(customerMachineId: $id) {\n    id\n    serialNumber\n    displayName\n    externalId\n    warrantyBegin\n    warrantyEnd\n    isSp1Migration\n    edgeDeviceSerialNumber\n    avatar\n    status\n    customer {\n      id\n      name\n      status\n      linkedTenant {\n        id\n        __typename\n      }\n      __typename\n    }\n    machineModel {\n      id\n      avatar\n      brand\n      modelName\n      technology\n      isPublic\n      __typename\n    }\n    machine {\n      id\n      technology\n      serialNumber\n      brand\n      modelName\n      collaborationStatus\n      edgeDevice {\n        id\n        iotDeviceId\n        status {\n          connectionState\n          __typename\n        }\n        product\n        connected\n        __typename\n      }\n      owner {\n        ownerType\n        tenant {\n          id\n          name\n          __typename\n        }\n        __typename\n      }\n      __typename\n    }\n    edgeDevice {\n      id\n      iotDeviceId\n      status {\n        connectionState\n        __typename\n      }\n      __typename\n    }\n    serviceContractAssignments {\n      id\n      startDate\n      endDate\n      serviceContract {\n        id\n        contractName\n        followTheSun\n        isAssignable\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}",
+        "variables": "={{ {\n  \"id\": $fromAI('customerMachineId', null, 'string')\n} }}",
+        "operationName": "getCustomerMachine",
+        "headerParametersUi": {
+          "parameter": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('hubTalk Input').first().json.token }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.graphqlTool",
+      "typeVersion": 1.1,
+      "position": [
+        384,
+        336
+      ],
+      "id": "getCustomerMachine-tool-id",
+      "name": "getCustomerMachine",
+      "alwaysOutputData": true,
+      "onError": "continueErrorOutput"
+    }
+  ],
+  "connections": {
+    "getCustomerMachine": {
+      "ai_tool": [
+        []
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "90f7e16e88b8af51a9fefb468989df8864c6fa45b8b0deeeccb82ce7f608fa65"
+  }
+}

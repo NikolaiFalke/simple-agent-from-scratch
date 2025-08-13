@@ -1,0 +1,43 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "toolDescription": "Retrieves machine documents for a specific machine model by ID. Use when users ask 'show machine documentation', 'get user manual for model X', 'documentation for machine', 'technical documents'. Returns comprehensive document information including categories, languages, creators, and download URLs.",
+        "endpoint": "={{ $('hubTalk Input').first().json.graphqlEndpoint }}",
+        "query": "query tableMachineModelMachineDocuments($machineModelId: ID!) {\n  machineModel(machineModelId: $machineModelId) {\n    id\n    modelName\n    brand\n    technology\n    machineDocuments {\n      id\n      category\n      createdAt\n      createdBy {\n        id\n        name\n        __typename\n      }\n      fileDomainType\n      documentType\n      documentUrl\n      label\n      language\n      owner {\n        id\n        name\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}",
+        "variables": "={{ {\n  \"machineModelId\": $fromAI('machineModelId', null, 'string')\n} }}",
+        "operationName": "tableMachineModelMachineDocuments",
+        "headerParametersUi": {
+          "parameter": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('hubTalk Input').first().json.token }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.graphqlTool",
+      "typeVersion": 1.1,
+      "position": [
+        384,
+        336
+      ],
+      "id": "getMachineDocuments-tool-id",
+      "name": "getMachineDocuments",
+      "alwaysOutputData": true,
+      "onError": "continueErrorOutput"
+    }
+  ],
+  "connections": {
+    "getMachineDocuments": {
+      "ai_tool": [
+        []
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "90f7e16e88b8af51a9fefb468989df8864c6fa45b8b0deeeccb82ce7f608fa65"
+  }
+}
