@@ -21,7 +21,8 @@ This file tracks known issues, limitations, and misleading aspects of the Tenant
 
 ### 🔧 Current Agent Framework Strategy
 **For counting/statistics (our use case)**:
-- Use `options: {}` (empty options) to fetch ALL data
+- **OMIT options parameter entirely** - don't use `options: {}`
+- Query pattern: `usersPaginated { data { ... } }` (no options)
 - Let AI count results client-side  
 - Never rely on `pageInfo` for counting
 
@@ -30,8 +31,8 @@ This file tracks known issues, limitations, and misleading aspects of the Tenant
 - Just don't use `pageInfo.totalElements` or `pageInfo.totalPages`
 
 **Affected Queries**: 
-- `usersPaginated` - Use `options: {}` for counting, pagination works for data display
-- `customersPaginated` - Use `options: {}` for counting, pagination works for data display
+- `usersPaginated` - OMIT options entirely for counting, pagination works for data display
+- `customersPaginated` - OMIT options entirely for counting, pagination works for data display
 
 ### 📋 Pagination Readiness Section
 **Future State**: When `pageInfo` counting is fixed, this section will be updated with:
@@ -39,13 +40,14 @@ This file tracks known issues, limitations, and misleading aspects of the Tenant
 - Performance-optimized counting strategies using pagination
 - Count-specific queries without fetching all data
 
-**Current State**: All tools use `options: {}` to fetch all data for client-side counting.
+**Current State**: All tools avoid empty options and query aliases for reliable data fetching.
 **Frontend Pattern**: Pagination works for data display, just not for counting.
+**Query Alias Issue**: Query aliases with empty options may cause parsing errors.
 
 **Working Examples**:
 ```graphql
-# ✅ AGENT FRAMEWORK - Fetch all data for counting:
-usersPaginated(options: {}) {
+# ✅ AGENT FRAMEWORK - Fetch all data for counting (NO options parameter):
+usersPaginated {
   data {
     id
     isActive
@@ -69,6 +71,12 @@ customers(pagination: {page: 0, pageSize: 15}, sortBy: [{name: "ASC"}]) {
     totalPages       # ← Returns -1 (broken)
   }
 }
+
+# ❌ INVALID - Empty options parameter breaks query:
+usersPaginated(options: {}) { ... }
+
+# ❌ INVALID - Query alias with empty options may break:
+allUsers: usersPaginated(options: {}) { ... }
 
 # ❌ DON'T RELY ON pageInfo FOR COUNTING:
 # totalElements: null, totalPages: -1

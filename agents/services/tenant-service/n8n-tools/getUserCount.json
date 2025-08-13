@@ -4,7 +4,7 @@
       "parameters": {
         "toolDescription": "Gets all users and their status. AI will count active/inactive users from the returned data. Use this when users ask 'how many users are there', 'user statistics', 'total user count', 'how many active users', or need user count information. This tool requires no parameters from the user.",
         "endpoint": "={{ $('hubTalk Input').first().json.graphqlEndpoint }}",
-        "query": "query getUserCount {\n  allUsers: usersPaginated(options: {}) {\n    data {\n      id\n      isActive\n      isTechnicalUser\n      status\n    }\n  }\n}",
+        "query": "query getUserCount {\n  usersPaginated {\n    data {\n      id\n      isActive\n      isTechnicalUser\n      status\n    }\n  }\n}",
         "variables": "{}",
         "operationName": "getUserCount",
         "headerParametersUi": {

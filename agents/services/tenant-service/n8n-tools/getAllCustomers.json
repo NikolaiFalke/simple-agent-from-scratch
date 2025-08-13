@@ -4,7 +4,7 @@
       "parameters": {
         "toolDescription": "Gets all customers for the current tenant. Use this when users ask for 'all customers', 'list customers', 'show me all customers', 'how many customers', 'customer count', 'total customers', or general customer information without specific filters. AI will count customers if user asks for statistics. This tool requires no parameters from the user.",
         "endpoint": "={{ $('hubTalk Input').first().json.graphqlEndpoint }}",
-        "query": "query getAllCustomers {\n  customersPaginated(options: {}) {\n    data {\n      id\n      tenantId\n      name\n      status\n      linkedTenant {\n        id\n        name\n      }\n      externalId\n      websiteUrl\n      serviceOrganisation {\n        id\n        name\n      }\n      address {\n        country\n        state\n        city\n        postalCode\n        street\n        street2\n      }\n    }\n  }\n}",
+        "query": "query getAllCustomers {\n  customersPaginated {\n    data {\n      id\n      tenantId\n      name\n      status\n      linkedTenant {\n        id\n        name\n      }\n      externalId\n      websiteUrl\n      serviceOrganisation {\n        id\n        name\n      }\n      address {\n        country\n        state\n        city\n        postalCode\n        street\n        street2\n      }\n    }\n  }\n}",
         "variables": "{}",
         "operationName": "getAllCustomers",
         "headerParametersUi": {

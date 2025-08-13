@@ -94,12 +94,14 @@ This is an agentic framework being rebuilt from scratch for Symmedia Hub, a comp
 ### 🚨 CRITICAL API Limitations
 - **Pagination BROKEN**: Pagination system currently non-functional and causes INTERNAL_ERROR
 - **NO PAGINATION**: Never use `pagination` parameters or `pageInfo` - causes query failures  
-- **Client-Side Counting**: Always fetch all data with `options: {}` and count in AI logic
+- **Empty Options Invalid**: `usersPaginated(options: {})` is INVALID - omit options entirely
+- **Client-Side Counting**: Always fetch all data by omitting options parameter
 - **Filtering**: User filtering limited to `isActive` boolean, customer filtering more robust
 - **Performance**: Unknown behavior with large datasets - monitor query execution times
 
 ### Mandatory Workarounds
-- **Always use `options: {}` for paginated queries** - never use pagination parameters
+- **Omit options entirely for counting queries** - don't use `options: {}`
+- **Avoid query aliases with empty options** - can cause parsing errors  
 - Fetch complete datasets and let AI agents handle counting and filtering
 - Implement graceful error handling for missing or incomplete data
 - Document when pagination becomes available for future optimization
