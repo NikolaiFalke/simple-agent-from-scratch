@@ -1,0 +1,43 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "toolDescription": "Gets the current tenant's company card information including company tags. Use this when users ask 'what are company tags?', 'show me company tags', 'what tags do we have?', or need to understand the tenant's company information and tags.",
+        "endpoint": "={{ $('hubTalk Input').first().json.graphqlEndpoint }}",
+        "query": "query getCompanyTags {\n  myUser {\n    tenant {\n      id\n      name\n      companyCard {\n        id\n        logo\n        image\n        slogan\n        website\n        description\n        dunsNumber\n        tags {\n          id\n          tag\n        }\n      }\n    }\n  }\n}",
+        "variables": "{}",
+        "operationName": "getCompanyTags",
+        "headerParametersUi": {
+          "parameter": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('hubTalk Input').first().json.token }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.graphqlTool",
+      "typeVersion": 1.1,
+      "position": [
+        384,
+        336
+      ],
+      "id": "getCompanyTags-tool-id",
+      "name": "getCompanyTags",
+      "alwaysOutputData": true,
+      "onError": "continueErrorOutput"
+    }
+  ],
+  "connections": {
+    "getCompanyTags": {
+      "ai_tool": [
+        []
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "90f7e16e88b8af51a9fefb468989df8864c6fa45b8b0deeeccb82ce7f608fa65"
+  }
+}

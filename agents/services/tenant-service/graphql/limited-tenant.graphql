@@ -26,7 +26,6 @@ type Query @extends{
     platformAgreements: [PlatformAgreement!]!
     tenantInvitations(options:TenantInvitationOptions): [TenantInvitation]!
 
-    checkInvitationByIDAndEmail(invitationId: ID!, email: String!): Boolean!
     isUserOfTenantActive(identityId: ID!): Boolean!
     findUserByIdentityId(identityId: ID!): User!
 }

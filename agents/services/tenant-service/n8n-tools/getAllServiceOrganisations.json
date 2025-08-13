@@ -1,0 +1,43 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "toolDescription": "Gets all service organisations for the current tenant. Use this when users ask 'what service organisations do I have?', 'list service orgs', 'show me service organisations', or need to reference service orgs for customer creation. This tool requires no parameters from the user.",
+        "endpoint": "={{ $('hubTalk Input').first().json.graphqlEndpoint }}",
+        "query": "query getAllServiceOrganisations {\n  serviceOrganisationsPaginated {\n    data {\n      id\n      name\n      description\n    }\n  }\n}",
+        "variables": "{}",
+        "operationName": "getAllServiceOrganisations",
+        "headerParametersUi": {
+          "parameter": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('hubTalk Input').first().json.token }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.graphqlTool",
+      "typeVersion": 1.1,
+      "position": [
+        384,
+        336
+      ],
+      "id": "getAllServiceOrganisations-tool-id",
+      "name": "getAllServiceOrganisations",
+      "alwaysOutputData": true,
+      "onError": "continueErrorOutput"
+    }
+  ],
+  "connections": {
+    "getAllServiceOrganisations": {
+      "ai_tool": [
+        []
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "90f7e16e88b8af51a9fefb468989df8864c6fa45b8b0deeeccb82ce7f608fa65"
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "toolDescription": "Creates a new customer. Use this when users ask 'create a customer', 'add a new customer', etc. Parameters: name (string, required) - customer name, serviceOrganisationId (string, required) - ID of the service organisation, country (string, required) - country for address, externalId (string, optional), websiteUrl (string, optional), city (string, optional), postalCode (string, optional), street (string, optional), street2 (string, optional), state (string, optional). If user references service org by name, use getAllServiceOrganisations first to find the ID.",
+        "endpoint": "={{ $('hubTalk Input').first().json.graphqlEndpoint }}",
+        "query": "mutation createCustomer($name: String!, $serviceOrganisationId: ID!, $country: String!, $externalId: String, $websiteUrl: String, $city: String, $postalCode: String, $street: String, $street2: String, $state: String) {\n  createCustomer(customer: {\n    name: $name\n    serviceOrganisation: $serviceOrganisationId\n    externalId: $externalId\n    websiteUrl: $websiteUrl\n    address: {\n      country: $country\n      city: $city\n      postalCode: $postalCode\n      street: $street\n      street2: $street2\n      state: $state\n    }\n  }) {\n    id\n    name\n    status\n    externalId\n    websiteUrl\n    serviceOrganisation {\n      id\n      name\n    }\n    address {\n      country\n      city\n      postalCode\n      street\n      street2\n      state\n    }\n  }\n}",
+        "variables": "={{ { \"name\": $fromAI('name', '', 'string'), \"serviceOrganisationId\": $fromAI('serviceOrganisationId', '', 'string'), \"country\": $fromAI('country', '', 'string'), \"externalId\": $fromAI('externalId', null, 'string'), \"websiteUrl\": $fromAI('websiteUrl', null, 'string'), \"city\": $fromAI('city', null, 'string'), \"postalCode\": $fromAI('postalCode', null, 'string'), \"street\": $fromAI('street', null, 'string'), \"street2\": $fromAI('street2', null, 'string'), \"state\": $fromAI('state', null, 'string') } }}",
+        "operationName": "createCustomer",
+        "headerParametersUi": {
+          "parameter": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('hubTalk Input').first().json.token }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.graphqlTool",
+      "typeVersion": 1.1,
+      "position": [
+        384,
+        336
+      ],
+      "id": "createCustomer-tool-id",
+      "name": "createCustomer",
+      "alwaysOutputData": true,
+      "onError": "continueErrorOutput"
+    }
+  ],
+  "connections": {
+    "createCustomer": {
+      "ai_tool": [
+        []
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "90f7e16e88b8af51a9fefb468989df8864c6fa45b8b0deeeccb82ce7f608fa65"
+  }
+}

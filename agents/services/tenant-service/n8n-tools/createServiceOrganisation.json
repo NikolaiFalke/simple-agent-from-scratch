@@ -1,0 +1,43 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "toolDescription": "Creates a new service organisation. Use this when users ask 'create a service organisation', 'add a new service org', etc. Parameters: name (string, required) - name of the service organisation, description (string, optional) - description of the service organisation.",
+        "endpoint": "={{ $('hubTalk Input').first().json.graphqlEndpoint }}",
+        "query": "mutation createServiceOrganisation($name: String!, $description: String) {\n  createServiceOrganisation(serviceOrganisation: {\n    name: $name\n    description: $description\n  }) {\n    id\n    name\n    description\n    tenant {\n      id\n      name\n    }\n  }\n}",
+        "variables": "={{ { \"name\": $fromAI('name', '', 'string'), \"description\": $fromAI('description', null, 'string') } }}",
+        "operationName": "createServiceOrganisation",
+        "headerParametersUi": {
+          "parameter": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('hubTalk Input').first().json.token }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.graphqlTool",
+      "typeVersion": 1.1,
+      "position": [
+        384,
+        336
+      ],
+      "id": "createServiceOrganisation-tool-id",
+      "name": "createServiceOrganisation",
+      "alwaysOutputData": true,
+      "onError": "continueErrorOutput"
+    }
+  ],
+  "connections": {
+    "createServiceOrganisation": {
+      "ai_tool": [
+        []
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "90f7e16e88b8af51a9fefb468989df8864c6fa45b8b0deeeccb82ce7f608fa65"
+  }
+}

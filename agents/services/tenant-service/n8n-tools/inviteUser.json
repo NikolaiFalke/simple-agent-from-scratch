@@ -1,0 +1,43 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "toolDescription": "Invites a user to the current tenant. Use this when users ask 'invite a user', 'send user invitation', 'add a user to tenant', etc. Parameters: email (string, required) - user's email address, name (string, optional) - user's name.",
+        "endpoint": "={{ $('hubTalk Input').first().json.graphqlEndpoint }}",
+        "query": "mutation inviteUser($email: String!, $name: String) {\n  inviteUser(options: {\n    email: $email\n    name: $name\n  })\n}",
+        "variables": "={{ { \"email\": $fromAI('email', '', 'string'), \"name\": $fromAI('name', null, 'string') } }}",
+        "operationName": "inviteUser",
+        "headerParametersUi": {
+          "parameter": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('hubTalk Input').first().json.token }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.graphqlTool",
+      "typeVersion": 1.1,
+      "position": [
+        384,
+        336
+      ],
+      "id": "inviteUser-tool-id",
+      "name": "inviteUser",
+      "alwaysOutputData": true,
+      "onError": "continueErrorOutput"
+    }
+  ],
+  "connections": {
+    "inviteUser": {
+      "ai_tool": [
+        []
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "90f7e16e88b8af51a9fefb468989df8864c6fa45b8b0deeeccb82ce7f608fa65"
+  }
+}

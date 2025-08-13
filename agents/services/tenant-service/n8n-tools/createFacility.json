@@ -1,0 +1,43 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "toolDescription": "Creates a new facility. Use this when users ask 'create a facility', 'add a new facility', etc. Parameters: name (string, required) - name of the facility, description (string, optional) - description of the facility.",
+        "endpoint": "={{ $('hubTalk Input').first().json.graphqlEndpoint }}",
+        "query": "mutation createFacility($name: String!, $description: String) {\n  createFacility(facility: {\n    name: $name\n    description: $description\n  }) {\n    id\n    name\n    description\n    tenant {\n      id\n      name\n    }\n  }\n}",
+        "variables": "={{ { \"name\": $fromAI('name', '', 'string'), \"description\": $fromAI('description', null, 'string') } }}",
+        "operationName": "createFacility",
+        "headerParametersUi": {
+          "parameter": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('hubTalk Input').first().json.token }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.graphqlTool",
+      "typeVersion": 1.1,
+      "position": [
+        384,
+        336
+      ],
+      "id": "createFacility-tool-id",
+      "name": "createFacility",
+      "alwaysOutputData": true,
+      "onError": "continueErrorOutput"
+    }
+  ],
+  "connections": {
+    "createFacility": {
+      "ai_tool": [
+        []
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "90f7e16e88b8af51a9fefb468989df8864c6fa45b8b0deeeccb82ce7f608fa65"
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "toolDescription": "Invites a customer to onboard and complete their tenant setup. Use this when users ask 'invite a customer', 'send customer invitation', 'onboard customer', etc. Parameters: customerId (string, required) - ID of the customer to invite, userName (string, required) - name for the user account, userEmail (string, required) - email for the user account. If user provides customer name instead of ID, use getAllCustomers to find the ID first.",
+        "endpoint": "={{ $('hubTalk Input').first().json.graphqlEndpoint }}",
+        "query": "mutation inviteCustomer($customerId: ID!, $userName: String!, $userEmail: String!) {\n  inviteCustomer(\n    customerId: $customerId\n    userName: $userName\n    userEmail: $userEmail\n  ) {\n    id\n    name\n    status\n    linkedTenant {\n      id\n      name\n    }\n    serviceOrganisation {\n      id\n      name\n    }\n  }\n}",
+        "variables": "={{ { \"customerId\": $fromAI('customerId', '', 'string'), \"userName\": $fromAI('userName', '', 'string'), \"userEmail\": $fromAI('userEmail', '', 'string') } }}",
+        "operationName": "inviteCustomer",
+        "headerParametersUi": {
+          "parameter": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('hubTalk Input').first().json.token }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.graphqlTool",
+      "typeVersion": 1.1,
+      "position": [
+        384,
+        336
+      ],
+      "id": "inviteCustomer-tool-id",
+      "name": "inviteCustomer",
+      "alwaysOutputData": true,
+      "onError": "continueErrorOutput"
+    }
+  ],
+  "connections": {
+    "inviteCustomer": {
+      "ai_tool": [
+        []
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "90f7e16e88b8af51a9fefb468989df8864c6fa45b8b0deeeccb82ce7f608fa65"
+  }
+}

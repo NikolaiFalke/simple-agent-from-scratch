@@ -32,6 +32,7 @@ This is an agentic framework being rebuilt from scratch for Symmedia Hub, a comp
 - **System Prompts**: Each agent has a system-prompt.md defining behavior and capabilities
 - **Tool Configuration**: N8N tool JSON files define GraphQL queries and parameters
 - **Agent Descriptions**: agent-description.md files document purpose and routing logic
+- **Claude Code Documentation**: `claude_code_docs/` folders contain development-only documentation for Claude Code instances
 
 ### GraphQL Schema & API Issues
 - **Schema Location**: `agents/services/tenant-service/graphql/limited-tenant.graphql`
