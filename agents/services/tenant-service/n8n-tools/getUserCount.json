@@ -2,9 +2,9 @@
   "nodes": [
     {
       "parameters": {
-        "toolDescription": "Gets the total count of users and breakdown by active/inactive status. Use this when users ask 'how many users are there', 'user statistics', 'total user count', 'how many active users', or need user count information. This tool requires no parameters from the user.",
+        "toolDescription": "Gets all users and their status. AI will count active/inactive users from the returned data. Use this when users ask 'how many users are there', 'user statistics', 'total user count', 'how many active users', or need user count information. This tool requires no parameters from the user.",
         "endpoint": "={{ $('hubTalk Input').first().json.graphqlEndpoint }}",
-        "query": "query getUserCount {\n  allUsers: usersPaginated(options: { pagination: { page: 1, pageSize: 1 } }) {\n    pageInfo {\n      totalElements\n    }\n  }\n  activeUsers: usersPaginated(options: {\n    filter: { isActive: true }\n    pagination: { page: 1, pageSize: 1 }\n  }) {\n    pageInfo {\n      totalElements\n    }\n  }\n  inactiveUsers: usersPaginated(options: {\n    filter: { isActive: false }\n    pagination: { page: 1, pageSize: 1 }\n  }) {\n    pageInfo {\n      totalElements\n    }\n  }\n}",
+        "query": "query getUserCount {\n  allUsers: usersPaginated(options: {}) {\n    data {\n      id\n      isActive\n      isTechnicalUser\n      status\n    }\n  }\n}",
         "variables": "{}",
         "operationName": "getUserCount",
         "headerParametersUi": {
