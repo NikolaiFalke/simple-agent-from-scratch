@@ -62,6 +62,15 @@ Also consult this agent when other agents need:
 - Context-appropriate response strategies
 - Hybrid user handling (multiple roles)
 
+## Tools Available
+
+### getDomainKnowledge
+**Smart knowledge retrieval tool** that returns relevant domain knowledge based on query keywords:
+- **Input**: Keywords like "roles", "permissions", "business rules", "platform overview"
+- **Output**: Comprehensive knowledge sections matching the query
+- **Intelligence**: Automatically selects relevant knowledge sections
+- **Fallback**: Returns roles + permissions for unknown queries
+
 ## Knowledge Areas
 
 ### Core Platform Concepts
