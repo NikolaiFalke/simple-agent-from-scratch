@@ -44,7 +44,8 @@ Route requests to this agent when users ask about:
 - "Who am I?" / "My user info" / "My profile"
 - "Show me customers with status X"
 - "How many active/inactive users?"
-- "Give me all customers"
+- "Give me all customers" / "How many customers do I have?"
+- "Customer count" / "Total customers"
 - "What are my permissions?"
 - "Tell me about my tenant"
 - Any queries involving users, customers, or tenant-scoped data

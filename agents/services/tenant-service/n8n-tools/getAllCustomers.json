@@ -2,10 +2,10 @@
   "nodes": [
     {
       "parameters": {
-        "toolDescription": "Gets all customers for the current tenant. Use this when users ask for 'all customers', 'list customers', 'show me all customers', or general customer information without specific filters. This tool requires no parameters from the user.",
+        "toolDescription": "Gets all customers for the current tenant. Use this when users ask for 'all customers', 'list customers', 'show me all customers', 'how many customers', 'customer count', 'total customers', or general customer information without specific filters. AI will count customers if user asks for statistics. This tool requires no parameters from the user.",
         "endpoint": "={{ $('hubTalk Input').first().json.graphqlEndpoint }}",
-        "query": "query getAllCustomers($page: Int!, $pageSize: Int!) {\n  customersPaginated(options: {\n    pagination: { page: $page, pageSize: $pageSize }\n  }) {\n    data {\n      id\n      tenantId\n      name\n      status\n      linkedTenant {\n        id\n        name\n      }\n      externalId\n      websiteUrl\n      address {\n        country\n        state\n        city\n        postalCode\n        street\n        street2\n      }\n    }\n    pageInfo {\n      totalElements\n      totalPages\n      currentPage\n    }\n  }\n}",
-        "variables": "={{ { \"page\": 1, \"pageSize\": 50 } }}",
+        "query": "query getAllCustomers {\n  customersPaginated(options: {}) {\n    data {\n      id\n      tenantId\n      name\n      status\n      linkedTenant {\n        id\n        name\n      }\n      externalId\n      websiteUrl\n      serviceOrganisation {\n        id\n        name\n      }\n      address {\n        country\n        state\n        city\n        postalCode\n        street\n        street2\n      }\n    }\n  }\n}",
+        "variables": "{}",
         "operationName": "getAllCustomers",
         "headerParametersUi": {
           "parameter": [

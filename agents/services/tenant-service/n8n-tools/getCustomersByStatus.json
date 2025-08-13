@@ -4,8 +4,8 @@
       "parameters": {
         "toolDescription": "Gets customers filtered by status. Use this when users ask for 'customers with status X', 'show me new customers', 'active customers', etc. Parameters: status (CustomerStatus) - valid values: NEW, INVITED, ONBOARDED, DEMO, CONVERTED.",
         "endpoint": "={{ $('hubTalk Input').first().json.graphqlEndpoint }}",
-        "query": "query getCustomersByStatus($status: CustomerStatus!, $page: Int!, $pageSize: Int!) {\n  customersPaginated(options: {\n    filter: {\n      status: { is: $status }\n    }\n    pagination: { page: $page, pageSize: $pageSize }\n  }) {\n    data {\n      id\n      tenantId\n      name\n      status\n      linkedTenant {\n        id\n        name\n      }\n      externalId\n      websiteUrl\n      address {\n        country\n        state\n        city\n        postalCode\n        street\n        street2\n      }\n    }\n    pageInfo {\n      totalElements\n      totalPages\n      currentPage\n    }\n  }\n}",
-        "variables": "={{ { \"status\": $fromAI('status', 'NEW', 'string'), \"page\": 1, \"pageSize\": 50 } }}",
+        "query": "query getCustomersByStatus($status: CustomerStatus!) {\n  customersPaginated(options: {\n    filter: {\n      status: { is: $status }\n    }\n  }) {\n    data {\n      id\n      tenantId\n      name\n      status\n      linkedTenant {\n        id\n        name\n      }\n      externalId\n      websiteUrl\n      serviceOrganisation {\n        id\n        name\n      }\n      address {\n        country\n        state\n        city\n        postalCode\n        street\n        street2\n      }\n    }\n  }\n}",
+        "variables": "={{ { \"status\": $fromAI('status', 'NEW', 'string') } }}",
         "operationName": "getCustomersByStatus",
         "headerParametersUi": {
           "parameter": [

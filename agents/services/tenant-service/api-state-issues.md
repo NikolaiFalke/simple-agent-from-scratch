@@ -2,36 +2,76 @@
 
 This file tracks known issues, limitations, and misleading aspects of the Tenant Service GraphQL API.
 
-## 📊 Pagination Issues
+## 🚨 CRITICAL: Pagination Partially Broken
 
-### ❌ PageInfo.totalElements Not Reliable
-**Issue**: Pagination `pageInfo.totalElements` is not correctly implemented
-**Impact**: Cannot rely on pagination counts for statistics
-**Affected Tools**: 
-- `getUserCount` (originally designed to use pageInfo.totalElements)
-- Any tool that needs accurate counts
+### ⚠️ Mixed Pagination State - Data Works, Counting Broken
+**Status**: Pagination parameters work for data retrieval, but `pageInfo` counting is broken
+**Evidence**: Frontend examples show successful pagination usage with broken `pageInfo`
+**Impact**: Can't rely on `totalElements` or `totalPages` for accurate counts
 
-**Workaround**: 
-- Fetch all data without pagination restrictions
-- Let AI count results client-side
+**What Works**: 
+- ✅ Pagination parameters (`page`, `pageSize`) work for data retrieval
+- ✅ Can fetch paginated data successfully  
+- ✅ Frontend uses: `customers(pagination: {page: $page, pageSize: $pageSize})`
 
-**Example**:
+**What's Broken**:
+- ❌ `pageInfo.totalElements` returns `null`
+- ❌ `pageInfo.totalPages` returns `-1` 
+- ❌ Cannot use pageInfo for counting or statistics
+
+### 🔧 Current Agent Framework Strategy
+**For counting/statistics (our use case)**:
+- Use `options: {}` (empty options) to fetch ALL data
+- Let AI count results client-side  
+- Never rely on `pageInfo` for counting
+
+**For future frontend usage**:
+- Pagination parameters work: `pagination: {page: 1, pageSize: 15}`
+- Just don't use `pageInfo.totalElements` or `pageInfo.totalPages`
+
+**Affected Queries**: 
+- `usersPaginated` - Use `options: {}` for counting, pagination works for data display
+- `customersPaginated` - Use `options: {}` for counting, pagination works for data display
+
+### 📋 Pagination Readiness Section
+**Future State**: When `pageInfo` counting is fixed, this section will be updated with:
+- Working `pageInfo.totalElements` examples for accurate counting
+- Performance-optimized counting strategies using pagination
+- Count-specific queries without fetching all data
+
+**Current State**: All tools use `options: {}` to fetch all data for client-side counting.
+**Frontend Pattern**: Pagination works for data display, just not for counting.
+
+**Working Examples**:
 ```graphql
-# ❌ Don't rely on this:
-usersPaginated(options: { pagination: { page: 1, pageSize: 1 } }) {
-  pageInfo {
-    totalElements  # ← Not accurate
-  }
-}
-
-# ✅ Use this instead:
+# ✅ AGENT FRAMEWORK - Fetch all data for counting:
 usersPaginated(options: {}) {
   data {
     id
     isActive
-    # ... get all data and count on AI side
+    status
+    # ... get all data and let AI count client-side
   }
 }
+
+# ✅ FRONTEND PATTERN - Pagination works for data display:
+customers(pagination: {page: 0, pageSize: 15}, sortBy: [{name: "ASC"}]) {
+  data {
+    id
+    name
+    status
+  }
+  pageInfo {
+    currentPage      # ← Works
+    fromElement      # ← Works  
+    untilElement     # ← Works
+    totalElements    # ← Returns null (broken)
+    totalPages       # ← Returns -1 (broken)
+  }
+}
+
+# ❌ DON'T RELY ON pageInfo FOR COUNTING:
+# totalElements: null, totalPages: -1
 ```
 
 ## 🔍 Schema vs Reality

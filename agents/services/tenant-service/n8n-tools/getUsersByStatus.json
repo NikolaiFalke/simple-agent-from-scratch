@@ -4,8 +4,8 @@
       "parameters": {
         "toolDescription": "Gets users filtered by activity status (active/inactive). Use this when users ask 'show inactive users', 'list active users', or similar user status queries. Parameters: isActive (boolean) - true for active users, false for inactive users.",
         "endpoint": "={{ $('hubTalk Input').first().json.graphqlEndpoint }}",
-        "query": "query getUsersByStatus($isActive: Boolean!, $page: Int!, $pageSize: Int!) {\n  usersPaginated(options: {\n    filter: { isActive: $isActive }\n    pagination: { page: $page, pageSize: $pageSize }\n  }) {\n    data {\n      id\n      identityId\n      email\n      name\n      status\n      isActive\n      isTechnicalUser\n      tenant {\n        id\n        name\n      }\n      settings {\n        portal\n      }\n    }\n    pageInfo {\n      totalElements\n      totalPages\n      currentPage\n    }\n  }\n}",
-        "variables": "={{ { \"isActive\": $fromAI('isActive', true, 'boolean'), \"page\": 1, \"pageSize\": 50 } }}",
+        "query": "query getUsersByStatus($isActive: Boolean!) {\n  usersPaginated(options: {\n    filter: { isActive: $isActive }\n  }) {\n    data {\n      id\n      identityId\n      email\n      name\n      status\n      isActive\n      isTechnicalUser\n      tenant {\n        id\n        name\n      }\n      settings {\n        portal\n      }\n    }\n  }\n}",
+        "variables": "={{ { \"isActive\": $fromAI('isActive', true, 'boolean') } }}",
         "operationName": "getUsersByStatus",
         "headerParametersUi": {
           "parameter": [

@@ -91,15 +91,18 @@ This is an agentic framework being rebuilt from scratch for Symmedia Hub, a comp
 
 ## Legacy System Considerations
 
-### Known API Limitations
-- **Pagination**: `pageInfo.totalElements` is unreliable - fetch all data and count client-side
+### 🚨 CRITICAL API Limitations
+- **Pagination BROKEN**: Pagination system currently non-functional and causes INTERNAL_ERROR
+- **NO PAGINATION**: Never use `pagination` parameters or `pageInfo` - causes query failures  
+- **Client-Side Counting**: Always fetch all data with `options: {}` and count in AI logic
 - **Filtering**: User filtering limited to `isActive` boolean, customer filtering more robust
 - **Performance**: Unknown behavior with large datasets - monitor query execution times
 
-### Workarounds
-- Fetch complete datasets without pagination restrictions
-- Let AI agents handle counting and filtering on retrieved data
+### Mandatory Workarounds
+- **Always use `options: {}` for paginated queries** - never use pagination parameters
+- Fetch complete datasets and let AI agents handle counting and filtering
 - Implement graceful error handling for missing or incomplete data
+- Document when pagination becomes available for future optimization
 
 ## Environment Configuration
 
