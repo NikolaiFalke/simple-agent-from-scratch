@@ -1,0 +1,94 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "toolDescription": "Ingests resolved service cases into vector database for enhanced knowledge management and semantic search. Use when users request 'add case to knowledge base', 'ingest resolved case', 'build knowledge from this case', or after analyzing valuable resolved cases. Stores case data with metadata to enable AI-powered similar case detection and solution recommendations. Parameters: service_case_id (string), title (string), description (string), machine_model_id (string), operator_tenant_id (string). Best used for cases with meaningful resolutions, clear solutions, or valuable troubleshooting patterns.",
+        "workflowId": {
+          "__rl": true,
+          "value": "btZeBqR1rJvpuhJA",
+          "mode": "list",
+          "cachedResultName": "demo-zess — Ingest Service Case"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "service_case_id",
+              "displayName": "service_case_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "title",
+              "displayName": "title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "description",
+              "displayName": "description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "machine_model_id",
+              "displayName": "machine_model_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "operator_tenant_id",
+              "displayName": "operator_tenant_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        -384,
+        -144
+      ],
+      "id": "6e4b682f-7b50-48ed-935b-d164d5589559",
+      "name": "Ingest Service Case"
+    }
+  ],
+  "connections": {
+    "Ingest Service Case": {
+      "ai_tool": [
+        []
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "90f7e16e88b8af51a9fefb468989df8864c6fa45b8b0deeeccb82ce7f608fa65"
+  }
+}

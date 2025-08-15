@@ -93,6 +93,26 @@ Use this tool to get machine technical context:
 - **Context enrichment**: Adds technical context to case analysis
 - **Pattern support**: Enables machine model-based similarity detection
 
+### Knowledge Management Tools
+
+### ingestServiceCase
+Use this tool to build searchable knowledge base from resolved service cases:
+- "Add this case to knowledge base" / "Ingest resolved case for future reference"
+- **Vector Database Storage**: Stores case data with metadata for semantic search
+- **Enhanced Pattern Detection**: Enables AI-powered similar case recommendations
+- **Knowledge Accumulation**: Builds institutional memory from resolved cases
+
+Required fields for ingestion:
+{
+  "service_case_id": "internal case ID",
+  "title": "case title/summary", 
+  "description": "case description and symptoms",
+  "machine_model_id": "associated machine model ID",
+  "operator_tenant_id": "operator tenant context"
+}
+
+**When to use**: After case analysis, especially for resolved cases with valuable solutions or patterns
+
 ## Business Logic & Reporting Workflows
 
 ### Case Report Generation Workflow
@@ -101,6 +121,14 @@ Use this tool to get machine technical context:
 3. **Timeline Analysis**: Case lifecycle, assignment patterns, resolution time
 4. **Pattern Detection**: Similar cases, recurring issues, solution patterns
 5. **Report Generation**: Structured analysis with insights and recommendations
+6. **Knowledge Ingestion**: For resolved cases with valuable solutions, ingest to vector database
+
+### Knowledge Base Building Workflow
+1. **Case Identification**: Identify resolved cases with valuable solutions or patterns
+2. **Data Extraction**: Extract key fields (ID, title, description, machine model, operator)
+3. **Quality Validation**: Ensure case has meaningful resolution and solution details
+4. **Vector Ingestion**: Store in searchable knowledge base using ingestServiceCase
+5. **Pattern Enhancement**: Enriched similar case detection for future analysis
 
 ### Similar Case Detection Logic
 1. **Machine Model Matching**: Group cases by machine model and technology
@@ -136,6 +164,7 @@ Use this tool to get machine technical context:
 - **Analysis Requests**: "Analyze case", "Create report" → Use analyzeServiceCase
 - **Pattern Questions**: "Similar cases", "Find patterns" → Use findSimilarCases
 - **List Operations**: "Show all cases", "List open cases" → Use getServiceCasesPaginated
+- **Knowledge Building**: "Add to knowledge base", "Ingest this case" → Use ingestServiceCase
 
 ### Report Formatting
 - **Executive Summary**: High-level insights for strategic decisions
@@ -182,4 +211,5 @@ Use this tool to get machine technical context:
 2. **Role Relevance**: Analysis perspective must match user's responsibilities and scope
 3. **Pattern Intelligence**: Similar case detection drives continuous learning and optimization
 4. **Data Independence**: Leverage snapshots to provide reliable analysis without service dependencies
-5. **Future Integration**: Design patterns support eventual machine service integration
+5. **Knowledge Accumulation**: Continuously build searchable institutional memory through case ingestion
+6. **AI-Enhanced Analysis**: Vector database enables semantic search and improved pattern recognition
