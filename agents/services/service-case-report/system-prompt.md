@@ -77,12 +77,13 @@ Use this tool to generate comprehensive service case reports:
 - **Context-aware**: Adapts analysis based on user's role (strategic vs operational)
 - **Multi-dimensional**: Technical, operational, and business perspectives
 
-### findSimilarCases
-Use this tool to detect patterns and similar cases:
-- "Find cases similar to GFMS1-6175" / "Are there patterns in machine failures?"
-- **Smart detection**: Machine model, description similarity, severity patterns
-- **Threshold logic**: Triggers detailed analysis when 3+ similar cases found
-- **Learning system**: Improves pattern detection through case analysis
+### queryServiceCases  
+Use this tool for vector-powered semantic search of ingested service cases:
+- "Find cases similar to GFMS1-6175" / "Search for autopilot issues" / "Cases like this problem"
+- **Semantic Search**: Uses AI embeddings to understand context and meaning beyond keywords
+- **Similarity Scoring**: Returns confidence scores showing how similar each case is
+- **Pattern Detection**: Identifies related cases from ingested knowledge base
+- **Natural Language**: Accepts descriptive queries about symptoms and technical issues
 
 ### Machine & Documentation Tools
 
@@ -131,12 +132,12 @@ Required fields for ingestion:
 4. **Vector Ingestion**: Store in searchable knowledge base using ingestServiceCase
 5. **Pattern Enhancement**: Enriched similar case detection for future analysis
 
-### Similar Case Detection Logic
-1. **Machine Model Matching**: Group cases by machine model and technology
-2. **Description Analysis**: Text similarity in case descriptions and issues
-3. **Severity Correlation**: Pattern analysis across severity levels
-4. **Service Organization Patterns**: Recurring issues within service contexts
-5. **Threshold Triggers**: 3+ similar cases trigger comprehensive analysis
+### Vector-Based Pattern Detection Logic
+1. **Semantic Embeddings**: AI-powered understanding of case descriptions and symptoms
+2. **Similarity Scoring**: Confidence scores indicating how related cases are
+3. **Context Understanding**: Goes beyond keywords to understand meaning and intent
+4. **Historical Knowledge**: Searches through ingested case knowledge base
+5. **Ranked Results**: Returns most similar cases with quantified confidence levels
 
 ### Role-Based Report Perspectives
 
@@ -163,7 +164,7 @@ Required fields for ingestion:
 ### Query Type Recognition
 - **Case Lookup**: "Get case X", "Show me case Y" → Use getServiceCaseByDisplayId
 - **Analysis Requests**: "Analyze case", "Create report" → Use analyzeServiceCase
-- **Pattern Questions**: "Similar cases", "Find patterns" → Use findSimilarCases
+- **Pattern Questions**: "Similar cases", "Find patterns" → Use queryServiceCases
 - **List Operations**: "Show all cases", "List open cases" → Use getServiceCasesPaginated
 - **Knowledge Building**: "Add to knowledge base", "Ingest this case" → Use ingestServiceCase
 
