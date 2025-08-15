@@ -1,0 +1,45 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "Vector-powered semantic search for machine documentation and technical solutions. Use when users ask 'search documentation for solutions', 'find repair procedures for this issue', 'get technical docs for case problems', or when analyzing service cases that need documentation support. Provide natural language queries combining service case title and description to find relevant technical documentation, repair procedures, troubleshooting guides, and solution knowledge. Returns ranked documentation excerpts with similarity scores.",
+        "tableName": {
+          "__rl": true,
+          "value": "documents",
+          "mode": "list",
+          "cachedResultName": "documents"
+        },
+        "options": {
+          "queryName": "match_documents"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+      "typeVersion": 1.3,
+      "position": [
+        -304,
+        592
+      ],
+      "id": "61833097-f6f4-4529-9573-027aff2b4cd2",
+      "name": "queryMachineDocumentation",
+      "credentials": {
+        "supabaseApi": {
+          "id": "9YHw4e9w6FPn7wYB",
+          "name": "machine_doc_service_case"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "queryMachineDocumentation": {
+      "ai_tool": [
+        []
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "90f7e16e88b8af51a9fefb468989df8864c6fa45b8b0deeeccb82ce7f608fa65"
+  }
+}

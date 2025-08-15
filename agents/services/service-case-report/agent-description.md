@@ -87,6 +87,11 @@ Route requests to this agent when users ask about:
 - "Add this case to vector database" / "Ingest case data for search"
 - "Create knowledge base entry from case XYZ"
 
+### Documentation & Solution Search
+- "Search documentation for solutions to case ABC-123" / "Find repair procedures for this issue"
+- "Get technical docs for autopilot problems" / "Look up troubleshooting guides"
+- "Find documentation that could help resolve this case" / "Search for technical solutions"
+
 Also consult this agent when other agents need:
 - Service case context for related operations
 - Historical case data for decision making
@@ -103,11 +108,12 @@ Also consult this agent when other agents need:
 
 ### Intelligent Analysis  
 - `analyzeServiceCase`: Comprehensive case report generation with insights
-- `findSimilarCases`: Pattern detection and similar case identification engine
 - `getMachineModelInfo`: Technical context and machine specification analysis
 
 ### Knowledge Management
 - `ingestServiceCase`: Vector database ingestion for building searchable knowledge base
+- `queryServiceCases`: Vector-powered semantic search with similarity scoring for service cases
+- `queryMachineDocuments`: Vector-powered semantic search for technical documentation and solutions
 
 ## Role-Based Capabilities
 
