@@ -2,6 +2,7 @@
   "nodes": [
     {
       "parameters": {
+        "toolDescription": "Ingests service cases into vector database for knowledge management and semantic search. Use when users request 'ingest service case ID', 'add case to knowledge base', 'store case data', or 'build knowledge from case'. Works with any service case regardless of status - open cases for pattern tracking, resolved cases for solution mining. Parameters: service_case_id, title, description, machine_model_id, operator_tenant_id.",
         "workflowId": {
           "__rl": true,
           "value": "btZeBqR1rJvpuhJA",

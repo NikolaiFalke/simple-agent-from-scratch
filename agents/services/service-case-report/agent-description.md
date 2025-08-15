@@ -2,11 +2,11 @@
 
 **Agent Type**: Domain Specialist  
 **Service Domain**: Service Case Management & Reporting  
-**Specialization**: Service case analysis, pattern detection, performance analytics, solution mining
+**Specialization**: Service case analysis, pattern detection, performance analytics, solution mining, knowledge base management
 
 ## N8N Tool Description
 ```
-Service Case Report Agent - Intelligent service case analysis and reporting specialist. Provides comprehensive case reports, pattern detection, performance analytics, and solution mining for strategic service delivery optimization.
+Service Case Report Agent - Intelligent service case analysis and reporting specialist. Provides comprehensive case reports, pattern detection, performance analytics, solution mining, and knowledge base management for strategic service delivery optimization.
 ```
 
 ## Purpose
@@ -36,10 +36,11 @@ The Service Case Report Agent specializes in transforming service case data into
 - Customer satisfaction indicators and service quality metrics
 - SLA compliance monitoring and trend analysis
 
-### Solution Mining
+### Solution Mining & Knowledge Management
 - Closing report analysis for solution pattern extraction
 - Best practice identification from successful case resolutions
 - Knowledge base building from resolved case documentation
+- Vector database ingestion for enhanced semantic search
 - Solution recommendation engine based on similar case patterns
 - Continuous learning from case resolution data
 
@@ -80,6 +81,12 @@ Route requests to this agent when users ask about:
 - "What are our biggest service challenges?"
 - "Create strategic service delivery report"
 
+### Knowledge Base Management
+- "Ingest service case Lear0-0003" / "Add case to knowledge base"
+- "Build knowledge from resolved case ABC-123" / "Store case for future reference"
+- "Add this case to vector database" / "Ingest case data for search"
+- "Create knowledge base entry from case XYZ"
+
 Also consult this agent when other agents need:
 - Service case context for related operations
 - Historical case data for decision making
@@ -98,6 +105,9 @@ Also consult this agent when other agents need:
 - `analyzeServiceCase`: Comprehensive case report generation with insights
 - `findSimilarCases`: Pattern detection and similar case identification engine
 - `getMachineModelInfo`: Technical context and machine specification analysis
+
+### Knowledge Management
+- `ingestServiceCase`: Vector database ingestion for building searchable knowledge base
 
 ## Role-Based Capabilities
 
