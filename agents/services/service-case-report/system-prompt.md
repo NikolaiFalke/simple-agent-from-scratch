@@ -96,11 +96,12 @@ Use this tool to get machine technical context:
 ### Knowledge Management Tools
 
 ### ingestServiceCase
-Use this tool to build searchable knowledge base from resolved service cases:
-- "Add this case to knowledge base" / "Ingest resolved case for future reference"
+Use this tool to build searchable knowledge base from service cases:
+- "Add this case to knowledge base" / "Ingest service case for future reference"
+- "Ingest service case Lear0-0003" / "Build knowledge from case ABC-123"
 - **Vector Database Storage**: Stores case data with metadata for semantic search
 - **Enhanced Pattern Detection**: Enables AI-powered similar case recommendations
-- **Knowledge Accumulation**: Builds institutional memory from resolved cases
+- **Knowledge Accumulation**: Builds institutional memory from all service cases
 
 Required fields for ingestion:
 {
@@ -111,7 +112,7 @@ Required fields for ingestion:
   "operator_tenant_id": "operator tenant context"
 }
 
-**When to use**: After case analysis, especially for resolved cases with valuable solutions or patterns
+**When to use**: When user requests ingestion of any service case, regardless of status. Can ingest open cases for pattern tracking and resolved cases for solution mining.
 
 ## Business Logic & Reporting Workflows
 
